@@ -1,0 +1,30 @@
+final Map<String, String> enUs = {
+  'msg_network_err': 'Network Error',
+  'msg_something_went_wrong': 'Something Went Wrong!',
+  "msg_welcome_oliva": "Welcome, Oliva Grace",
+  "lbl_sign_in": "Sign In",
+  "lbl_forgot_password": "Forgot Password",
+  "lbl_dashboard": "dashboard",
+  "lbl_splash": "splash",
+  "lbl_welcome_back": "Welcome Back!",
+  "msg_enter_your_emai": "Enter your email",
+  "msg_don_t_have_an_a": "Don’t have an account ? Sign Up",
+  "msg_check_your_app":
+      "Check your app's UI from the below demo screens of your app.",
+  "msg_welcome_onboard": "Welcome Onboard!",
+  "msg_confirm_passwor": "Confirm Password",
+  "lbl_get_started": "Get Started",
+  "lbl_sign_up": "Sign Up",
+  "msg_don_t_have_an_a2": "Don’t have an account ? ",
+  "msg_lorem_ipsum_dol":
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum dictum tempus, interdum at dignissim metus. Ultricies sed nunc.",
+  "msg_gets_things_don": "Gets things done with thia app ",
+  "msg_already_have_an": "Already have an account ? Sign In",
+  "lbl_login": "login",
+  "msg_enter_your_full": "Enter your full name",
+  "lbl_register": "Register",
+  "lbl_enter_password": "Enter password",
+  "lbl_app_navigation": "App Navigation",
+  "msg_already_have_an2": "Already have an account ? ",
+  "lbl_registration": "registration"
+};
