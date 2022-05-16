@@ -1,14 +1,16 @@
+import 'package:get/get.dart';
 import 'package:laboratoire_app/Screen/prescription/showPrescriptionImae.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/inputfields.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/imageWidget.dart';
 import 'package:flutter/material.dart';
 
 class PrescriptionDetailsPage extends StatefulWidget {
   final title;
   final prescriptionDetails;
-  const PrescriptionDetailsPage({ this.title, this.prescriptionDetails});
+  const PrescriptionDetailsPage({ this.title, this.prescriptionDetails });
   @override
   _PrescriptionDetailsPageState createState() => _PrescriptionDetailsPageState();
 }
@@ -54,12 +56,13 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      drawer : CustomDrawer(isConn: true),
       body: Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
-          CAppBarWidget(title:widget.title),
+          CAppBarWidget(title:widget.title, isConn:true),
           Positioned(
-            top: 80,
+            top: 90,
             left: 0,
             right: 0,
             bottom: 0,
@@ -73,7 +76,7 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
                     InputFields.readableInputField(_drNameController, "Dr Name", 1),
                     InputFields.readableInputField(_dateController, "Date", 1),
                     InputFields.readableInputField(_timeController, "Time", 1),
-                   InputFields.readableInputField(_messageController, "Message",null),
+                    InputFields.readableInputField(_messageController, "Message",null),
                     _buildImageList()
                   ],
               ),
@@ -96,14 +99,10 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
               padding: const EdgeInsets.only(bottom: 10.0),
               child: GestureDetector(
                 onTap: (){
-                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ShowPrescriptionImagePage(
+                     Get.to(() => ShowPrescriptionImagePage(
                             imageUrls: _imageUrls,
                             selectedImagesIndex: index,
                             title: "Download Prescription"),
-                      ),
                      );
                 },
 

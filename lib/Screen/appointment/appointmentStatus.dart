@@ -95,8 +95,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
     // <1> Use FutureBuilder
     return FutureBuilder(
         // <2> Pass `Future<QuerySnapshot>` to future
-        future: AppointmentService.getData(
-            "Visited,Rejected,Canceled"), //fetch appointment details according to uid
+        future: AppointmentService.getData("Visited,Rejected,Canceled"), //fetch appointment details according to uid
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             return snapshot.data.length == 0

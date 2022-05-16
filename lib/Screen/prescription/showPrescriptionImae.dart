@@ -14,7 +14,7 @@ class ShowPrescriptionImagePage extends StatefulWidget {
   final title;
   final imageUrls;
   final int selectedImagesIndex;
-  ShowPrescriptionImagePage({Key key, this.imageUrls,this.title,this.selectedImagesIndex})
+  const ShowPrescriptionImagePage({Key key, this.imageUrls, this.title, this.selectedImagesIndex})
       : super(key: key);
   @override
   _ShowPrescriptionImagePageState createState() => _ShowPrescriptionImagePageState();
@@ -24,12 +24,12 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
   String _selectedImageUrl = "";
   int totalImg = 0;
   int _index = 0;
-  ReceivePort _port = ReceivePort();
+  final ReceivePort _port = ReceivePort();
 
   @override
   void initState() {
     // TODO: implement initState
-    //print(widget.imageUrls.length);
+    print(widget.imageUrls.length);
     //initialize all value
     setState(() {
       _selectedImageUrl = widget.imageUrls[widget.selectedImagesIndex];
@@ -68,7 +68,7 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
             if(perStatus.isGranted) {
               final externalDir=await getExternalStorageDirectory();
               ToastMsg.showToastMsg("Download Stated");
-          await FlutterDownloader.enqueue(
+              await FlutterDownloader.enqueue(
                 url: _selectedImageUrl,
                 savedDir: externalDir.path,
                 fileName:DateTime.now().millisecondsSinceEpoch.toString(),
@@ -76,30 +76,26 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
                 openFileFromNotification: true, // click on notification to open downloaded file (for Android)
               );
             }
-          }, icon: Icon(Icons.download_rounded,))
+          }, icon: const Icon(Icons.download_rounded,))
         ],
       ),
-      body: Container(
+      body: SizedBox(
           height: MediaQuery.of(context).size.height,
           //color: Colors.red,
           child: Stack(
             children: [
-              Container(
-                  child: SwipeDetector(
-                    onSwipeLeft: () {
-                      _forwardImg();
-                     // print("Swipe Left");
-                    },
-                    onSwipeRight: () {
-                      _backwardImg();
-                     // print("Swipe Right");
-
-                    },
-                    child: Center(
-                        child: ImageBoxContainWidget(imageUrl:_selectedImageUrl )
-                      //get image from url
-                    ),
-                  )),
+              SwipeDetector(
+                onSwipeLeft: () {
+                  _forwardImg();
+                },
+                onSwipeRight: () {
+                  _backwardImg();
+                },
+                child: Center(
+                    child: ImageBoxContainWidget(imageUrl:_selectedImageUrl )
+                  //get image from url
+                ),
+              ),
               widget.imageUrls.indexOf(_selectedImageUrl)!= totalImg-1? Positioned.fill(
                   child: Align(
                     alignment: Alignment.centerRight,
@@ -110,7 +106,7 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
                         backgroundColor: Colors.grey,
                         child: IconButton(
                           onPressed: _forwardImg,
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_forward_ios,
                             color: Colors.black,
                             size: 15,
@@ -129,7 +125,7 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
                         backgroundColor: Colors.grey,
                         child: IconButton(
                           onPressed: _backwardImg,
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_back_ios_sharp,
                             color: Colors.black,
                             size: 15,
@@ -152,11 +148,11 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
         _selectedImageUrl = widget.imageUrls[_index + 1]; // if true then set forward to new image by increment the index
       });
     }
-    if (_index + 1 < totalImg) // check more images is remain or not by indexes
+    if (_index + 1 < totalImg) {
       setState(() {
-        _index = _index +
-            1; // increment index value by one so user can forward to other remain images
+        _index = _index + 1; // increment index value by one so user can forward to other remain images
       });
+    }
   }
 
   void _backwardImg() {

@@ -154,14 +154,9 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
         ));
   }
   _handlePrescription(){
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => PrescriptionListByIDPage(
+    Get.to(() => PrescriptionListByIDPage(
               appointmentId: widget.appointmentDetails.id)
-      ),
     );
-
   }
   Widget _inputTextField(String labelText, controller, maxLine) {
     return Padding(

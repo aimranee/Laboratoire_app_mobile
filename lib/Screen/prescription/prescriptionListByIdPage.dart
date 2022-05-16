@@ -1,9 +1,11 @@
+import 'package:get/get.dart';
 import 'package:laboratoire_app/Screen/prescription/prescriptionDetails.dart';
 import 'package:laboratoire_app/Service/prescriptionService.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
 import 'package:laboratoire_app/widgets/bottomNavigationBarWidget.dart';
+import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/errorWidget.dart';
 import 'package:laboratoire_app/widgets/loadingIndicator.dart';
 import 'package:laboratoire_app/widgets/noDataWidget.dart';
@@ -30,12 +32,13 @@ class _PrescriptionListByIDPageState extends State<PrescriptionListByIDPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationWidget(route: "/ContactUsPage", title:"Contact us"),
+      drawer : CustomDrawer(isConn: true),
       body: Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
-          CAppBarWidget(title:"Prescriptions"),
+          CAppBarWidget(title:"Prescriptions", isConn: true),
           Positioned(
-            top: 80,
+            top: 90,
             left: 0,
             right: 0,
             bottom: 0,
@@ -73,15 +76,10 @@ class _PrescriptionListByIDPageState extends State<PrescriptionListByIDPage> {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>   PrescriptionDetailsPage(
+              Get.to (() => PrescriptionDetailsPage(
                         title: prescriptionDetails[index].appointmentName,
                         prescriptionDetails:prescriptionDetails[index])
-                ),
               );
-
             },
             child: Card(
               shape: RoundedRectangleBorder(

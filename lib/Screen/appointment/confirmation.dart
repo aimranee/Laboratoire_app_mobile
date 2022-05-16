@@ -17,6 +17,7 @@ import 'package:laboratoire_app/utilities/toastMsg.dart';
 import 'package:laboratoire_app/widgets/AuthScreen.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
 import 'package:laboratoire_app/widgets/bottomNavigationBarWidget.dart';
+import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/loadingIndicator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -61,6 +62,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     final PatientDetailsArg _patientDetailsArgs = ModalRoute.of(context).settings.arguments;
     
     return Scaffold(
+      drawer : CustomDrawer(isConn: true),
         bottomNavigationBar: BottomNavigationStateWidget(
           title: "Confirm Appointment",
           onPressed: () {
