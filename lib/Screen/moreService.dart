@@ -17,7 +17,6 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.serviceDetails.title);
   }
 
   @override
@@ -30,10 +29,10 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
       //overflow: Overflow.visible,
       children: <Widget>[
         CAppBarWidget(
-          title: widget.serviceDetails.title,
+          title: widget.serviceDetails.title, isConn: true
         ),
         Positioned(
-          top: 80,
+          top: 90,
           left: 0,
           right: 0,
           bottom: 0,
@@ -41,7 +40,7 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 color: bgColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10))),
             child: Padding(
@@ -54,12 +53,25 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildCard(),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Text("Description", style: kPageTitleStyle),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Text(
                         widget.serviceDetails.desc,
+                        style: kParaStyle,
+                      ),
+                      const SizedBox(height: 20),
+                      Text("Duree", style: kPageTitleStyle),
+                      const SizedBox(height: 20),
+                      Text(
+                        widget.serviceDetails.duree,
+                        style: kParaStyle,
+                      ),
+                      const SizedBox(height: 20),
+                      Text("Prix", style: kPageTitleStyle),
+                      const SizedBox(height: 20),
+                      Text(
+                        widget.serviceDetails.prix,
                         style: kParaStyle,
                       ),
                     ],
@@ -74,29 +86,29 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
   _buildCard() {
     return ListTile(
       contentPadding: const EdgeInsets.all(00.0),
-      trailing:
-          Icon(Icons.arrow_drop_down_outlined, size: 30, color: appBarColor),
-      leading: CircleAvatar(
-        backgroundColor: bgColor,
-        radius: 30,
-        child: ClipOval(
-            child: Padding(
-                padding: const EdgeInsets.all(00.0),
-                child: widget.serviceDetails.imageUrl == ""
-                    ? Icon(Icons.category_outlined, color: appBarColor)
-                    : ImageBoxFillWidget(
-                        imageUrl: widget.serviceDetails.imageUrl))),
-      ),
-      title: Text(widget.serviceDetails.title,
+      trailing: Icon(Icons.arrow_drop_down_outlined, size: 30, color: appBarColor),
+      // leading: CircleAvatar(
+      //   backgroundColor: bgColor,
+      //   radius: 30,
+      //   child: ClipOval(
+      //       child: Padding(
+      //           padding: const EdgeInsets.all(00.0),
+      //           child: widget.serviceDetails.imageUrl == ""
+      //               ? Icon(Icons.category_outlined, color: appBarColor)
+      //               : ImageBoxFillWidget(
+      //                   imageUrl: widget.serviceDetails.imageUrl))),
+      // ),
+      title: const Text("Prix : ",
           style: TextStyle(
             fontFamily: 'OpenSans-Bold',
             fontSize: 14.0,
           )),
-      subtitle: Text(widget.serviceDetails.subTitle,
-          style: TextStyle(
+      subtitle: Text(widget.serviceDetails.prix,
+          style: const TextStyle(
             fontFamily: 'OpenSans-SemiBold',
             fontSize: 14.0,
           )),
+          
     );
   }
 }

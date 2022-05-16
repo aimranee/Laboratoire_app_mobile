@@ -199,7 +199,7 @@ class SignInBtnWidget extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              LoginSignupScreen(back : true);
+              LoginSignupScreen();
             }),
         const Text(
           "LogOut",

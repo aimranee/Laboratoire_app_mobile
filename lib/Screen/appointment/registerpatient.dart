@@ -68,7 +68,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
                       _chooseTimeScrArgs.serviceTimeMIn,
                       _chooseTimeScrArgs.selectedTime,
                       _chooseTimeScrArgs.selectedDate, 
-                      _chooseTimeScrArgs.isConn),
+                    ),
                 );
               }
             }
@@ -78,7 +78,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
         body: Stack(
           clipBehavior: Clip.none,
           children: <Widget>[
-            CAppBarWidget(title: "Register Patient", isConn: _chooseTimeScrArgs.isConn),
+            CAppBarWidget(title: "Register Patient", isConn: true),
             Positioned(
               top: 90,
               left: 0,

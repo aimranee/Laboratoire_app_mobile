@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Screen/appointment/choosetimeslots.dart';
-import 'package:laboratoire_app/Service/Firebase/readData.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/style.dart';
+import 'package:laboratoire_app/widgets/AuthScreen.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
 import 'package:laboratoire_app/widgets/bottomNavigationBarWidget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
@@ -70,7 +70,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 bottom: 0,
                 child:
                 //_stopBooking?showDialogBox():
-                _buildContent()),
+                !isConn ? AuthScreen() : _buildContent()),
           ],
         ));
   }

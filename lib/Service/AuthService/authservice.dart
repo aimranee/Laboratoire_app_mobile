@@ -2,8 +2,6 @@ import 'package:laboratoire_app/Screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:laboratoire_app/Screen/Login_SignUp.dart';
-import 'package:laboratoire_app/utilities/toastMsg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
 
@@ -15,7 +13,7 @@ class AuthService {
           if (snapshot.hasData) {
             return const HomeScreen();
           } else {
-            return LoginSignupScreen(back: back);
+            return LoginSignupScreen();
           }
         });
   }
@@ -23,16 +21,15 @@ class AuthService {
   static Future<bool> signOut() async {
     bool isConn = true;
 
-    bool isOut = await AuthService.signOut();
-    if (isOut) {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      await preferences.clear();
-      ToastMsg.showToastMsg("Logged Out");
+    await FirebaseAuth.instance.signOut().then((v) {
       isConn = false;
-    }
+    }).catchError((e) {
+      print(e); //Invalid otp
+      isConn = true;
+    });
+
     return isConn;
   }
-
 
   //SignIn
 

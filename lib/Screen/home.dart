@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // HandleFirebaseNotification.handleNotifications(
     //     context); //firebase notification
     _getAndSetUserData(); //get users details from database
-    _checkTechnicalIssueStatus(); //check show technical issue dialog box
     super.initState();
   }
 
@@ -46,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     
     // final res=await FirebaseMessaging.instance.getToken();
     // print(res);
-    
+
     final user = await UserService.getData();
       if (user != null) {
         setState(() {
@@ -61,12 +60,15 @@ class _HomeScreenState extends State<HomeScreen> {
         prefs.setString("lastName", user[0].lastName);
         prefs.setString("uid", user[0].uId);
         prefs.setString("createdDate", user[0].createdDate);
+        // setState(() {
+        //   _isLoading = false;
+        // });
       }
     
-    //stop loading indicator
-    setState(() {
-      _isLoading = false;
-    });
+    // //stop loading indicator
+    // setState(() {
+    //   _isLoading = false;
+    // });
   }
 
   @override
@@ -91,9 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
             left: 0,
             right: 0,
             bottom: 0,
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
                     color: bgColor,
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
@@ -239,32 +241,33 @@ class _HomeScreenState extends State<HomeScreen> {
   //       });
   // }
 
-  Widget _image(String imageUrl) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 5.0,
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: ImageBoxFillWidget(imageUrl: imageUrl)),
-    );
-  }
+  // Widget _image(String imageUrl) {
+  //   return Card(
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.circular(10.0),
+  //     ),
+  //     elevation: 5.0,
+  //     child: ClipRRect(
+  //         borderRadius: BorderRadius.circular(10.0),
+  //         child: ImageBoxFillWidget(imageUrl: imageUrl)),
+  //   );
+  // }
 
-  Widget _buildContent(/*bannerImages*/) {
+  Widget _buildContent() {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height * .3,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * .24,
             width: MediaQuery.of(context).size.width,
 
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(0.0),
                 child: Container(
-                    color: Colors.grey,
-                    child: ImageBoxFillWidget(
-                      // imageUrl: bannerImages.banner1,
+                    color: bgColor,
+                    child: Image.asset(
+                      'assets/images/image1.png',
+                      fit: BoxFit.cover,
                     ) //recommended 200*300 pixel
                     )),
           ),
@@ -278,13 +281,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-
-  void _checkTechnicalIssueStatus() async {
-    final res = await ReadData.fetchSettings(); //fetch settings details
-    if (res != null && res["technicalIssue"]) {
-      DialogBoxes.technicalIssueAlertBox(context, "Sorry!",
-          "we are facing some technical issues. our team trying to solve problems. hope we will come back very soon ");
-    }
   }
 }

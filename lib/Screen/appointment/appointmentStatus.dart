@@ -35,8 +35,8 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
       child: Scaffold(
         drawer : _isLoading ? Container() : CustomDrawer(isConn: isConn),
           bottomNavigationBar: _isLoading
-        ? Container() : BottomNavigationWidget(
-              title: "Book an appointment", route: '/AppoinmentPage', isConn: isConn),
+        ? Container() 
+        : BottomNavigationWidget(title: "Book an appointment", route: '/AppoinmentPage', isConn: isConn),
           appBar: AppBar(
             title: Text("Appointments", style: kAppbarTitleStyle),
             centerTitle: true,
@@ -59,7 +59,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
             ),
           ),
           body: Container(
-            child: !isConn ? AuthScreen(back : true) : TabBarView(
+            child: !isConn ? AuthScreen() : TabBarView(
               children: [_upcomingAppointmentList(), _pastAppointmentList()],
             ),
           )),

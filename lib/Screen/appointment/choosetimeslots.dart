@@ -195,7 +195,6 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
                   widget.serviceTimeMin,
                   _setTime,
                   _selectedDate,
-                  widget.isConn,
                 ),);
           },
           clickable: _setTime,

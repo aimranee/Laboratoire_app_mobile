@@ -13,10 +13,9 @@ class ChooseTimeScrArg {
   final int serviceTimeMIn;
   final String selectedTime;
   final String selectedDate;
-  bool isConn = false;
 
   ChooseTimeScrArg(this.serviceName, this.serviceTimeMIn, this.selectedTime,
-      this.selectedDate, this.isConn);
+      this.selectedDate);
 }
 
 class PatientDetailsArg {
@@ -46,5 +45,5 @@ class PatientDetailsArg {
       this.serviceTimeMIn,
       this.selectedTime,
       this.selectedDate,
-      this.isConn);
+  );
 }

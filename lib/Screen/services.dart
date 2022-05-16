@@ -120,18 +120,18 @@ class _ServicesPageState extends State<ServicesPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 35,
-                      child: ClipOval(
-                          child: Padding(
-                              padding: const EdgeInsets.all(00.0),
-                              child: serviceDetails.imageUrl == ""
-                                  ? Icon(Icons.category_outlined,
-                                      color: appBarColor)
-                                  : ImageBoxFillWidget(
-                                      imageUrl: serviceDetails.imageUrl))),
-                    ),
+                    // CircleAvatar(
+                    //   backgroundColor: Colors.white,
+                    //   radius: 35,
+                    //   child: ClipOval(
+                    //       child: Padding(
+                    //           padding: const EdgeInsets.all(00.0),
+                    //           child: serviceDetails. == ""
+                    //               ? Icon(Icons.category_outlined,
+                    //                   color: appBarColor)
+                    //               : ImageBoxFillWidget(
+                    //                   imageUrl: serviceDetails.imageUrl))),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Text(serviceDetails.title,
@@ -140,11 +140,11 @@ class _ServicesPageState extends State<ServicesPage> {
                             fontSize: 12.0,
                           )),
                     ),
-                    Text(serviceDetails.subTitle,
-                        style: const TextStyle(
-                          fontFamily: 'OpenSans-SemiBold',
-                          fontSize: 12.0,
-                        )),
+                    // Text(serviceDetails,
+                    //     style: const TextStyle(
+                    //       fontFamily: 'OpenSans-SemiBold',
+                    //       fontSize: 12.0,
+                    //     )),
                   ],
                 ),
               ),

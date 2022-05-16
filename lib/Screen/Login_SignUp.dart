@@ -5,8 +5,7 @@ import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/utilities/colors.dart';
 
 class LoginSignupScreen extends StatefulWidget {
-  bool back = false;
-  LoginSignupScreen({Key key, this.back}) : super(key: key);
+  LoginSignupScreen({Key key}) : super(key: key);
 
   @override
   _LoginSignupScreenState createState() => _LoginSignupScreenState();
@@ -30,7 +29,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: AuthScreen(back: widget.back),
+            child: AuthScreen(),
           )
         ]
       )

@@ -4,8 +4,7 @@ import 'package:laboratoire_app/widgets/SingUpPage.dart';
 import 'package:laboratoire_app/widgets/loginPage.dart';
 
 class AuthScreen extends StatefulWidget {
-  bool back = false;
-  AuthScreen({ Key key, this.back}) : super(key: key);
+  AuthScreen({ Key key }) : super(key: key);
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -154,7 +153,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         )
                       ],
                     ),
-                    if (!isSignupScreen) LoginPage(back: widget.back),
+                    if (!isSignupScreen) LoginPage(),
                     if (isSignupScreen) const SignUpPage(),
                   ],
                 ),

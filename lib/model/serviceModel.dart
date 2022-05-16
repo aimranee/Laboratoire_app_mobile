@@ -1,14 +1,14 @@
 
 class ServiceModel{
   String title;
-  String subTitle;
-  String imageUrl;
+  String prix;
+  String duree;
   String desc;
 
 
   ServiceModel({
-    this.imageUrl,
-    this.subTitle,
+    this.duree,
+    this.prix,
     this.title,
     this.desc
 
@@ -18,8 +18,8 @@ class ServiceModel{
     return ServiceModel(
 
       title: json['title'],
-      subTitle: json['subTitle'],
-      imageUrl: json['imageUrl'],
+      duree: json['duree'],
+      prix: json['prix'],
       desc: json['description']
 
     );

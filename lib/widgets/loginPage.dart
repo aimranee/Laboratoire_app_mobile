@@ -11,8 +11,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:laboratoire_app/utilities/toastMsg.dart';
 
 class LoginPage extends StatefulWidget {
-  bool back = false;
-  LoginPage({ Key key , this.back}) : super(key: key);
+  LoginPage({ Key key }) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -168,13 +167,12 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLoading = true;
       });
-      final res = await AuthService.signIn(
-          _userIdController.text, _passwordController.text);
+      final res = await AuthService.signIn(_userIdController.text, _passwordController.text);
       if (res) {
         final FirebaseAuth auth = FirebaseAuth.instance;
-       await setData(auth.currentUser.uid);
+        await setData(auth.currentUser.uid);
         ToastMsg.showToastMsg("Logged in");
-        widget.back ? Get.back() : Get.offAllNamed('/HomePage');
+        Get.offAllNamed('/HomePage');
       } else {
         ToastMsg.showToastMsg("Smoothing went wrong");
       }

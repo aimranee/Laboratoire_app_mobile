@@ -29,7 +29,6 @@ class ConfirmationPage extends StatefulWidget {
 }
 
 class _ConfirmationPageState extends State<ConfirmationPage> {
-  String _adminFCMid;
   bool _isLoading = false;
   String _isBtnDisable = "false";
   String _uId = "";
@@ -66,7 +65,6 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
           title: "Confirm Appointment",
           onPressed: () {
             //  Service.myfb(); //if you want to add something in all documents of one collection then you can invoke this method. this is for only the developing part.
-            _patientDetailsArgs.isConn ? 
             _updateBookedSlot(
               _patientDetailsArgs.pFirstName,
               _patientDetailsArgs.pLastName,
@@ -80,8 +78,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               _patientDetailsArgs.serviceTimeMIn,
               _patientDetailsArgs.selectedTime,
               _patientDetailsArgs.selectedDate, 
-              _patientDetailsArgs.isConn
-            ) : LoginSignupScreen(back : true); // Method handles all the booking system operation.
+            ); // Method handles all the booking system operation.
           },
           clickable: _isBtnDisable,
         ),
@@ -167,15 +164,12 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
             ),
             const Divider(),
             Text(
-              "Patient Name - ${args.pFirstName} " + "${args.pLastName}",
-              style: kCardSubTitleStyle,
+              "Patient Name - ${args.pFirstName} ${args.pLastName}", style: kCardSubTitleStyle,
             ),
             const SizedBox(height: 10),
-            Text("Service Name - ${args.serviceName}",
-                style: kCardSubTitleStyle),
+            Text("Service Name - ${args.serviceName}", style: kCardSubTitleStyle),
             const SizedBox(height: 10),
-            Text("Service Time - ${args.serviceTimeMIn} Minute",
-                style: kCardSubTitleStyle),
+            Text("Service Time - ${args.serviceTimeMIn} Minute", style: kCardSubTitleStyle),
             const SizedBox(height: 10),
             Text("Date - ${args.selectedDate}", style: kCardSubTitleStyle),
             const SizedBox(height: 10),
@@ -189,7 +183,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   }
 
   void _updateBookedSlot(pFirstName, pLastName, pPhn, pEmail, age, gender,
-      pCity, desc, serviceName, serviceTimeMin, setTime, selectedDate, isConn) async {
+      pCity, desc, serviceName, serviceTimeMin, setTime, selectedDate) async {
     setState(() {
       _isLoading = true;
       _isBtnDisable = "";
@@ -279,9 +273,9 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     });
     final res = await DrProfileService.getData(); //fetch admin fcm id for sending messages to admin
     if (res != null) {
-      setState(() {
-        _adminFCMid = res[0].fdmId;
-      });
+      // setState(() {
+      //   _adminFCMid = res[0].fdmId;
+      // });
     }
     setState(() {
       _isLoading = false;

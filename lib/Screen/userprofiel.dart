@@ -15,13 +15,13 @@ import 'package:flutter/material.dart';
 import 'package:laboratoire_app/utilities/toastMsg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class EditUserProfilePage extends StatefulWidget {
-  const EditUserProfilePage({Key key}) : super(key: key);
+class UserProfilePage extends StatefulWidget {
+  const UserProfilePage({Key key}) : super(key: key);
   @override
-  _EditUserProfilePageState createState() => _EditUserProfilePageState();
+  _UserProfilePageState createState() => _UserProfilePageState();
 }
 
-class _EditUserProfilePageState extends State<EditUserProfilePage> {
+class _UserProfilePageState extends State<UserProfilePage> {
   bool _isLoading = false;
   String _selectedGender = "";
   String _isEnableBtn = "false";
@@ -56,6 +56,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
   }
 
   _takeConfirmation() {
+    !isConn ? Container() : 
     DialogBoxes.confirmationBox(
         context,
         "Update",
@@ -85,11 +86,10 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
               right: 0,
               bottom: 0,
               child:
-                //_stopBooking?showDialogBox():
                 Container(
-                    height: MediaQuery.of(context).size.height,
-                    decoration: IBoxDecoration.upperBoxDecoration(),
-                    child: ! isConn ? AuthScreen(back : true) : _buildContent())),
+                  height: MediaQuery.of(context).size.height,
+                  decoration: IBoxDecoration.upperBoxDecoration(),
+                  child: ! isConn ? AuthScreen() : _buildContent())),
         ],
       ),
     );
@@ -214,7 +214,6 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
         ),
         onChanged: (String value) {
           setState(() {
-            print(value);
             _selectedGender = value;
           });
         },
@@ -230,10 +229,8 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
             child: ListView(
               children: [
                 const SizedBox(height: 20),
-                _inputField(
-                    "First Name", "Enter first name", _firstNameController),
-                _inputField(
-                    "Last Name", "Enter last name", _lastNameController),
+                _inputField("First Name", "Enter first name", _firstNameController),
+                _inputField("Last Name", "Enter last name", _lastNameController),
                 _inputField("City", "Enter city", _cityController),
                 _ageInputField("Age", _ageController),
                 _genderDropDown(),
@@ -247,9 +244,9 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
 
   void _setData() async {
     
-    setState(() {
-      _isLoading = true;
-    });
+    // setState(() {
+    //   _isLoading = true;
+    // });
 
     final user = await UserService.getData();
     

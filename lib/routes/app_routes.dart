@@ -78,15 +78,11 @@ class AppRoutes {
     ),
     GetPage(
       name: notificationPage,
-      page: () => NotificationPage(),
+      page: () => const NotificationPage(),
     ),
     GetPage(
       name: moreServiceScreen,
       page: () => const MoreServiceScreen(),
-    ),
-    GetPage(
-      name: editUserProfilePage,
-      page: () => const EditUserProfilePage(),
     ),
     GetPage(
       name: prescriptionListPage,
@@ -98,12 +94,12 @@ class AppRoutes {
     // ),
     GetPage(
       name: authScreen,
-      page: () => LoginSignupScreen(back: Get.arguments),
+      page: () => LoginSignupScreen(),
     ),
 
     GetPage(
       name: profile,
-      page: () => const EditUserProfilePage(),
+      page: () => const UserProfilePage(),
     ),
     
   ];
