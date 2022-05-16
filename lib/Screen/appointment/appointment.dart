@@ -12,7 +12,6 @@ import 'package:laboratoire_app/widgets/imageWidget.dart';
 import 'package:laboratoire_app/widgets/loadingIndicator.dart';
 import 'package:laboratoire_app/widgets/noDataWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:laboratoire_app/utilities/dialogBox.dart';
 import 'package:laboratoire_app/Service/appointmentTypeService.dart';
 
 class AppointmentPage extends StatefulWidget {
@@ -46,21 +45,16 @@ class _AppointmentPageState extends State<AppointmentPage> {
           : BottomNavigationStateWidget(
           title: "Next",
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ChooseTimeSlotPage(
-                  serviceName: _serviceName,
-                  serviceTimeMin: _serviceTimeMin,
-                  openingTime: _openingTime,
-                  closingTime: _closingTime,
-                  closedDay: closedDay,
-                  isConn : isConn
-                ),
+            Get.to(() => 
+              ChooseTimeSlotPage(
+                serviceName: _serviceName,
+                serviceTimeMin: _serviceTimeMin,
+                openingTime: _openingTime,
+                closingTime: _closingTime,
+                closedDay: closedDay,
+                isConn : isConn
               ),
             );
-            // Navigator.pushNamed(context, "/ChooseTimeSlotPage",
-            //     arguments: ServiceScrArg(_serviceName, _serviceTimeMin,_openingTime,_closingTime));
           },
           clickable: _serviceName,
         ),
@@ -93,11 +87,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
             Padding(
                 padding: const EdgeInsets.only(top: 10.0, left: 20, right: 10),
                 child: Center(
-                    child: Text("What type of appointment",
-                        style: kPageTitleStyle))),
+                  child: Text("What type of appointment", style: kPageTitleStyle))),
             FutureBuilder(
-                future: AppointmentTypeService
-                    .getData(), //fetch all appointment types
+                future: AppointmentTypeService.getData(), //fetch all appointment types
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return snapshot.data.length == 0
@@ -124,8 +116,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
         childAspectRatio: .9,
         crossAxisCount: 2,
         children: List.generate(appointmentTypesDetails.length, (index) {
-          return _cardImg(appointmentTypesDetails[index],
-              index + 1); //send type details and index with increment one
+          return _cardImg(appointmentTypesDetails[index], index + 1); //send type details and index with increment one
         }),
       ),
     );
@@ -150,10 +141,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
           } else {
             //if user taps
             setState(() {
-              _serviceName =
-                  appointmentTypesDetails.title; //set the service name
-              _serviceTimeMin =
-                  appointmentTypesDetails.forTimeMin; //set the service time
+              _serviceName = appointmentTypesDetails.title; //set the service name
+              _serviceTimeMin = appointmentTypesDetails.forTimeMin; //set the service time
               _openingTime = appointmentTypesDetails.openingTime;
               _closingTime = appointmentTypesDetails.closingTime;
               closedDay = appointmentTypesDetails.day;
@@ -164,7 +153,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
         });
       },
       child: Container(
-        //  height: MediaQuery.of(context).size.height * .2,
+        // height: MediaQuery.of(context).size.height * .2,
         // width:  MediaQuery.of(context).size.width*.15,
         child: Card(
           shape: RoundedRectangleBorder(
@@ -196,8 +185,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                   bottom: 0,
                   child: Align(
                       alignment: Alignment.bottomCenter,
-                      child: num ==
-                              _number //if tap card value index+1 match with number value it mean user tap on the card
+                      child: num == _number //if tap card value index+1 match with number value it mean user tap on the card
                           ? Container(
                               width: double.infinity,
                               height: 40,
@@ -209,14 +197,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                         style: const TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'OpenSans-Bold',
-                                          fontSize: 12.0,
+                                          fontSize: 16.0,
                                         )),
-                                    Text(appointmentTypesDetails.subTitle,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'OpenSans-Bold',
-                                          fontSize: 12.0,
-                                        ))
                                   ],
                                 ),
                               ),
@@ -230,12 +212,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                     Text(appointmentTypesDetails.title,
                                         style: const TextStyle(
                                           fontFamily: 'OpenSans-Bold',
-                                          fontSize: 12.0,
-                                        )),
-                                    Text(appointmentTypesDetails.subTitle,
-                                        style: const TextStyle(
-                                          fontFamily: 'OpenSans-Bold',
-                                          fontSize: 12.0,
+                                          fontSize: 16.0,
                                         )),
                                   ],
                                 ),

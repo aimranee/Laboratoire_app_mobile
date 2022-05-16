@@ -139,10 +139,10 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Future<bool> _onWillPop() async {
-    AuthService.signOut();
-    return false;
-  }
+  // Future<bool> _onWillPop() async {
+  //   AuthService.signOut();
+  //   return false;
+  // }
   
   Widget buildTextField(
       IconData icon, String hintText) {

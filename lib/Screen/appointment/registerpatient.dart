@@ -1,6 +1,3 @@
-import 'package:get/get.dart';
-import 'package:laboratoire_app/Screen/Login_SignUp.dart';
-import 'package:laboratoire_app/Service/userService.dart';
 import 'package:laboratoire_app/SetData/screenArg.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
@@ -9,36 +6,26 @@ import 'package:laboratoire_app/utilities/toastMsg.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
 import 'package:laboratoire_app/widgets/bottomNavigationBarWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:laboratoire_app/widgets/loadingIndicator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPatient extends StatefulWidget {
-  const RegisterPatient({Key key}) : super(key: key);
+  RegisterPatient({Key key}) : super(key: key);
 
   @override
   _RegisterPatientState createState() => _RegisterPatientState();
 }
 
 class _RegisterPatientState extends State<RegisterPatient> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _desController = TextEditingController();
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _cityController = TextEditingController();
+  TextEditingController _phoneNumberController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController _desController = TextEditingController();
   String _selectedGender = 'Gender';
 
-  final _isBtnDisable = "false";
-  bool _isLoading = false;
-  String _uId;
-
-  @override
-  void initState() {
-    _setData();
-    super.initState();
-  }
+  var _isBtnDisable = "false";
 
   @override
   void dispose() {
@@ -46,37 +33,11 @@ class _RegisterPatientState extends State<RegisterPatient> {
     _lastNameController.dispose();
     _phoneNumberController.dispose();
     _emailController.dispose();
-    _ageController.dispose();
+    ageController.dispose();
     _cityController.dispose();
     _desController.dispose();
     // TODO: implement dispose
     super.dispose();
-  }
-
-
-  void _setData() async {
-    setState(() {
-      _isLoading = true;
-    });
-    final user =
-        await UserService.getData();
-        if (user != null) {
-          //set all data
-          setState(() {
-            _uId = user[0].uId;
-          });
-          _firstNameController.text = user[0].firstName;
-          _lastNameController.text = user[0].lastName;
-          _phoneNumberController.text = user[0].pNo;
-          _emailController.text = user[0].email;
-          _ageController.text = user[0].age;
-          _selectedGender = user[0].gender;
-          _cityController.text = user[0].city;
-          //stop loading indicator
-        }
-        setState(() {
-            _isLoading = false;
-          });
   }
 
   @override
@@ -91,21 +52,22 @@ class _RegisterPatientState extends State<RegisterPatient> {
               if (_selectedGender == "Gender") {
                 ToastMsg.showToastMsg("Please select gender");
               } else {
-                Get.toNamed(
+                Navigator.pushNamed(
+                  context,
                   '/ConfirmationPage',
                   arguments: PatientDetailsArg(
                       _firstNameController.text,
                       _lastNameController.text,
                       _phoneNumberController.text,
                       _emailController.text,
-                      _ageController.text,
+                      ageController.text,
                       _selectedGender,
                       _cityController.text,
                       _desController.text,
                       _chooseTimeScrArgs.serviceName,
                       _chooseTimeScrArgs.serviceTimeMIn,
                       _chooseTimeScrArgs.selectedTime,
-                      _chooseTimeScrArgs.selectedDate,
+                      _chooseTimeScrArgs.selectedDate, 
                       _chooseTimeScrArgs.isConn),
                 );
               }
@@ -116,13 +78,13 @@ class _RegisterPatientState extends State<RegisterPatient> {
         body: Stack(
           clipBehavior: Clip.none,
           children: <Widget>[
-            _isLoading ? Container() : CAppBarWidget(title: "Register Patient", isConn: _chooseTimeScrArgs.isConn),
+            CAppBarWidget(title: "Register Patient", isConn: _chooseTimeScrArgs.isConn),
             Positioned(
               top: 90,
               left: 0,
               right: 0,
               bottom: 0,
-              child: _isLoading ? LoadingIndicatorWidget() : Container(
+              child: Container(
                 height: MediaQuery.of(context).size.height,
                 decoration: IBoxDecoration.upperBoxDecoration(),
                 child: SingleChildScrollView(
@@ -180,7 +142,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
                                   r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
                                   r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
                                   r"{0,253}[a-zA-Z0-9])?)*$";
-                              RegExp regex = RegExp(pattern);
+                              RegExp regex = new RegExp(pattern);
                               if (item.length > 0) {
                                 if (!regex.hasMatch(item) || item == null) {
                                   return 'Enter a valid email address';
@@ -196,7 +158,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
                             context,
                             "Age*",
                             TextInputType.number,
-                            _ageController,
+                            ageController,
                             false,
                             (item) {
                               if (item.length > 0 && item.length <= 3) {
@@ -256,7 +218,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
         focusColor: Colors.white,
         value: _selectedGender,
         //elevation: 5,
-        style: const TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white),
         iconEnabledColor: btnColor,
         items: <String>[
           'Gender',
@@ -268,16 +230,16 @@ class _RegisterPatientState extends State<RegisterPatient> {
             value: value,
             child: Text(
               value,
-              style: const TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.black),
             ),
           );
         }).toList(),
-        hint: const Text(
+        hint: Text(
           "Select Gender",
         ),
         onChanged: (String value) {
           setState(() {
-            // print(value);
+            print(value);
             _selectedGender = value;
           });
         },

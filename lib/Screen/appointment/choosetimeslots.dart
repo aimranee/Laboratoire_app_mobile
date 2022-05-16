@@ -64,14 +64,11 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
     setState(() {
       _isLoading = true;
     });
-
     _selectedDate = await _initializeDate(); //Initialize start time
     await _getAndSetbookedTimeSlots();
     await _getAndSetOpeningClosingTime();
     await _setClosingDate();
-    _getAndsetTimeSlots(
-        _openingTimeHour, _openingTimeMin, _closingTimeHour, _closingTimeMin);
-
+    _getAndsetTimeSlots(_openingTimeHour, _openingTimeMin, _closingTimeHour, _closingTimeMin);
     setState(() {
       _isLoading = false;
     });
@@ -90,6 +87,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
   }
 
   Future<String> _initializeDate() async {
+    
     var date = DateTime.now().toString();
     var dateParse = DateTime.parse(date);
     var formattedDate = "${dateParse.month}-${dateParse.day}-${dateParse.year}";
@@ -99,12 +97,12 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
 
   Future<void> _getAndSetbookedTimeSlots() async {
     _bookedTimeSlots = await ReadData.fetchBookedTime(_selectedDate);
-    // await ReadData().fetchBookedTime(GlobalVariables.selectedClinicId);
   }
 
   Future<void> _getAndSetOpeningClosingTime() async {
+    
     var openingClosingTime = await ReadData.fetchOpeningClosingTime();
-    //break the opening and closing time in to the hour and minute
+  
     _openingTimeHour = (widget.openingTime).substring(0, 2);
     _openingTimeMin = (widget.openingTime).substring(3, 5);
     _closingTimeHour = (widget.closingTime).substring(0, 2);
@@ -129,6 +127,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
       _lunchClosingTimeMin =
           (openingClosingTime["lunchClosingTime"]).substring(3, 5);
     }
+    
   }
 
   _getAndsetTimeSlots(String openingTimeHour, String openingTimeMin,

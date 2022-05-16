@@ -138,15 +138,11 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
                         _inputTextField("Email", _emailController, 1),
                         _inputTextField("Appointment Date", _dateController, 1),
                         _inputTextField("Appointment Time", _timeController, 1),
-                        _inputTextField(
-                            "Appointment Minute", _serviceTimeController, 1),
-                        _inputTextField(
-                            "Appointment ID", _appointmentIdController, 1),
+                        _inputTextField("Appointment Minute", _serviceTimeController, 1),
+                        _inputTextField("Appointment ID", _appointmentIdController, 1),
                         _inputTextField("User ID", _uIdController, 1),
-                        _inputTextField(
-                            "Created on", _createdDateTimeController, 1),
-                        _inputTextField(
-                            "Last update on", _lastUpdatedController, 1),
+                        _inputTextField("Created on", _createdDateTimeController, 1),
+                        _inputTextField("Last update on", _lastUpdatedController, 1),
                         _inputTextField("Description, About your problem", _descController, null),
                       ],
                     ),

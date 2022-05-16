@@ -47,16 +47,26 @@ class _HomeScreenState extends State<HomeScreen> {
     // final res=await FirebaseMessaging.instance.getToken();
     // print(res);
     
-    final user =
-        await UserService.getData();
-        if (user != null) {
-          setState(() {
-            isConn = true;
-          });
-        }
-    // setState(() {
-    //   _isLoading = false;
-    // });
+    final user = await UserService.getData();
+      if (user != null) {
+        setState(() {
+          isConn = true;
+        });
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        //set all data
+        setState(() {
+          _uId = user[0].uId;
+        });
+        prefs.setString("firstName", user[0].firstName);
+        prefs.setString("lastName", user[0].lastName);
+        prefs.setString("uid", user[0].uId);
+        prefs.setString("createdDate", user[0].createdDate);
+      }
+    
+    //stop loading indicator
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -89,20 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10))),
             child: _buildContent(),
-                    /*FutureBuilder(
-                        future: BannerImageService
-                            .getData(), //fetch banner image urls
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return snapshot.data.length == 0
-                                ? NoDataWidget()
-                                : _buildContent(snapshot.data[0]);
-                          } else if (snapshot.hasError) {
-                            return IErrorWidget();
-                          } else {
-                            return LoadingIndicatorWidget();
-                          }
-                        }),*/
           ),)
         ]
       )
@@ -149,14 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              // Container(
-              //     height: 50,
-              //     width: 50,
-              //     color: Colors.grey,
-              //     child: //Center(child: Text("Your assets"))),
-              //         //delete the just above code [child container ] and uncomment the below code and set your assets
-              //      ),
-
               SizedBox(
                 height: 30,
                 width: 30,

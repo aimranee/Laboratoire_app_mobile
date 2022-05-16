@@ -59,8 +59,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final PatientDetailsArg _patientDetailsArgs =
-        ModalRoute.of(context).settings.arguments;
+    final PatientDetailsArg _patientDetailsArgs = ModalRoute.of(context).settings.arguments;
     
     return Scaffold(
         bottomNavigationBar: BottomNavigationStateWidget(
@@ -69,20 +68,20 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
             //  Service.myfb(); //if you want to add something in all documents of one collection then you can invoke this method. this is for only the developing part.
             _patientDetailsArgs.isConn ? 
             _updateBookedSlot(
-                _patientDetailsArgs.pFirstName,
-                _patientDetailsArgs.pLastName,
-                _patientDetailsArgs.pPhn,
-                _patientDetailsArgs.pEmail,
-                _patientDetailsArgs.age,
-                _patientDetailsArgs.gender,
-                _patientDetailsArgs.pCity,
-                _patientDetailsArgs.desc,
-                _patientDetailsArgs.serviceName,
-                _patientDetailsArgs.serviceTimeMIn,
-                _patientDetailsArgs.selectedTime,
-                _patientDetailsArgs.selectedDate, 
-                _patientDetailsArgs.isConn
-                    ) : LoginSignupScreen(back : true); // Method handles all the booking system operation.
+              _patientDetailsArgs.pFirstName,
+              _patientDetailsArgs.pLastName,
+              _patientDetailsArgs.pPhn,
+              _patientDetailsArgs.pEmail,
+              _patientDetailsArgs.age,
+              _patientDetailsArgs.gender,
+              _patientDetailsArgs.pCity,
+              _patientDetailsArgs.desc,
+              _patientDetailsArgs.serviceName,
+              _patientDetailsArgs.serviceTimeMIn,
+              _patientDetailsArgs.selectedTime,
+              _patientDetailsArgs.selectedDate, 
+              _patientDetailsArgs.isConn
+            ) : LoginSignupScreen(back : true); // Method handles all the booking system operation.
           },
           clickable: _isBtnDisable,
         ),
@@ -278,8 +277,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     setState(() {
       _isLoading = true;
     });
-    final res = await DrProfileService
-        .getData(); //fetch admin fcm id for sending messages to admin
+    final res = await DrProfileService.getData(); //fetch admin fcm id for sending messages to admin
     if (res != null) {
       setState(() {
         _adminFCMid = res[0].fdmId;

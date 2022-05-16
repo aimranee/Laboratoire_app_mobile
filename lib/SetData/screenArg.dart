@@ -48,6 +48,3 @@ class PatientDetailsArg {
       this.selectedDate,
       this.isConn);
 }
-
-
-

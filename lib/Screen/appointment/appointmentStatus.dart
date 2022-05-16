@@ -1,10 +1,6 @@
 import 'package:get/get.dart';
-import 'package:laboratoire_app/Screen/Login_SignUp.dart';
-import 'package:laboratoire_app/Service/Firebase/readData.dart';
 import 'package:laboratoire_app/Service/appointmentService.dart';
-import 'package:laboratoire_app/Service/userService.dart';
 import 'package:laboratoire_app/utilities/color.dart';
-import 'package:laboratoire_app/utilities/dialogBox.dart';
 import 'package:laboratoire_app/utilities/style.dart';
 import 'package:laboratoire_app/widgets/AuthScreen.dart';
 import 'package:laboratoire_app/widgets/bottomNavigationBarWidget.dart';
@@ -14,7 +10,6 @@ import 'package:laboratoire_app/widgets/loadingIndicator.dart';
 import 'package:laboratoire_app/widgets/noDataWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:laboratoire_app/Screen/appointment/appointmentDetailsPage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AppointmentStatus extends StatefulWidget {
   const AppointmentStatus({Key key}) : super(key: key);
@@ -41,7 +36,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
         drawer : _isLoading ? Container() : CustomDrawer(isConn: isConn),
           bottomNavigationBar: _isLoading
         ? Container() : BottomNavigationWidget(
-              title: "Book an appointment", route: '/AppoinmentPage'),
+              title: "Book an appointment", route: '/AppoinmentPage', isConn: isConn),
           appBar: AppBar(
             title: Text("Appointments", style: kAppbarTitleStyle),
             centerTitle: true,
@@ -75,8 +70,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
     // <1> Use FutureBuilder
     return FutureBuilder(
         // <2> Pass `Future<QuerySnapshot>` to future
-        future: AppointmentService.getData(
-            "Pending,Confirmed,Rescheduled"), ////fetch appointment details according to uid
+        future: AppointmentService.getData("Pending,Confirmed,Rescheduled"), ////fetch appointment details according to uid
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             return snapshot.data.length == 0
