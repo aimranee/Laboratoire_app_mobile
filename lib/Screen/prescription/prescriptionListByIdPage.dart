@@ -53,8 +53,7 @@ class _PrescriptionListByIDPageState extends State<PrescriptionListByIDPage> {
                       return snapshot.data.length == 0
                           ? NoDataWidget()
                           : Padding(
-                          padding: const EdgeInsets.only(
-                              top: 0.0, left: 8, right: 8),
+                          padding: const EdgeInsets.only(top: 0.0, left: 8, right: 8),
                           child: _buildCard(snapshot.data));
                     } else if (snapshot.hasError) {
                       return IErrorWidget();

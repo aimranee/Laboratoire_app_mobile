@@ -31,7 +31,7 @@ class AppRoutes {
   static String  moreServiceScreen = '/MoreServiceScreen';
   static String  authTest = '/AuthTest';
   static String  editUserProfilePage = '/EditUserProfilePage';
-  static String  prescriptionListPage = '/PrescriptionListPage';
+  static String  documents = '/Documents';
   static String  authScreen = '/AuthScreen';
   static String  profile = '/Profile';
   
@@ -85,7 +85,7 @@ class AppRoutes {
       page: () => const MoreServiceScreen(),
     ),
     GetPage(
-      name: prescriptionListPage,
+      name: documents,
       page: () => const PrescriptionListPage(),
     ),
     // GetPage(

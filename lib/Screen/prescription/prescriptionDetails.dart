@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class PrescriptionDetailsPage extends StatefulWidget {
   final title;
   final prescriptionDetails;
-  const PrescriptionDetailsPage({ this.title, this.prescriptionDetails });
+  PrescriptionDetailsPage({ this.title, this.prescriptionDetails });
   @override
   _PrescriptionDetailsPageState createState() => _PrescriptionDetailsPageState();
 }
@@ -23,7 +23,7 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController=ScrollController();
-  List _imageUrls=[];
+  List _fileUrls=[];
 
   @override
   void initState() {
@@ -35,8 +35,8 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
       _dateController.text=widget.prescriptionDetails.appointmentDate;
       _timeController.text=widget.prescriptionDetails.appointmentTime;
       _messageController.text=widget.prescriptionDetails.prescription;
-      if(widget.prescriptionDetails.imageUrl!="") {
-        _imageUrls=widget.prescriptionDetails.imageUrl.toString().split(",");
+      if(widget.prescriptionDetails.fileUrl!="") {
+        _fileUrls=widget.prescriptionDetails.fileUrl.toString().split(",");
       }
 
     });
@@ -93,22 +93,22 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
       child: ListView.builder(
         shrinkWrap: true,
           controller: _scrollController,
-          itemCount: _imageUrls.length,
+          itemCount: _fileUrls.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: GestureDetector(
                 onTap: (){
-                     Get.to(() => ShowPrescriptionImagePage(
-                            imageUrls: _imageUrls,
-                            selectedImagesIndex: index,
+                     Get.to(() => ShowPrescriptionFilePage(
+                            fileUrls: _fileUrls,
+                            selectedFilesIndex: index,
                             title: "Download Prescription"),
                      );
                 },
 
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child:ImageBoxContainWidget(imageUrl:_imageUrls[index] ,),
+                  child:ImageBoxContainWidget(imageUrl:_fileUrls[index] ,),
                 ),
               ),
             );

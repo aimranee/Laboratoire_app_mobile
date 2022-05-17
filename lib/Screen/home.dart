@@ -112,13 +112,18 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
 
         TableRow(children: [
-          _cardImg('assets/icon/doct.svg', 'Profile', "/Profile"),
+          _cardImg('assets/icon/patient.svg', 'Profile', "/Profile"),
           _cardImg('assets/icon/teeth.svg', 'Services', "/ServicesPage"),
         ]),
 
         TableRow(children: [
           _cardImg("assets/icon/appoin.svg", "Appointment", '/Appointmentstatus'),
           _cardImg('assets/icon/sch.svg', 'Availability', '/AvailabilityPage'),
+        ]),
+
+        TableRow(children: [
+          _cardImg('assets/icon/documents.svg', 'Documents', "/Documents"),
+          _cardImg("assets/icon/doct.svg", "Team", "/ContactUsPage"),
         ]),
 
         TableRow(children: [
@@ -271,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ) //recommended 200*300 pixel
                     )),
           ),
-          const SizedBox(height:30),
+          const SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.only(right: 20.0, left: 20, top: 8.0),
             child: Container(

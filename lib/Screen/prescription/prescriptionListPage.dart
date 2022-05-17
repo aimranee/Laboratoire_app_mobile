@@ -19,8 +19,9 @@ class PrescriptionListPage extends StatefulWidget {
 }
 
 class _PrescriptionListPageState extends State<PrescriptionListPage> {
- final ScrollController _scrollController=new ScrollController();
- void dispose() {
+ final ScrollController _scrollController = ScrollController();
+ @override
+  void dispose() {
    // TODO: implement dispose
    _scrollController.dispose();
    super.dispose();
@@ -35,7 +36,7 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
         children: <Widget>[
           CAppBarWidget(title:"Prescriptions", isConn:true),
           Positioned(
-            top: 80,
+            top: 90,
             left: 0,
             right: 0,
             bottom: 0,
@@ -92,7 +93,7 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
                 child: ListTile(
                     title: Text(
                       prescriptionDetails[index].appointmentName,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'OpenSans-Bold',
                         fontSize: 14.0,
                       )),
@@ -102,13 +103,13 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
                       children: [
                         Text(
                           "${prescriptionDetails[index].patientName}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'OpenSans-SemiBold',
                             fontSize: 14,
                           ),
                         ),
                         Text("${prescriptionDetails[index].appointmentDate} ${prescriptionDetails[index].appointmentTime}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'OpenSans-Regular',
                             fontSize: 10,
                           ),

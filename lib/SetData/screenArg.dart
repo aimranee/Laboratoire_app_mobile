@@ -31,7 +31,6 @@ class PatientDetailsArg {
   final int serviceTimeMIn;
   final String selectedTime;
   final String selectedDate;
-  bool isConn = false;
   PatientDetailsArg(
       this.pFirstName,
       this.pLastName,

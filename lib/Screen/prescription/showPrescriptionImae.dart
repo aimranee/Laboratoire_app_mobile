@@ -10,18 +10,18 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:swipedetector/swipedetector.dart';
 
-class ShowPrescriptionImagePage extends StatefulWidget {
+class ShowPrescriptionFilePage extends StatefulWidget {
   final title;
-  final imageUrls;
-  final int selectedImagesIndex;
-  const ShowPrescriptionImagePage({Key key, this.imageUrls, this.title, this.selectedImagesIndex})
+  final fileUrls;
+  final int selectedFilesIndex;
+  const ShowPrescriptionFilePage({Key key, this.fileUrls, this.title, this.selectedFilesIndex})
       : super(key: key);
   @override
-  _ShowPrescriptionImagePageState createState() => _ShowPrescriptionImagePageState();
+  _ShowPrescriptionFilePageState createState() => _ShowPrescriptionFilePageState();
 }
 
-class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
-  String _selectedImageUrl = "";
+class _ShowPrescriptionFilePageState extends State<ShowPrescriptionFilePage> {
+  String _selectedFileUrl = "";
   int totalImg = 0;
   int _index = 0;
   final ReceivePort _port = ReceivePort();
@@ -29,12 +29,12 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
   @override
   void initState() {
     // TODO: implement initState
-    print(widget.imageUrls.length);
+    print(widget.fileUrls.length);
     //initialize all value
     setState(() {
-      _selectedImageUrl = widget.imageUrls[widget.selectedImagesIndex];
-      totalImg = widget.imageUrls.length;
-      _index = widget.selectedImagesIndex;
+      _selectedFileUrl = widget.fileUrls[widget.selectedFilesIndex];
+      totalImg = widget.fileUrls.length;
+      _index = widget.selectedFilesIndex;
     });
     IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
@@ -60,7 +60,8 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        title: Text(widget.title,style: kAppbarTitleStyle,),
+        title: Text(widget.title,style: kAppbarTitleStyle),
+        centerTitle: true,
         backgroundColor: appBarColor,
         actions: [
           IconButton(onPressed: ()  async{
@@ -69,7 +70,7 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
               final externalDir=await getExternalStorageDirectory();
               ToastMsg.showToastMsg("Download Stated");
               await FlutterDownloader.enqueue(
-                url: _selectedImageUrl,
+                url: _selectedFileUrl,
                 savedDir: externalDir.path,
                 fileName:DateTime.now().millisecondsSinceEpoch.toString(),
                 showNotification: true, // show download progress in status bar (for Android)
@@ -92,11 +93,11 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
                   _backwardImg();
                 },
                 child: Center(
-                    child: ImageBoxContainWidget(imageUrl:_selectedImageUrl )
-                  //get image from url
+                    child: ImageBoxContainWidget(imageUrl:_selectedFileUrl )
+                  //get file from url
                 ),
               ),
-              widget.imageUrls.indexOf(_selectedImageUrl)!= totalImg-1? Positioned.fill(
+              widget.fileUrls.indexOf(_selectedFileUrl)!= totalImg-1? Positioned.fill(
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Padding(
@@ -115,7 +116,7 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
                       ),
                     ),
                   )):Container(),
-              widget.imageUrls.indexOf(_selectedImageUrl)>0? Positioned.fill(
+              widget.fileUrls.indexOf(_selectedFileUrl)>0? Positioned.fill(
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -145,7 +146,7 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
     if (_index + 1 <= totalImg - 1) {
       // check more images is remain or not by indexes
       setState(() {
-        _selectedImageUrl = widget.imageUrls[_index + 1]; // if true then set forward to new image by increment the index
+        _selectedFileUrl = widget.fileUrls[_index + 1]; // if true then set forward to new image by increment the index
       });
     }
     if (_index + 1 < totalImg) {
@@ -159,10 +160,9 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
     if (_index - 1 >= 0) {
       //if value is less then 0 then it show error show we are checking the value
       setState(() {
-        _selectedImageUrl = widget.imageUrls[_index - 1]; // if upper condition is true then decrement the index value and show just backward image
+        _selectedFileUrl = widget.fileUrls[_index - 1]; // if upper condition is true then decrement the index value and show just backward image
         _index = _index - 1;
       });
     }
   }
-
 }

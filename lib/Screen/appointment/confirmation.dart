@@ -87,7 +87,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         body: Stack(
           clipBehavior: Clip.none,
           children: <Widget>[
-            _isLoading ? Container() : CAppBarWidget(title: "Booking Confirmation", isConn: _patientDetailsArgs.isConn),
+            _isLoading ? Container() : CAppBarWidget(title: "Booking Confirmation", isConn: true),
             Positioned(
               top: 90,
               left: 0,

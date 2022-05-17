@@ -119,7 +119,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
         firstName: _firstNameController.text,
         age: _ageController.text,
         city: _cityController.text,
-        uId: _uIdController.text,
         searchByName: searchByName,
         gender: _selectedGender,
         pNo: _phoneNumberController.text);
@@ -236,7 +235,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 _genderDropDown(),
                 _emailInputField(),
                 _phnNumInputField(),
-                _readOnlyInputField("User Id", _uIdController),
               ],
             ),
           );
@@ -244,9 +242,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   void _setData() async {
     
-    // setState(() {
-    //   _isLoading = true;
-    // });
+    setState(() {
+      _isLoading = true;
+    });
 
     final user = await UserService.getData();
     
