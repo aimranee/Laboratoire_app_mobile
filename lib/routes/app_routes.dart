@@ -1,19 +1,19 @@
 import 'package:get/get.dart';
-import 'package:laboratoire_app/Screen/Login_SignUp.dart';
+import 'package:laboratoire_app/Screen/login_signup.dart';
 import 'package:laboratoire_app/Screen/appointment/appointment.dart';
-import 'package:laboratoire_app/Screen/appointment/appointmentStatus.dart';
+import 'package:laboratoire_app/Screen/appointment/appointment_status.dart';
 import 'package:laboratoire_app/Screen/appointment/choosetimeslots.dart';
 import 'package:laboratoire_app/Screen/appointment/confirmation.dart';
 import 'package:laboratoire_app/Screen/appointment/registerpatient.dart';
 import 'package:laboratoire_app/Screen/availiblity.dart';
-import 'package:laboratoire_app/Screen/conectUs.dart';
-import 'package:laboratoire_app/Screen/Userprofiel.dart';
+import 'package:laboratoire_app/Screen/conect_us.dart';
 import 'package:laboratoire_app/Screen/home.dart';
-import 'package:laboratoire_app/Screen/moreService.dart';
-import 'package:laboratoire_app/Screen/notificationPage.dart';
-import 'package:laboratoire_app/Screen/prescription/prescriptionListPage.dart';
+import 'package:laboratoire_app/Screen/more_service.dart';
+import 'package:laboratoire_app/Screen/notification_page.dart';
+import 'package:laboratoire_app/Screen/prescription/prescription_list_page.dart';
 import 'package:laboratoire_app/Screen/reachus.dart';
 import 'package:laboratoire_app/Screen/services.dart';
+import 'package:laboratoire_app/Screen/user_profiel.dart';
 
 class AppRoutes {
   static String  homeScreen = '/HomePage';
@@ -42,7 +42,7 @@ class AppRoutes {
     ),
     GetPage(
       name: appointmentPage,
-      page: () => AppointmentPage(),
+      page: () => const AppointmentPage(),
     ),
     GetPage(
       name: chooseTimeSlotPage,
@@ -54,7 +54,7 @@ class AppRoutes {
     ),
     GetPage(
       name: contactUs,
-      page: () => ContactUs(),
+      page: () => const ContactUs(),
     ),
     GetPage(
       name: appointmentStatus,
@@ -62,7 +62,7 @@ class AppRoutes {
     ),
     GetPage(
       name: reachUS,
-      page: () => ReachUS(),
+      page: () => const ReachUS(),
     ),
     GetPage(
       name: servicesPage,
@@ -70,11 +70,11 @@ class AppRoutes {
     ),
     GetPage(
       name: registerPatient,
-      page: () => RegisterPatient(),
+      page: () => const RegisterPatient(),
     ),
     GetPage(
       name: confirmationPage,
-      page: () => ConfirmationPage(),
+      page: () => const ConfirmationPage(),
     ),
     GetPage(
       name: notificationPage,
@@ -94,7 +94,7 @@ class AppRoutes {
     // ),
     GetPage(
       name: authScreen,
-      page: () => LoginSignupScreen(),
+      page: () => const LoginSignupScreen(),
     ),
 
     GetPage(

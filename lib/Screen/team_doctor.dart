@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:laboratoire_app/Screen/more_service.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
@@ -7,7 +8,6 @@ import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:laboratoire_app/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:laboratoire_app/Service/service_service.dart';
-import 'package:laboratoire_app/Screen/more_service.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
 import 'package:laboratoire_app/widgets/buttons_widget.dart';
 

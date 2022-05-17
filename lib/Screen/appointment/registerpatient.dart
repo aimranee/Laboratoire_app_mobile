@@ -1,31 +1,31 @@
-import 'package:laboratoire_app/SetData/screenArg.dart';
+import 'package:laboratoire_app/SetData/screen_arg.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/inputfields.dart';
-import 'package:laboratoire_app/utilities/toastMsg.dart';
+import 'package:laboratoire_app/utilities/toast_msg.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
-import 'package:laboratoire_app/widgets/bottomNavigationBarWidget.dart';
+import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPatient extends StatefulWidget {
-  RegisterPatient({Key key}) : super(key: key);
+  const RegisterPatient({Key key}) : super(key: key);
 
   @override
   _RegisterPatientState createState() => _RegisterPatientState();
 }
 
 class _RegisterPatientState extends State<RegisterPatient> {
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _cityController = TextEditingController();
-  TextEditingController _phoneNumberController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
-  TextEditingController _desController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController _desController = TextEditingController();
   String _selectedGender = 'Gender';
 
-  var _isBtnDisable = "false";
+  final _isBtnDisable = "false";
 
   @override
   void dispose() {
@@ -36,7 +36,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
     ageController.dispose();
     _cityController.dispose();
     _desController.dispose();
-    // TODO: implement dispose
+      
     super.dispose();
   }
 
@@ -142,7 +142,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
                                   r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
                                   r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
                                   r"{0,253}[a-zA-Z0-9])?)*$";
-                              RegExp regex = new RegExp(pattern);
+                              RegExp regex = RegExp(pattern);
                               if (item.length > 0) {
                                 if (!regex.hasMatch(item) || item == null) {
                                   return 'Enter a valid email address';
@@ -170,7 +170,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
                               }
                             },
                           ),
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: _genderDropDown(),
                           ),
@@ -218,7 +218,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
         focusColor: Colors.white,
         value: _selectedGender,
         //elevation: 5,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         iconEnabledColor: btnColor,
         items: <String>[
           'Gender',
@@ -230,16 +230,16 @@ class _RegisterPatientState extends State<RegisterPatient> {
             value: value,
             child: Text(
               value,
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
             ),
           );
         }).toList(),
-        hint: Text(
+        hint: const Text(
           "Select Gender",
         ),
         onChanged: (String value) {
           setState(() {
-            print(value);
+            // //print(value);
             _selectedGender = value;
           });
         },

@@ -1,29 +1,22 @@
 import 'package:get/get.dart';
-import 'package:laboratoire_app/Screen/Login_SignUp.dart';
-import 'package:laboratoire_app/Service/Firebase/updateData.dart';
-import 'package:laboratoire_app/Service/Noftification/handleFirebaseNotification.dart';
-import 'package:laboratoire_app/Service/Noftification/handleLocalNotification.dart';
-import 'package:laboratoire_app/Service/appointmentService.dart';
-
-import 'package:laboratoire_app/Service/drProfileService.dart';
-import 'package:laboratoire_app/Service/notificationService.dart';
-import 'package:laboratoire_app/SetData/screenArg.dart';
-import 'package:laboratoire_app/model/appointmentModel.dart';
-import 'package:laboratoire_app/model/notificationModel.dart';
+import 'package:laboratoire_app/Service/Firebase/update_data.dart';
+import 'package:laboratoire_app/Service/appointment_service.dart';
+import 'package:laboratoire_app/Service/dr_profile_service.dart';
+import 'package:laboratoire_app/SetData/screen_arg.dart';
+import 'package:laboratoire_app/model/appointment_model.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/style.dart';
-import 'package:laboratoire_app/utilities/toastMsg.dart';
-import 'package:laboratoire_app/widgets/AuthScreen.dart';
+import 'package:laboratoire_app/utilities/toast_msg.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
-import 'package:laboratoire_app/widgets/bottomNavigationBarWidget.dart';
+import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
-import 'package:laboratoire_app/widgets/loadingIndicator.dart';
+import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfirmationPage extends StatefulWidget {
-  ConfirmationPage({Key key}) : super(key: key);
+  const ConfirmationPage({Key key}) : super(key: key);
 
   @override
   _ConfirmationPageState createState() => _ConfirmationPageState();
@@ -37,7 +30,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+     
     super.initState();
     _setAdminFcmId();
     _getAndSetUserData();
@@ -107,7 +100,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                           child: _isLoading
                               ? Center(child: LoadingIndicatorWidget())
                               : Center(
-                                  child: Container(
+                                  child: SizedBox(
                                       height: 250,
                                       width: double.infinity,
                                       child: _cardView(_patientDetailsArgs)),
@@ -216,7 +209,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     final insertStatus = await AppointmentService.addData(appointmentModel);
 
     if (insertStatus != "error") {
-      // print(":::::::::::::::::::::;$insertStatus");
+      // //print(":::::::::::::::::::::;$insertStatus");
       final updatedTimeSlotsStatus = await UpdateData.updateTimeSlot(
           serviceTimeMin, setTime, selectedDate, insertStatus);
       //if appoint details added successfully added
@@ -295,7 +288,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   //   await UpdateData.updateIsAnyNotification("usersList", _uId, true);
 
   //   //send notification to admin app for booking confirmation
-  //   print("++++++++++++admin$_adminFCMid");
+  //   //print("++++++++++++admin$_adminFCMid");
   //   await HandleFirebaseNotification.sendPushMessage(
   //       _adminFCMid, //admin fcm
   //       "New Appointment", //title

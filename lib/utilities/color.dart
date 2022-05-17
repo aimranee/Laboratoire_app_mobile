@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
-final chatBgColor = Color(0xFFFFF4E2);
-final chatIconColor = Color(0xFFF6AF3D);
-final callBgkColor = Color(0xFFFFEBEF);
-final callIconColor = Color(0xFFFF5479);
-final wightColor = Color(0xFFE6FFF4);
-final videoIconColor = Color(0xFF65DCA8);
+const chatBgColor = Color(0xFFFFF4E2);
+const chatIconColor = Color(0xFFF6AF3D);
+const callBgkColor = Color(0xFFFFEBEF);
+const callIconColor = Color(0xFFFF5479);
+const wightColor = Color(0xFFE6FFF4);
+const videoIconColor = Color(0xFF65DCA8);
 
-final appBarColor = Color(0xFF01beb2);//#01BEB2E
+const appBarColor = Color(0xFF01beb2);//#01BEB2E
 
-final appBarIconColor=Colors.white;
+const appBarIconColor=Colors.white;
 
-final bgColor = Color(0xFFE6EFF0);
+const bgColor = Color(0xFFE6EFF0);
 
-final iconsColor = Color(0xFF01beb2);
+const iconsColor = Color(0xFF01beb2);
 
-final btnColor = Color(0xFF01beb2);
-final gradientColor=LinearGradient(
+const btnColor = Color(0xFF01beb2);
+const gradientColor=LinearGradient(
 begin: Alignment.topRight,
 end: Alignment.bottomLeft,
 colors: [
-const Color(0xFF01beb2),
-const Color(0xFF04A99E),
+Color(0xFF01beb2),
+Color(0xFF04A99E),
 ],
 );

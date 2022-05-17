@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:laboratoire_app/Service/availablityService.dart';
+import 'package:laboratoire_app/Service/availablity_service.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
-import 'package:laboratoire_app/widgets/bottomNavigationBarWidget.dart';
+import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
-import 'package:laboratoire_app/widgets/errorWidget.dart';
-import 'package:laboratoire_app/widgets/loadingIndicator.dart';
-import 'package:laboratoire_app/widgets/noDataWidget.dart';
+import 'package:laboratoire_app/widgets/error_widget.dart';
+import 'package:laboratoire_app/widgets/loading_indicator.dart';
+import 'package:laboratoire_app/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 
 class AvailabilityPage extends StatefulWidget {
@@ -21,7 +21,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
   final bool _isLoading = false;
   @override
   void initState() {
-    // TODO: implement initState
+     
     super.initState();
   }
 
@@ -55,10 +55,10 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return snapshot.data.length == 0
-                          ? NoDataWidget()
+                          ? const NoDataWidget()
                           : _buildContent(snapshot);
                     } else if (snapshot.hasError) {
-                      return IErrorWidget();
+                      return const IErrorWidget();
                     } else {
                       return LoadingIndicatorWidget();
                     }

@@ -16,7 +16,7 @@ class InputFields {
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Theme.of(context).dividerColor),
           ),
-          focusedBorder: UnderlineInputBorder(
+          focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.blueAccent, width: 1.0),
           )),
     );
@@ -35,7 +35,7 @@ class InputFields {
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Theme.of(context).dividerColor),
           ),
-          focusedBorder: UnderlineInputBorder(
+          focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.blueAccent, width: 1.0),
           )),
     );
@@ -67,13 +67,13 @@ class InputFields {
     //   //errorAnimationController: errorController,
     //   // controller: _otpController,
     //   onCompleted: (v) {
-    //     print("Completed");
+    //     //print("Completed");
     //   },
 
     //   onChanged: onChanged,
 
     //   beforeTextPaste: (text) {
-    //     print("Allowing to paste $text");
+    //     //print("Allowing to paste $text");
     //     //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
     //     //but you can show anything you want here, like your pop up saying wrong paste format or etc
     //     return true;
@@ -98,30 +98,30 @@ class InputFields {
       },
       onChanged: onChanged,
       decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.phone,
             color: appBarColor,
           ),
           labelText: 'Enter Mobile Number',
-          labelStyle: TextStyle(fontSize: 12, color: appBarColor),
+          labelStyle: const TextStyle(fontSize: 12, color: appBarColor),
           //hintStyle: TextStyle(fontSize: 16),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               width: 0,
               style: BorderStyle.none,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
                 //  width: 5    ,
                 //style: BorderStyle.none,
                 color: appBarColor),
           ),
           filled: true,
-          contentPadding: EdgeInsets.all(5),
-          fillColor: Color(0xFFf3eff5)),
+          contentPadding: const EdgeInsets.all(5),
+          fillColor: const Color(0xFFf3eff5)),
     );
   }
 
@@ -132,30 +132,30 @@ class InputFields {
       controller: _countryCodeControlller,
       onTap: onTap,
       decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.flag,
             color: appBarColor,
           ),
           labelText: 'Select Country Code',
-          labelStyle: TextStyle(fontSize: 12, color: appBarColor),
+          labelStyle: const TextStyle(fontSize: 12, color: appBarColor),
           //hintStyle: TextStyle(fontSize: 16),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               width: 0,
               style: BorderStyle.none,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
                 //  width: 5    ,
                 //style: BorderStyle.none,
                 color: appBarColor),
           ),
           filled: true,
-          contentPadding: EdgeInsets.all(5),
-          fillColor: Color(0xFFf3eff5)),
+          contentPadding: const EdgeInsets.all(5),
+          fillColor: const Color(0xFFf3eff5)),
     );
   }
 
@@ -173,7 +173,7 @@ class InputFields {
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[350]),
             ),
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: appBarColor, width: 1.0),
             )),
       ),
@@ -193,7 +193,7 @@ class InputFields {
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[350]),
             ),
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: appBarColor, width: 1.0),
             )),
       ),

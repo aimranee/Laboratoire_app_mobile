@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:laboratoire_app/Service/Firebase/readData.dart';
-import 'package:laboratoire_app/Service/DateAndTimeCalculation/timeCalculation.dart';
-import 'package:laboratoire_app/SetData/screenArg.dart';
+import 'package:laboratoire_app/Service/DateAndTimeCalculation/time_calculation.dart';
+import 'package:laboratoire_app/Service/Firebase/read_data.dart';
+import 'package:laboratoire_app/SetData/screen_arg.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
-import 'package:laboratoire_app/widgets/bottomNavigationBarWidget.dart';
-import 'package:laboratoire_app/widgets/loadingIndicator.dart';
+import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
+import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:intl/intl.dart';
@@ -142,8 +142,8 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
         serviceTime
     ); //calculate all the possible time slots between opening and closing time
 
-    //  print("Service Time" + " " + "$serviceTime");
-    // print("...................." + "$timeSlots");
+    //  //print("Service Time" + " " + "$serviceTime");
+    // //print("...................." + "$timeSlots");
 
     if (_bookedTimeSlots != null) {
       //if any booked time exists on the selected day
@@ -155,7 +155,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
           closingTimeMin,
           widget.serviceTimeMin); // Recalculate the time according to the booked time slots and date
     }
-    // print("+++++++++++++++++++++++++ $timeSlots");
+    // //print("+++++++++++++++++++++++++ $timeSlots");
 
     _arrangeTimeSlots(
         timeSlots); //separate the time according to morning, afternoon and evening slots
@@ -367,10 +367,10 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
 
     //print("dddddddddddddddddd ");
     final todayDate = _setTodayDateFormate();
-    // print("tooooooooodddddddddddd $todayDate");
+    // //print("tooooooooodddddddddddd $todayDate");
 
     if (_selectedDate == todayDate) {
-      // print(DateTime.now().month);
+      // //print(DateTime.now().month);
       if (int.parse(time.substring(0, 2)) < DateTime.now().hour) {
         //true the time is over
 
@@ -382,8 +382,8 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
         }
       }
     }
-    // print(time);
-    // print(_isNoRemainingTime);
+    // //print(time);
+    // //print(_isNoRemainingTime);
     if (_openingTimeHour != "" &&
         _closingTimeHour != "" &&
         _openingTimeMin != "" &&

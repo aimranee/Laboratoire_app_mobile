@@ -15,7 +15,7 @@ class CAppBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      iconTheme: IconThemeData(color: appBarIconColor //change your color here
+      iconTheme: const IconThemeData(color: appBarIconColor //change your color here
           ),
       title: Text(
         title,

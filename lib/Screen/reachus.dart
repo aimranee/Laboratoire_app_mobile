@@ -1,16 +1,14 @@
 import 'package:get/get.dart';
-import 'package:laboratoire_app/Service/DrProfileService.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/style.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
-import 'package:laboratoire_app/widgets/loadingIndicator.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ReachUS extends StatefulWidget {
-  ReachUS({Key key}) : super(key: key);
+  const ReachUS({Key key}) : super(key: key);
 
   @override
   _ReachUSState createState() => _ReachUSState();
@@ -51,7 +49,7 @@ class _ReachUSState extends State<ReachUS> {
             bottom: -4,
             left: 5,
             right: 5,
-            child: Container(
+            child: SizedBox(
                 height: 110,
                 child: Card(
                   shape: const RoundedRectangleBorder(
@@ -64,7 +62,7 @@ class _ReachUSState extends State<ReachUS> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
+                      children: const [
                         Text(
                           "We are here...",
                           style: kPageTitleStyle,
@@ -86,7 +84,7 @@ class _ReachUSState extends State<ReachUS> {
                     ? await launch(_url)
                     : throw 'Could not launch $_url'; //launch google map
               },
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 radius: 25,
                 backgroundColor: btnColor,
                 child: Icon(

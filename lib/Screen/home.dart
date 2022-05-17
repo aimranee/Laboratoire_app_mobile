@@ -1,16 +1,13 @@
 import 'package:get/get.dart';
-import 'package:laboratoire_app/Service/Firebase/readData.dart';
-import 'package:laboratoire_app/Service/userService.dart';
+import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/utilities/color.dart';
-import 'package:laboratoire_app/utilities/dialogBox.dart';
 import 'package:laboratoire_app/utilities/style.dart';
 import 'package:laboratoire_app/widgets/appbarsWidget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
-import 'package:laboratoire_app/widgets/imageWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:laboratoire_app/widgets/loadingIndicator.dart';
-import 'package:laboratoire_app/widgets/bottomNavigationBarWidget.dart';
+import 'package:laboratoire_app/widgets/loading_indicator.dart';
+import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,14 +19,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _uId = "";
-  bool _isLoading = false;
+  final bool _isLoading = false;
   bool isConn = false;
   
   @override
   void initState() {
     
-    // TODO: implement initState
+     
     // initialize local and firebase notification
     // HandleLocalNotification.initializeFlutterNotification(
     //     context); //local notification
@@ -44,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //start loading indicator
     
     // final res=await FirebaseMessaging.instance.getToken();
-    // print(res);
+    // //print(res);
 
     final user = await UserService.getData();
       if (user != null) {
@@ -54,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         //set all data
         setState(() {
-          _uId = user[0].uId;
         });
         prefs.setString("firstName", user[0].firstName);
         prefs.setString("lastName", user[0].lastName);
@@ -95,9 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
             bottom: 0,
             child: Container(
               height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                     color: bgColor,
-                    borderRadius: const BorderRadius.only(
+                    borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10))),
             child: _buildContent(),
@@ -140,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
         //  Check.addData();
         if (routeName != null) Get.toNamed(routeName, arguments : isConn);
       },
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height * .15,
         //width: MediaQuery.of(context).size.width * .1,
         child: Card(

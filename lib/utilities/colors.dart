@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
-final Color appBarColor=Color(0xFF01beb2);
-final Color primaryColor=Color(0xFF01beb2);
-final Color btnColor=Color(0xFF01beb2);
-final Color iconsColor=Color(0xFF01beb2);
-final appBarIconColor= Colors.white;
-final gradientColor=LinearGradient(
+const Color appBarColor=Color(0xFF01beb2);
+const Color primaryColor=Color(0xFF01beb2);
+const Color btnColor=Color(0xFF01beb2);
+const Color iconsColor=Color(0xFF01beb2);
+const appBarIconColor= Colors.white;
+const gradientColor=LinearGradient(
   begin: Alignment.topRight,
   end: Alignment.bottomLeft,
   colors: [
-    const Color(0xFF01beb2),
-    const Color(0xFF04A99E),
+    Color(0xFF01beb2),
+    Color(0xFF04A99E),
   ],
 );
-final btnLinearColor=LinearGradient(
+const btnLinearColor=LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
   colors: [
-    const Color(0xFF04A99E),
-    const Color(0xFF04A99E),
+    Color(0xFF04A99E),
+    Color(0xFF04A99E),
 
     //const Color(0xFF01beb2),
 

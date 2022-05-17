@@ -1,7 +1,7 @@
+import 'package:laboratoire_app/Screen/Login_SignUp.dart';
 import 'package:laboratoire_app/Screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:laboratoire_app/Screen/Login_SignUp.dart';
 
 class AuthService {
 
@@ -13,7 +13,7 @@ class AuthService {
           if (snapshot.hasData) {
             return const HomeScreen();
           } else {
-            return LoginSignupScreen();
+            return const LoginSignupScreen();
           }
         });
   }
@@ -24,7 +24,7 @@ class AuthService {
     await FirebaseAuth.instance.signOut().then((v) {
       isConn = false;
     }).catchError((e) {
-      print(e); //Invalid otp
+      // //print(e); //Invalid otp
       isConn = true;
     });
 
@@ -42,9 +42,9 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       isLoggedIn = false;
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        // //print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        // //print('Wrong password provided for that user.');
       }
     }
     return isLoggedIn;
