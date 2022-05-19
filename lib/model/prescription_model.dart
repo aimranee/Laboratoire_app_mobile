@@ -8,6 +8,7 @@ class PrescriptionModel {
   String appointmentName;
   String drName;
   String fileUrl;
+  int isPaied;
 
   PrescriptionModel({
     this.appointmentTime,
@@ -17,7 +18,8 @@ class PrescriptionModel {
     this.patientName,
     this.prescription,
     this.fileUrl,
-    this.drName
+    this.drName,
+    this.isPaied
   });
 
   factory PrescriptionModel.fromJson(Map<String,dynamic> json){
@@ -30,6 +32,7 @@ class PrescriptionModel {
       patientName: json['patientName'],
       drName: json['drName'],
       fileUrl: json['fileUrl'],
+      isPaied: json['isPaied']
     );
   }
 

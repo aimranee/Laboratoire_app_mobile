@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Service/availablity_service.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
-import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/error_widget.dart';

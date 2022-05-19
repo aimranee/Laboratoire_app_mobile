@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:laboratoire_app/Screen/more_service.dart';
+import 'package:laboratoire_app/Service/dr_profile_service.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
@@ -7,18 +7,17 @@ import 'package:laboratoire_app/widgets/error_widget.dart';
 import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:laboratoire_app/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:laboratoire_app/Service/service_service.dart';
-import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/buttons_widget.dart';
 
-class ServicesPage extends StatefulWidget {
-  const ServicesPage({Key key}) : super(key: key);
+class TeamDoctPage extends StatefulWidget {
+  const TeamDoctPage({Key key}) : super(key: key);
 
   @override
-  _ServicesPageState createState() => _ServicesPageState();
+  _TeamDoctPageState createState() => _TeamDoctPageState();
 }
 
-class _ServicesPageState extends State<ServicesPage> {
+class _TeamDoctPageState extends State<TeamDoctPage> {
   bool isConn = Get.arguments;
   final bool _isLoading = false;
 
@@ -47,7 +46,7 @@ class _ServicesPageState extends State<ServicesPage> {
       //overflow: Overflow.visible,
       children: <Widget>[
 
-        CAppBarWidget(title: 'Service', isConn: isConn),
+        CAppBarWidget(title: 'Doctors', isConn: isConn),
         Positioned(
           top: 90,
           left: 0,
@@ -63,14 +62,14 @@ class _ServicesPageState extends State<ServicesPage> {
                   right: 20,
                 ),
                 child: FutureBuilder(
-                    future: ServiceService.getData(),
+                    future: DrProfileService.getData(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return snapshot.data.length == 0
-                            ? NoDataWidget()
+                            ? const NoDataWidget()
                             : _buildGridView(snapshot.data);
                       } else if (snapshot.hasError) {
-                        return IErrorWidget();
+                        return const IErrorWidget();
                       } else {
                         return LoadingIndicatorWidget();
                       }
@@ -81,18 +80,18 @@ class _ServicesPageState extends State<ServicesPage> {
     );
   }
 
-  Widget _buildGridView(service) {
+  Widget _buildGridView(doctor) {
     return GridView.count(
       childAspectRatio: .8, //you can change the size of items
       crossAxisCount: 2,
       shrinkWrap: true,
-      children: List.generate(service.length, (index) {
-        return _cardImg(service[index]);
+      children: List.generate(doctor.length, (index) {
+        return _cardImg(doctor[index]);
       }),
     );
   }
 
-  Widget _cardImg(serviceDetails) {
+  Widget _cardImg(doctorDetails) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: GestureDetector(
@@ -132,7 +131,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     // ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
-                      child: Text(serviceDetails.title,
+                      child: Text(doctorDetails.firstName+' '+ doctorDetails.lastName,
                           style: const TextStyle(
                             fontFamily: 'OpenSans-Bold',
                             fontSize: 12.0,
@@ -149,7 +148,6 @@ class _ServicesPageState extends State<ServicesPage> {
             ),
             Positioned.fill(
               //bottom: -10,
-
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
@@ -157,14 +155,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     child: RoundedBtnWidget(
                       title: "More",
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MoreServiceScreen(
-                                serviceDetails:
-                                    serviceDetails), //send to data to the next screen
-                          ),
-                        );
+                        Get.to(() => {}); //send to data to the next screen
                       },
                     )),
               ),

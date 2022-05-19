@@ -12,7 +12,7 @@ import 'package:laboratoire_app/model/notification_model.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/dialog_box.dart';
 import 'package:laboratoire_app/utilities/toast_msg.dart';
-import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/loading_indicator.dart';
@@ -117,9 +117,9 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
               bottom: 0,
               child: Container(
                 height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: bgColor,
-                    borderRadius: const BorderRadius.only(
+                    borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10))),
                 child:_isLoading?LoadingIndicatorWidget(): SingleChildScrollView(

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/style.dart';
-import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';

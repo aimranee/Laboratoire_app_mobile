@@ -1,14 +1,19 @@
+import 'dart:developer';
+
+import 'package:get/get.dart';
 import 'package:laboratoire_app/Screen/prescription/prescription_details.dart';
 import 'package:laboratoire_app/Service/prescription_service.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
-import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/appbars_widget.dart';
+import 'package:laboratoire_app/widgets/auth_screen.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/error_widget.dart';
 import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:laboratoire_app/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class PrescriptionListPage extends StatefulWidget {
@@ -20,27 +25,50 @@ class PrescriptionListPage extends StatefulWidget {
 
 class _PrescriptionListPageState extends State<PrescriptionListPage> {
  final ScrollController _scrollController = ScrollController();
+ bool _isLoading = false;
+ bool isConn = false;
+  @override
+  void initState() {
+    _TestConnection();
+    super.initState();
+  }
+
+  _TestConnection() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  setState(() {
+    _isLoading = true;
+  });
+  if (prefs.getString("fcm") != ""){
+    setState(() {
+      isConn = true;
+    });
+  }
+  setState(() {
+    _isLoading = false;
+  });
+}
+
  @override
   void dispose() {
-     
    _scrollController.dispose();
    super.dispose();
  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationWidget(route: "/ContactUsPage", title:"Contact us"),
-      drawer : CustomDrawer(isConn: true),
-      body: Stack(
+      drawer : CustomDrawer(isConn: isConn),
+      body: _isLoading ? LoadingIndicatorWidget() : Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
-          CAppBarWidget(title:"Prescriptions", isConn:true),
+          CAppBarWidget(title:"Prescriptions", isConn: isConn),
           Positioned(
             top: 90,
             left: 0,
             right: 0,
             bottom: 0,
-            child: Container(
+            child: !isConn ? const AuthScreen() : Container(
               height: MediaQuery.of(context).size.height,
               decoration:IBoxDecoration.upperBoxDecoration(),
               child:FutureBuilder(
@@ -51,8 +79,7 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
                       return snapshot.data.length == 0
                           ? const NoDataWidget()
                           : Padding(
-                          padding: const EdgeInsets.only(
-                              top: 0.0, left: 8, right: 8),
+                          padding: const EdgeInsets.only(top: 0.0, left: 8, right: 8),
                           child: _buildCard(snapshot.data));
                     } else if (snapshot.hasError) {
                       return const IErrorWidget();
@@ -74,14 +101,11 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>   PrescriptionDetailsPage(
-                            title: prescriptionDetails[index].appointmentName,
-                          prescriptionDetails:prescriptionDetails[index])
-                      ),
-                    );
+              Get.to(() => PrescriptionDetailsPage(
+                      title: prescriptionDetails[index].appointmentName, 
+                      prescriptionDetails:prescriptionDetails[index]
+                    ),
+              );
 
             },
             child: Card(
@@ -122,4 +146,9 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
           );
         });
   }
+
+  
+
 }
+
+

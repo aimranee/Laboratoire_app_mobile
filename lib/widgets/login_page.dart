@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:laboratoire_app/widgets/buttons_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:laboratoire_app/utilities/toast_msg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key key }) : super(key: key);
@@ -172,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
         final FirebaseAuth auth = FirebaseAuth.instance;
         await setData(auth.currentUser.uid);
         ToastMsg.showToastMsg("Logged in");
-        Get.offAllNamed('/HomePage');
+        Get.offAllNamed('/HomePage', arguments: true);
       } else {
         ToastMsg.showToastMsg("Smoothing went wrong");
       }
@@ -186,5 +187,7 @@ class _LoginPageState extends State<LoginPage> {
   setData(uId) async {
     final fcm = await FirebaseMessaging.instance.getToken();
     await DrProfileService.updateFcmId(uId, fcm);
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("fcm", fcm);
   }
 }

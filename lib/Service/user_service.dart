@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:laboratoire_app/config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +13,7 @@ class UserService {
   static List<UserModel> dataFromJson(String jsonString) {
     
     final data = json.decode(jsonString);
-    //print(data.toString());
+    // log(data.toString());
     return List<UserModel>.from(data.map((item) => UserModel.fromJson(item)));
   }
 
@@ -20,9 +21,11 @@ class UserService {
     final userId = FirebaseAuth.instance.currentUser.uid;
 
     final response = await http.get(Uri.parse("$_viewUrl?uid=$userId"));
-
+    
     if (response.statusCode == 200) {
+      
       List<UserModel> list = dataFromJson(response.body);
+      log("message : "+list[0].uId);
       return list;
     } else {
       return []; //if any error occurs then it return a blank list
@@ -41,7 +44,7 @@ class UserService {
 
   static updateFcmId(String uId, String fcmId) async {
     final res = await http
-        .post(Uri.parse("$_update"), body: {"fcmId": fcmId, "uid": uId});
+        .post(Uri.parse(_update), body: {"fcmId": fcmId, "uid": uId});
     if (res.statusCode == 200) {
       return res.body;
     } else {
@@ -51,7 +54,7 @@ class UserService {
 
   static updateData(UserModel userModel) async {
     final res =
-        await http.post(Uri.parse(_updateUrl), body: userModel.toUpdateJson());
+        await http.post(Uri.parse(_updateUrl), body: userModel.toJsonAdd());
     //print(">>>>>>>>>>>>>>>>>>>>>>${res.body}");
     if (res.statusCode == 200) {
       return res.body;

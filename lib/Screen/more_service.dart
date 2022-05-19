@@ -1,6 +1,6 @@
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/style.dart';
-import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:flutter/material.dart';
 
 class MoreServiceScreen extends StatefulWidget {

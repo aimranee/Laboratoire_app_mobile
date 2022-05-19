@@ -6,7 +6,7 @@ import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/dialog_box.dart';
 import 'package:laboratoire_app/utilities/inputfields.dart';
 import 'package:laboratoire_app/widgets/auth_screen.dart';
-import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/loading_indicator.dart';
@@ -24,7 +24,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   bool _isLoading = false;
   String _selectedGender = "";
   String _isEnableBtn = "false";
-  bool isConn = Get.arguments;
+  bool isConn = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
@@ -36,7 +36,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   @override
   void initState() {
-     
     _setData();
     super.initState();
   }
@@ -83,11 +82,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
               left: 0,
               right: 0,
               bottom: 0,
-              child:
-                Container(
+              child: Container(
                   height: MediaQuery.of(context).size.height,
                   decoration: IBoxDecoration.upperBoxDecoration(),
-                  child: ! isConn ? AuthScreen() : _buildContent())),
+                  child: ! isConn ? const AuthScreen() : _buildContent())),
         ],
       ),
     );
@@ -235,30 +233,37 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
   void _setData() async {
-    
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     setState(() {
       _isLoading = true;
     });
 
-    final user = await UserService.getData();
-    
-    if (user != null){
-      
-      _emailController.text = user[0].email;
-      _lastNameController.text = user[0].lastName;
-      _firstNameController.text = user[0].firstName;
-      _firstNameController.text = user[0].firstName;
-      _phoneNumberController.text = user[0].pNo;
-      _cityController.text = user[0].city;
-      _uIdController.text = user[0].uId;
-      _ageController.text = user[0].age;
-      _selectedGender = user[0].gender;
+    if (prefs.getString("fcm") != "") {
       setState(() {
         isConn = true;
+      });
+      
+    final user = await UserService.getData();
+
+    _emailController.text = user[0].email;
+    _lastNameController.text = user[0].lastName;
+    _firstNameController.text = user[0].firstName;
+    _firstNameController.text = user[0].firstName;
+    _phoneNumberController.text = user[0].pNo;
+    _cityController.text = user[0].city;
+    _uIdController.text = user[0].uId;
+    _ageController.text = user[0].age;
+    _selectedGender = user[0].gender;
+
+    }else{
+      setState(() {
+        isConn = false;
       });
     }
     setState(() {
       _isLoading = false;
     });
+    
   }
 }

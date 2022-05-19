@@ -1,5 +1,3 @@
-// import 'package:laboratoire_app/Screen/Login_SignUp.dart';
-// import 'package:laboratoire_app/Screen/login.dart';
 import 'package:laboratoire_app/Screen/login_signup.dart';
 import 'package:laboratoire_app/service/authService/authService.dart';
 import 'package:laboratoire_app/utilities/colors.dart';

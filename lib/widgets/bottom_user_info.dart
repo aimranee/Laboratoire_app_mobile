@@ -89,13 +89,12 @@ class BottomUserInfo extends StatelessWidget {
                         ),
                       ): IconButton(
                         onPressed: () {
-                          Navigator.pushNamed(
-                            context,
+                         Get.toNamed(
                             "/AuthScreen",
                           );
                         },
                         icon: const Icon(
-                          Icons.logout,
+                          Icons.login,
                           color: Colors.white,
                         ),
                       ),

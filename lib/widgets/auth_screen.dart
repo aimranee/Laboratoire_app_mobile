@@ -153,7 +153,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         )
                       ],
                     ),
-                    if (!isSignupScreen) LoginPage(),
+                    if (!isSignupScreen) const LoginPage(),
                     if (isSignupScreen) const SignUpPage(),
                   ],
                 ),

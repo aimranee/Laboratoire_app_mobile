@@ -4,7 +4,7 @@ import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/style.dart';
 import 'package:laboratoire_app/widgets/auth_screen.dart';
-import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/error_widget.dart';

@@ -3,7 +3,7 @@ import 'package:laboratoire_app/Service/DateAndTimeCalculation/time_calculation.
 import 'package:laboratoire_app/Service/Firebase/read_data.dart';
 import 'package:laboratoire_app/SetData/screen_arg.dart';
 import 'package:laboratoire_app/utilities/color.dart';
-import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -211,9 +211,9 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
               bottom: 0,
               child: Container(
                 height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: bgColor,
-                    borderRadius: const BorderRadius.only(
+                    borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10))),
                 child: SingleChildScrollView(

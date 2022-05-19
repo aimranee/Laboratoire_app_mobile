@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:laboratoire_app/Screen/prescription/show_prescription_imae.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/inputfields.dart';
-import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class PrescriptionDetailsPage extends StatefulWidget {
   final title;
   final prescriptionDetails;
-  const PrescriptionDetailsPage({ this.title, this.prescriptionDetails });
+  PrescriptionDetailsPage({ this.title, this.prescriptionDetails });
   @override
   _PrescriptionDetailsPageState createState() => _PrescriptionDetailsPageState();
 }

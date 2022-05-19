@@ -5,7 +5,7 @@ import 'package:laboratoire_app/utilities/style.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class CAppBarWidget extends StatelessWidget {
+class CAppBarWidget extends StatefulWidget {
 
   final String title;
   bool isConn;
@@ -13,19 +13,24 @@ class CAppBarWidget extends StatelessWidget {
   CAppBarWidget({Key key, this.title, this.isConn}) : super(key: key);
 
   @override
+  State<CAppBarWidget> createState() => _CAppBarWidgetState();
+}
+
+class _CAppBarWidgetState extends State<CAppBarWidget> {
+  @override
   Widget build(BuildContext context) {
     return AppBar(
       iconTheme: const IconThemeData(color: appBarIconColor //change your color here
           ),
       title: Text(
-        title,
+        widget.title,
         style: kAppbarTitleStyle,
       ),
       centerTitle: true,
       backgroundColor: appBarColor,
       actions: 
       <Widget>[ 
-        isConn ? IconButton(
+        widget.isConn ? IconButton(
             icon: Stack(
               children: [
                 const Icon(

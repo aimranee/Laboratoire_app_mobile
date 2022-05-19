@@ -1,12 +1,14 @@
+import 'dart:developer';
 import 'package:laboratoire_app/Screen/Login_SignUp.dart';
 import 'package:laboratoire_app/Screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
 
   //Handles Auth
-  handleAuth(back) {
+  handleAuth() {
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
@@ -21,13 +23,16 @@ class AuthService {
   static Future<bool> signOut() async {
     bool isConn = true;
 
-    await FirebaseAuth.instance.signOut().then((v) {
+    await FirebaseAuth.instance.signOut().then((v) async {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.clear();
+      pref.setString("fcm", "");
       isConn = false;
     }).catchError((e) {
-      // //print(e); //Invalid otp
+      log(e); //Invalid otp
       isConn = true;
     });
-
+    
     return isConn;
   }
 
@@ -36,15 +41,14 @@ class AuthService {
   static Future<bool> signIn(String email, String password) async {
     bool isLoggedIn = false;
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       isLoggedIn = true;
     } on FirebaseAuthException catch (e) {
       isLoggedIn = false;
       if (e.code == 'user-not-found') {
-        // //print('No user found for that email.');
+        log('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        // //print('Wrong password provided for that user.');
+        log('Wrong password provided for that user.');
       }
     }
     return isLoggedIn;

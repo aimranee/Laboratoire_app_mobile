@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/style.dart';
-import 'package:laboratoire_app/widgets/appbarsWidget.dart';
+import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,51 +19,53 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final bool _isLoading = false;
+  bool _isLoading = false;
   bool isConn = false;
   
   @override
   void initState() {
     
-     
     // initialize local and firebase notification
     // HandleLocalNotification.initializeFlutterNotification(
     //     context); //local notification
     // HandleFirebaseNotification.handleNotifications(
     //     context); //firebase notification
     _getAndSetUserData(); //get users details from database
+
     super.initState();
   }
 
   _getAndSetUserData() async {
     
     //start loading indicator
-    
+    SharedPreferences pref = await SharedPreferences.getInstance();
     // final res=await FirebaseMessaging.instance.getToken();
-    // //print(res);
+    // log(res);
+    setState(() {
+      _isLoading = true;
+    });
 
-    final user = await UserService.getData();
-      if (user != null) {
-        setState(() {
+    if (pref.getString("fcm") != "") {
+      setState(() {
           isConn = true;
         });
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        //set all data
-        setState(() {
-        });
-        prefs.setString("firstName", user[0].firstName);
-        prefs.setString("lastName", user[0].lastName);
-        prefs.setString("uid", user[0].uId);
-        prefs.setString("createdDate", user[0].createdDate);
-        // setState(() {
-        //   _isLoading = false;
-        // });
+      final user = await UserService.getData();
+        
+      //set all data
+      setState(() {
+      });
+      pref.setString("firstName", user[0].firstName);
+      pref.setString("lastName", user[0].lastName);
+      pref.setString("uid", user[0].uId);
+      pref.setString("createdDate", user[0].createdTimeStamp);
+
       }
+      setState(() {
+        _isLoading = false;
+      });
     
     // //stop loading indicator
-    // setState(() {
-    //   _isLoading = false;
-    // });
+    
   }
 
   @override
@@ -271,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ) //recommended 200*300 pixel
                     )),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.only(right: 20.0, left: 20, top: 8.0),
             child: Container(
