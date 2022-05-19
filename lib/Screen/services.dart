@@ -157,13 +157,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     child: RoundedBtnWidget(
                       title: "More",
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MoreServiceScreen(
-                                serviceDetails:
-                                    serviceDetails), //send to data to the next screen
-                          ),
+                        Get.to(() => MoreServiceScreen(serviceDetails: serviceDetails), //send to data to the next screen
                         );
                       },
                     )),

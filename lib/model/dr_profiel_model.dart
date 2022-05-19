@@ -2,8 +2,8 @@ class DrProfileModel {
   String firstName;
   String lastName;
   String email;
-  String dNo1;
-  String dNo2;
+  String pNo1;
+  String pNo2;
   String description;
   String whatsAppNo;
   String subTitle;
@@ -17,8 +17,8 @@ class DrProfileModel {
     this.firstName,
     this.lastName,
     this.email,
-    this.dNo1,
-    this.dNo2,
+    this.pNo1,
+    this.pNo2,
     this.description,
     this.whatsAppNo,
     this.subTitle,
@@ -34,8 +34,8 @@ class DrProfileModel {
 
         firstName: json['firstName'],
         lastName: json['lastName'],
-        dNo1: json['dNo1'],
-        dNo2: json['dNo2'],
+        pNo1: json['dNo1'],
+        pNo2: json['dNo2'],
         email: json['email'],
         subTitle: json['subTitle'],
         description: json['description'],
@@ -53,8 +53,8 @@ class DrProfileModel {
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
-      "dNo1": dNo1,
-      "dNo2": dNo2,
+      "dNo1": pNo1,
+      "dNo2": pNo2,
       "description": description,
       "whatsAppNo": whatsAppNo,
       "subTitle": subTitle,

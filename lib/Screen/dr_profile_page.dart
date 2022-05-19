@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/curverdpath.dart';
@@ -9,31 +12,50 @@ import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:laboratoire_app/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:laboratoire_app/Service/dr_profile_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ContactUs extends StatefulWidget {
-  const ContactUs({Key key}) : super(key: key);
+class DoctorProfilePage extends StatefulWidget {
+  String id;
+  DoctorProfilePage({Key key, this.id}) : super(key: key);
 
   @override
-  _ContactUsState createState() => _ContactUsState();
+  _DoctorProfilePageState createState() => _DoctorProfilePageState();
 }
 
-class _ContactUsState extends State<ContactUs> {
+class _DoctorProfilePageState extends State<DoctorProfilePage> {
   bool isConn = Get.arguments;
+  bool _isLoading = false;
   @override
   void initState() {
-     
-
+     log(widget.id);
+    _checkData();
     super.initState();
   }
+  _checkData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
+    setState(() {
+      _isLoading = true;
+    });
+
+    if (pref.getString("fcm") != "") {
+      setState(() {
+          isConn = true;
+        });
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       drawer : CustomDrawer(isConn: isConn),
-        body: FutureBuilder(
-            future: DrProfileService
-                .getData(), //fetch doctors profile details like name, profileImage, description etc
+        body: _isLoading ? LoadingIndicatorWidget() : FutureBuilder(
+            future: DrProfileService.getDataById(widget.id), //fetch doctors profile details like name, profileImage, description etc
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return snapshot.data.length==0
@@ -92,7 +114,7 @@ class _ContactUsState extends State<ContactUs> {
                         ),
                         onPressed: () {
                           Navigator.popUntil(
-                              context, ModalRoute.withName('/'));
+                              context, ModalRoute.withName('/HomePage'));
                         })
                   ],
                 )),
@@ -169,7 +191,7 @@ class _ContactUsState extends State<ContactUs> {
                 width: MediaQuery.of(context).size.width * .8,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/ReachUsPage');
+                    Get.toNamed('/ReachUsPage');
                   },
                   child: Card(
                     elevation: 10.0,
@@ -258,7 +280,7 @@ class _ContactUsState extends State<ContactUs> {
               onTap: () async {
  //take clinic longitude from google map
                 const _url =
-                    'https://goo.gl/maps/Vb85pHShfgGXTSWC6';
+                    '';
                 await canLaunch(_url)
                     ? await launch(_url)
                     : throw 'Could not launch $_url'; //launch google map

@@ -232,8 +232,7 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
   }
 
   void _handleSendNotification() async {
-    final res = await DrProfileService
-        .getData();
+    final res = await DrProfileService.getData();
     String  _adminFCMid = res[0].fdmId;
     //send local notification
 

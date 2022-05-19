@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
+import 'package:laboratoire_app/Screen/dr_profile_page.dart';
 import 'package:laboratoire_app/Service/dr_profile_service.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
+import 'package:laboratoire_app/widgets/auth_screen.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/error_widget.dart';
@@ -19,7 +23,7 @@ class TeamDoctPage extends StatefulWidget {
 
 class _TeamDoctPageState extends State<TeamDoctPage> {
   bool isConn = Get.arguments;
-  final bool _isLoading = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -52,10 +56,11 @@ class _TeamDoctPageState extends State<TeamDoctPage> {
           left: 0,
           right: 0,
           bottom: 0,
-          child: Container(
+          child: !isConn ? const AuthScreen() : Container(
             height: MediaQuery.of(context).size.height,
             decoration: IBoxDecoration.upperBoxDecoration(),
             child: Padding(
+              
                 padding: const EdgeInsets.only(
                   top: 0.0,
                   left: 20,
@@ -131,7 +136,7 @@ class _TeamDoctPageState extends State<TeamDoctPage> {
                     // ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
-                      child: Text(doctorDetails.firstName+' '+ doctorDetails.lastName,
+                      child: Text(doctorDetails.firstName+" "+doctorDetails.lastName,
                           style: const TextStyle(
                             fontFamily: 'OpenSans-Bold',
                             fontSize: 12.0,
@@ -155,7 +160,8 @@ class _TeamDoctPageState extends State<TeamDoctPage> {
                     child: RoundedBtnWidget(
                       title: "More",
                       onPressed: () {
-                        Get.to(() => {}); //send to data to the next screen
+                        Get.to( () => DoctorProfilePage(id: doctorDetails.id),
+                        ); //send to data to the next screen
                       },
                     )),
               ),

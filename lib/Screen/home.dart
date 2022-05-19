@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // final res=await FirebaseMessaging.instance.getToken();
     // log(res);
     setState(() {
-      _isLoading = true;
+      _isLoading = false;
     });
 
     if (pref.getString("fcm") != "") {
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           isConn = true;
         });
       final user = await UserService.getData();
-        
+
       //set all data
       setState(() {
       });
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         TableRow(children: [
           _cardImg('assets/icon/documents.svg', 'Documents', "/Documents"),
-          _cardImg("assets/icon/doct.svg", "Team", "/ContactUsPage"),
+          _cardImg("assets/icon/doct.svg", "Team", "/Team"),
         ]),
 
         TableRow(children: [
