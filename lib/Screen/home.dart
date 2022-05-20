@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/utilities/color.dart';
@@ -38,11 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
   _getAndSetUserData() async {
     
     //start loading indicator
-    SharedPreferences pref = await SharedPreferences.getInstance();
-
+    
     setState(() {
-      _isLoading = false;
+      _isLoading = true;
     });
+    
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     if (pref.getString("fcm") != "") {
       setState(() {
@@ -50,13 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       final user = await UserService.getData();
 
-      //set all data
-      setState(() {
-      });
       pref.setString("firstName", user[0].firstName);
       pref.setString("lastName", user[0].lastName);
       pref.setString("uid", user[0].uId);
-      pref.setString("createdDate", user[0].createdTimeStamp);
+      log("msssss");
+      // pref.setString("createdDate", user[0].createdTimeStamp);
 
       }
       setState(() {

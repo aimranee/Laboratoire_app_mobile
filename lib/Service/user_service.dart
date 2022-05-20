@@ -25,7 +25,7 @@ class UserService {
     if (response.statusCode == 200) {
       
       List<UserModel> list = dataFromJson(response.body);
-      log("message : "+list[0].uId);
+      // log("message : "+list[0].uId);
       return list;
     } else {
       return []; //if any error occurs then it return a blank list
