@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:laboratoire_app/Screen/categories.dart';
 import 'package:laboratoire_app/Screen/dr_profile_page.dart';
 import 'package:laboratoire_app/Screen/login_signup.dart';
 import 'package:laboratoire_app/Screen/appointment/appointment.dart';
@@ -13,7 +14,7 @@ import 'package:laboratoire_app/Screen/more_service.dart';
 import 'package:laboratoire_app/Screen/notification_page.dart';
 import 'package:laboratoire_app/Screen/prescription/prescription_list_page.dart';
 import 'package:laboratoire_app/Screen/reachus.dart';
-import 'package:laboratoire_app/Screen/services.dart';
+import 'package:laboratoire_app/Screen/analyses.dart';
 import 'package:laboratoire_app/Screen/team_doctor.dart';
 import 'package:laboratoire_app/Screen/user_profiel.dart';
 
@@ -26,7 +27,7 @@ class AppRoutes {
   static String  contactUs =   '/ContactUsPage';
   static String  appointmentStatus = '/Appointmentstatus';
   static String  reachUS = '/ReachUsPage';
-  static String  servicesPage = '/ServicesPage';
+  static String  analysesPage = '/AnalysesPage';
   static String  registerPatient = '/RegisterPatientPage';
   static String  confirmationPage = '/ConfirmationPage';
   static String  notificationPage = '/NotificationPage';
@@ -38,6 +39,7 @@ class AppRoutes {
   static String  profile = '/Profile';
   static String  team = '/Team';
   static String  doctorProfile = '/DoctorProfile';
+  static String  categoryList = '/CategoryList';
   
   static List<GetPage> pages = [
     GetPage(
@@ -69,8 +71,8 @@ class AppRoutes {
       page: () => const ReachUS(),
     ),
     GetPage(
-      name: servicesPage,
-      page: () => const ServicesPage(),
+      name: analysesPage,
+      page: () => AnalysesPage(),
     ),
     GetPage(
       name: registerPatient,
@@ -114,6 +116,11 @@ class AppRoutes {
     GetPage(
       name: doctorProfile,
       page: () => DoctorProfilePage(),
+    ),
+
+    GetPage(
+      name: categoryList,
+      page: () => const CategoryListPage(),
     ),
     
   ];

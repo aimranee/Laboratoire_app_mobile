@@ -133,14 +133,6 @@ _getAndSetUserData() async {
                 // args: widget.isConn,
                 infoCount: 2,
               ),
-              CustomListTile(
-                isCollapsed: _isCollapsed,
-                icon: Icons.settings,
-                title: 'Settings',
-                // root: '',
-                // args: widget.isConn,
-                infoCount: 0,
-              ),
               const SizedBox(height: 10),
               BottomUserInfo(isCollapsed: _isCollapsed, isConn: widget.isConn),
               Align(

@@ -39,8 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     
     //start loading indicator
     SharedPreferences pref = await SharedPreferences.getInstance();
-    // final res=await FirebaseMessaging.instance.getToken();
-    // log(res);
+
     setState(() {
       _isLoading = false;
     });
@@ -110,22 +109,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
         TableRow(children: [
           _cardImg('assets/icon/patient.svg', 'Profile', "/Profile"),
-          _cardImg('assets/icon/teeth.svg', 'Services', "/ServicesPage"),
+          _cardImg('assets/icon/teeth.svg', 'Analyses', "/CategoryList"),
         ]),
 
         TableRow(children: [
-          _cardImg("assets/icon/appoin.svg", "Appointment", '/Appointmentstatus'),
-          _cardImg('assets/icon/sch.svg', 'Availability', '/AvailabilityPage'),
+          _cardImg("assets/icon/appoin.svg", "Rendez-vous", '/Appointmentstatus'),
+          _cardImg('assets/icon/sch.svg', 'Disponibilité', '/AvailabilityPage'),
         ]),
 
-        TableRow(children: [
-          _cardImg('assets/icon/documents.svg', 'Documents', "/Documents"),
-          _cardImg("assets/icon/doct.svg", "Team", "/Team"),
-        ]),
-
-        TableRow(children: [
-          _cardImg('assets/icon/reachus.svg', 'Reach Us', "/ReachUsPage"),
-          _cardImg("assets/icon/call.svg", "Contact Us", "/ContactUsPage"),
+        TableRow(children: [     
+          _cardImg('assets/icon/documents.svg', 'Resultas', "/Documents"),
+          _cardImg("assets/icon/call.svg", "Contactez-nous", "/ContactUsPage"),
         ]),
       ],
     );
@@ -164,6 +158,37 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: 20),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * .20,
+            width: MediaQuery.of(context).size.width *.8,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(0.0),
+                child: Container(            
+                    margin: const EdgeInsets.all(6),
+                    color: bgColor,
+                    child: Image.asset(
+                      'assets/images/image1.png',
+                      fit: BoxFit.cover,
+                    ) //recommended 200*300 pixel
+                    )),
+          ),
+          const SizedBox(height: 45),
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0, left: 20, top: 8.0),
+            child: Container(
+              child: _table(),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -255,33 +280,5 @@ class _HomeScreenState extends State<HomeScreen> {
   //   );
   // }
 
-  Widget _buildContent() {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .24,
-            width: MediaQuery.of(context).size.width,
-
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(0.0),
-                child: Container(
-                    color: bgColor,
-                    child: Image.asset(
-                      'assets/images/image1.png',
-                      fit: BoxFit.cover,
-                    ) //recommended 200*300 pixel
-                    )),
-          ),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0, left: 20, top: 8.0),
-            child: Container(
-              child: _table(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  
 }

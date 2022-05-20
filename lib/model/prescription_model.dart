@@ -8,7 +8,7 @@ class PrescriptionModel {
   String appointmentName;
   String drName;
   String fileUrl;
-  int isPaied;
+  String isPaied;
 
   PrescriptionModel({
     this.appointmentTime,

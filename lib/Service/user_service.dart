@@ -19,7 +19,7 @@ class UserService {
 
   static Future<List<UserModel>> getData() async {
     final userId = FirebaseAuth.instance.currentUser.uid;
-
+    
     final response = await http.get(Uri.parse("$_viewUrl?uid=$userId"));
     
     if (response.statusCode == 200) {
@@ -53,9 +53,10 @@ class UserService {
   }
 
   static updateData(UserModel userModel) async {
-    final res =
-        await http.post(Uri.parse(_updateUrl), body: userModel.toJsonAdd());
-    //print(">>>>>>>>>>>>>>>>>>>>>>${res.body}");
+    // log("hhhhhhhhhhhhhhh");
+    
+    final res = await http.post(Uri.parse(_updateUrl), body: userModel.toUpdateJson());
+    log(">>>>>>>>>>>>>>>>>>>>>>${userModel.toUpdateJson()}");
     if (res.statusCode == 200) {
       return res.body;
     } else {

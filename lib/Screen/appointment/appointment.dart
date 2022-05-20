@@ -24,10 +24,9 @@ class AppointmentPage extends StatefulWidget {
 class _AppointmentPageState extends State<AppointmentPage> {
   int _number;
   int _serviceTimeMin;
-  String _serviceName = "";
+  String _appointmentType = "";
   String _openingTime = "";
   String _closingTime = "";
-  String closedDay = "";
   bool isConn = Get.arguments;
   final bool _isLoading = false;
 
@@ -48,22 +47,21 @@ class _AppointmentPageState extends State<AppointmentPage> {
           onPressed: () {
             Get.to(() => 
               ChooseTimeSlotPage(
-                serviceName: _serviceName,
+                appointmentType: _appointmentType,
                 serviceTimeMin: _serviceTimeMin,
                 openingTime: _openingTime,
                 closingTime: _closingTime,
-                closedDay: closedDay,
                 isConn : isConn
               ),
             );
           },
-          clickable: _serviceName,
+          clickable: _appointmentType,
         ),
         drawer: CustomDrawer(isConn: isConn),
         body: Stack(
           clipBehavior: Clip.none,
           children: <Widget>[
-            CAppBarWidget(title: "Book an appointment", isConn: isConn), //common app bar
+            CAppBarWidget(title: "Demander Rendez-vous", isConn: isConn), //common app bar
             Positioned(
                 top: 90,
                 left: 0,
@@ -135,18 +133,17 @@ class _AppointmentPageState extends State<AppointmentPage> {
           if (_number == num) {
             //if user again tap
             setState(() {
-              _serviceName = ""; //clear name
+              _appointmentType = ""; //clear name
               _number = 0;
               //set to zero
             });
           } else {
             //if user taps
             setState(() {
-              _serviceName = appointmentTypesDetails.title; //set the service name
+              _appointmentType = appointmentTypesDetails.title; //set the service name
               _serviceTimeMin = appointmentTypesDetails.forTimeMin; //set the service time
               _openingTime = appointmentTypesDetails.openingTime;
               _closingTime = appointmentTypesDetails.closingTime;
-              closedDay = appointmentTypesDetails.day;
             });
 
             _number = num; //set the number to taped card index+1

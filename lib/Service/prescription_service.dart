@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:laboratoire_app/config.dart';
 import 'package:laboratoire_app/model/prescription_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,12 +12,12 @@ class PrescriptionService {
 
   static List<PrescriptionModel> dataFromJson(String jsonString) {
     final data = json.decode(jsonString);
-    return List<PrescriptionModel>.from(
-        data.map((item) => PrescriptionModel.fromJson(item)));
+    return List<PrescriptionModel>.from(data.map((item) => PrescriptionModel.fromJson(item)));
   }
 
   static Future<List<PrescriptionModel>> getData() async {
     final userId =  FirebaseAuth.instance.currentUser.uid;
+    
     final response = await http.post(Uri.parse(_viewUrl),body: {"uId":userId});
     if (response.statusCode == 200) {
       List<PrescriptionModel> list = dataFromJson(response.body);

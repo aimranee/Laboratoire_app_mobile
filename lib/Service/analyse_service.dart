@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:laboratoire_app/config.dart';
 import 'package:http/http.dart' as http;
-import 'package:laboratoire_app/model/service_model.dart';
+import 'package:laboratoire_app/model/analyses_model.dart';
 
 class ServiceService {
-  static const _viewUrl = "$apiUrl/get_service";
+  static const _viewUrl = "$apiUrl/get_analyses";
 
   static List<ServiceModel> dataFromJson(String jsonString) {
     final data = json.decode(jsonString);

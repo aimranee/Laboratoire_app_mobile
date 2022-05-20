@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:laboratoire_app/Screen/home.dart';
 import 'package:laboratoire_app/Screen/prescription/prescription_list_by_id_page.dart';
 import 'package:laboratoire_app/Service/Firebase/delet_data.dart';
 import 'package:laboratoire_app/Service/Firebase/update_data.dart';
@@ -28,15 +29,9 @@ class AppointmentDetailsPage extends StatefulWidget {
 
 class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
 
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _latsNameController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
-  final TextEditingController _phnController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _serviceNameController = TextEditingController();
+  final TextEditingController _appointmentTypeController = TextEditingController();
   final TextEditingController _statusController = TextEditingController();
   final TextEditingController _serviceTimeController = TextEditingController();
   final TextEditingController _appointmentIdController = TextEditingController();
@@ -51,15 +46,10 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
   void initState() {
      
     super.initState();
-    _firstNameController.text = widget.appointmentDetails.pFirstName;
-    _latsNameController.text = widget.appointmentDetails.pLastName;
-    _ageController.text = widget.appointmentDetails.age;
-    _cityController.text = widget.appointmentDetails.pCity;
-    _emailController.text = widget.appointmentDetails.pEmail;
-    _phnController.text = widget.appointmentDetails.pPhn;
+
     _dateController.text = widget.appointmentDetails.appointmentDate;
     _timeController.text = widget.appointmentDetails.appointmentTime;
-    _serviceNameController.text = widget.appointmentDetails.serviceName;
+    _appointmentTypeController.text = widget.appointmentDetails.appointmentType;
     _serviceTimeController.text = (widget.appointmentDetails.serviceTimeMin).toString();
     _appointmentIdController.text = widget.appointmentDetails.id;
     _uIdController.text = widget.appointmentDetails.uId; //firebase user id
@@ -81,13 +71,7 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
     super.dispose();
     _dateController.dispose();
     _timeController.dispose();
-    _cityController.dispose();
-    _ageController.dispose();
-    _firstNameController.dispose();
-    _latsNameController.dispose();
-    _phnController.dispose();
-    _emailController.dispose();
-    _serviceNameController.dispose();
+    _appointmentTypeController.dispose();
     _serviceTimeController.dispose();
     _appointmentIdController.dispose();
     _uIdController.dispose();
@@ -129,20 +113,14 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        _inputTextField("First Name", _firstNameController, 1),
-                        _inputTextField("Last Name", _latsNameController, 1),
-                        _inputTextField("Age", _ageController, 1),
                         _inputTextField("Appointment Status", _statusController, 1),
-                        _inputTextField("Phone Number", _phnController, 1),
-                        _inputTextField("City ", _cityController, 1),
-                        _inputTextField("Email", _emailController, 1),
                         _inputTextField("Appointment Date", _dateController, 1),
                         _inputTextField("Appointment Time", _timeController, 1),
-                        _inputTextField("Appointment Minute", _serviceTimeController, 1),
-                        _inputTextField("Appointment ID", _appointmentIdController, 1),
-                        _inputTextField("User ID", _uIdController, 1),
-                        _inputTextField("Created on", _createdDateTimeController, 1),
-                        _inputTextField("Last update on", _lastUpdatedController, 1),
+                        // _inputTextField("Appointment Minute", _serviceTimeController, 1),
+                        // _inputTextField("Appointment ID", _appointmentIdController, 1),
+                        // _inputTextField("User ID", _uIdController, 1),
+                        // _inputTextField("Created on", _createdDateTimeController, 1),
+                        // _inputTextField("Last update on", _lastUpdatedController, 1),
                         _inputTextField("Description, About your problem", _descController, null),
                       ],
                     ),
@@ -195,28 +173,27 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
       );
       final isUpdated=await AppointmentService.updateStatus(appointmentModel);
       if(isUpdated=="success"){
-        final notificationModel = NotificationModel(
-            title: "Canceled",
-            body:
-            "Appointment has been canceled for date ${widget.appointmentDetails.appointmentDate}. appointment id: ${widget.appointmentDetails.id}",
-            uId: widget.appointmentDetails.uId,
-            routeTo: "/Appointmentstatus",
-            sendBy: "user",
-            sendFrom: "${widget.appointmentDetails.pFirstName} ${widget.appointmentDetails.pLastName}",
-            sendTo: "Admin");
-        final notificationModelForAdmin = NotificationModel(
-            title: "Canceled Appointment",
-            body:
-            "${widget.appointmentDetails.pFirstName} ${widget.appointmentDetails.pLastName} has canceled appointment for date ${widget.appointmentDetails.appointmentDate}. appointment id: ${widget.appointmentDetails.id}",//body
-            uId: widget.appointmentDetails.uId,
-            sendBy: "${widget.appointmentDetails.pFirstName} ${widget.appointmentDetails.pLastName}"
-        );
-        await NotificationService.addData(notificationModel);
-        _handleSendNotification();
-        await NotificationService.addDataForAdmin(notificationModelForAdmin);
+        // final notificationModel = NotificationModel(
+        //     title: "Canceled",
+        //     body:
+        //     "Appointment has been canceled for date ${widget.appointmentDetails.appointmentDate}. appointment id: ${widget.appointmentDetails.id}",
+        //     uId: widget.appointmentDetails.uId,
+        //     routeTo: "/Appointmentstatus",
+        //     sendBy: "user",
+        //     sendFrom: "${widget.appointmentDetails.pFirstName} ${widget.appointmentDetails.pLastName}",
+        //     sendTo: "Admin");
+        // final notificationModelForAdmin = NotificationModel(
+        //     title: "Canceled Appointment",
+        //     body:
+        //     "${widget.appointmentDetails.pFirstName} ${widget.appointmentDetails.pLastName} has canceled appointment for date ${widget.appointmentDetails.appointmentDate}. appointment id: ${widget.appointmentDetails.id}",//body
+        //     uId: widget.appointmentDetails.uId,
+        //     sendBy: "${widget.appointmentDetails.pFirstName} ${widget.appointmentDetails.pLastName}"
+        // );
+        // await NotificationService.addData(notificationModel);
+        // _handleSendNotification();
+        // await NotificationService.addDataForAdmin(notificationModelForAdmin);
         ToastMsg.showToastMsg("Successfully Canceled");
-        Navigator.of(context).pushNamedAndRemoveUntil(
-            '/Appointmentstatus', ModalRoute.withName('/'));
+        Get.off(()=>const HomeScreen());
       } else {
         ToastMsg.showToastMsg("Something went wrong");
       }
@@ -231,26 +208,26 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
 
   }
 
-  void _handleSendNotification() async {
-    final res = await DrProfileService.getData();
-    String  _adminFCMid = res[0].fdmId;
-    //send local notification
+  // void _handleSendNotification() async {
+  //   final res = await DrProfileService.getData();
+  //   String  _adminFCMid = res[0].fdmId;
+  //   //send local notification
 
-    await HandleLocalNotification.showNotification(
-      "Canceled",
-      "Appointment has been canceled for date ${widget.appointmentDetails.appointmentDate}", // body
-    );
-    await UpdateData.updateIsAnyNotification("usersList", widget.appointmentDetails.uId, true);
+  //   // await HandleLocalNotification.showNotification(
+  //   //   "Canceled",
+  //   //   "Appointment has been canceled for date ${widget.appointmentDetails.appointmentDate}", // body
+  //   // );
+  //   // await UpdateData.updateIsAnyNotification("usersList", widget.appointmentDetails.uId, true);
 
-    //send notification to admin app for booking confirmation
-    await HandleFirebaseNotification.sendPushMessage(
-        _adminFCMid, //admin fcm
-        "Canceled Appointment", //title
-        "${widget.appointmentDetails.pFirstName} ${widget.appointmentDetails.pLastName} has canceled appointment for date ${widget.appointmentDetails.appointmentDate}. appointment id: ${widget.appointmentDetails.id}"//body
-    );
-    await UpdateData.updateIsAnyNotification("profile", "profile", true);
+  //   //send notification to admin app for booking confirmation
+  //   // await HandleFirebaseNotification.sendPushMessage(
+  //   //     _adminFCMid, //admin fcm
+  //   //     "Canceled Appointment", //title
+  //   //     "${widget.appointmentDetails.uName} has canceled appointment for date ${widget.appointmentDetails.appointmentDate}. appointment id: ${widget.appointmentDetails.id}"//body
+  //   // );
+  //   await UpdateData.updateIsAnyNotification("profile", "profile", true);
 
-  }
+  // }
   _takeConfirmation() {
     DialogBoxes.confirmationBox(
         context, "Cancel", "Are you sure want to cancel appointment", _handleCancelBtn);

@@ -1,16 +1,16 @@
-
 class ServiceModel{
   String title;
-  String prix;
+  String price;
   String duree;
   String desc;
-
+  String category;
 
   ServiceModel({
     this.duree,
-    this.prix,
+    this.price,
     this.title,
-    this.desc
+    this.desc,
+    this.category
 
   });
 
@@ -19,8 +19,9 @@ class ServiceModel{
 
       title: json['title'],
       duree: json['duree'],
-      prix: json['prix'],
-      desc: json['description']
+      price: json['price'],
+      desc: json['description'],
+      category: json['category_id'],
 
     );
   }

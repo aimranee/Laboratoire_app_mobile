@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/model/user_model.dart';
@@ -23,8 +25,11 @@ class UserProfilePage extends StatefulWidget {
 class _UserProfilePageState extends State<UserProfilePage> {
   bool _isLoading = false;
   String _selectedGender = "";
+  String _selectedfamilySituation = "";
   String _isEnableBtn = "false";
   bool isConn = false;
+  bool _hasRamid = false;
+  bool _hasCnss = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
@@ -33,6 +38,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _uIdController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _cinController = TextEditingController();
 
   @override
   void initState() {
@@ -49,6 +55,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     _phoneNumberController.dispose();
     _cityController.dispose();
     _uIdController.dispose();
+    _cinController.dispose();
     super.dispose();
   }
 
@@ -93,7 +100,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   _handleUpdate() {
     if (_formKey.currentState.validate()) {
-      if (_selectedGender == "" || _selectedGender == null) {
+      if ((_selectedGender == "" || _selectedGender == null) && (_selectedfamilySituation =="" || _selectedfamilySituation == null)) {
         ToastMsg.showToastMsg("Please select gender");
       } else {
         setState(() {
@@ -106,19 +113,31 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
   _updateDetails() async {
-    final pattern = RegExp('\\s+'); //remove all space
-    final fullName = _firstNameController.text + _lastNameController.text;
-    String searchByName = fullName.toLowerCase().replaceAll(pattern, "");
+    String R = "0";
+    String C = "0";
+      if (_hasRamid == true){
+          R = "1";
+      }
+      if (_hasCnss == true){
+          C = "1";
+      }
+
     final userModel = UserModel(
         email: _emailController.text,
         lastName: _lastNameController.text,
         firstName: _firstNameController.text,
+        cin: _cinController.text,
         age: _ageController.text,
         city: _cityController.text,
-        searchByName: searchByName,
         gender: _selectedGender,
-        pNo: _phoneNumberController.text);
-    // //print(">>>>>>>>>>>>>>>>>>>>>>${userModel.toUpdateJson()}");
+        familySituation: _selectedfamilySituation,
+        hasRamid: R,
+        hasCnss: C,
+        // uId: _uIdController.text,
+        pNo: _phoneNumberController.text,
+
+      );
+    // log(">>>>>>>>>>>>>>>>>>>>>>${userModel.toUpdateJson()}");
     final res = await UserService.updateData(userModel);
     if (res == "success") {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -173,10 +192,18 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }, TextInputType.emailAddress, 1);
   }
 
-  Widget _phnNumInputField() {
-    return InputFields.readableInputField(
-        _phoneNumberController, "Mobile Number", 1);
-  } 
+  Widget _phnNumInputField(String labelText, controller) {
+    return InputFields.commonInputField(controller, labelText, (item) {
+      if (item.length == 10) {
+        return null;
+      } else if (item.length < 10 || item.length > 10) {
+        return "Enter valid phone numbre";
+      } else {
+        return "Enter phone numbre";
+      }
+    }, TextInputType.number, 1);
+  }
+
 
   _genderDropDown() {
     return Padding(
@@ -212,6 +239,72 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
+  _familySituationDropDown() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+      child: DropdownButton<String>(
+        focusColor: Colors.white,
+        value: _selectedfamilySituation,
+        //elevation: 5,
+        style: const TextStyle(color: Colors.white),
+        iconEnabledColor: appBarColor,
+        items: <String>[
+          'Célibataire',
+          'Marié',
+          'Divorcé',
+        ].map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(
+              value,
+              style: const TextStyle(color: Colors.black),
+            ),
+          );
+        }).toList(),
+        hint: const Text(
+          "Family Situation",
+        ),
+        onChanged: (String value) {
+          setState(() {
+            _selectedfamilySituation = value;
+          });
+        },
+      ),
+    );
+  }
+
+  _checkRamid(bool _checked){
+    return CheckboxListTile(
+        title: const Text("RAMID"),
+        controlAffinity: ListTileControlAffinity.platform,
+        value: _checked,
+        onChanged: (bool value) {
+          setState(() {
+            _hasRamid = value;
+          });
+        },
+        activeColor: Colors.green,
+        checkColor: Colors.black,
+
+    );
+  }
+
+  _checkCnss(bool _checked){
+    return CheckboxListTile(
+        title: const Text("CNSS"),
+        controlAffinity: ListTileControlAffinity.platform,
+        value: _checked,
+        onChanged: (bool value) {
+          setState(() {
+            _hasCnss = value;
+          });
+        },
+        activeColor: Colors.green,
+        checkColor: Colors.black,
+
+    );
+  }
+
   _buildContent() {
     return _isLoading
         ? LoadingIndicatorWidget()
@@ -223,10 +316,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 _inputField("First Name", "Enter first name", _firstNameController),
                 _inputField("Last Name", "Enter last name", _lastNameController),
                 _inputField("City", "Enter city", _cityController),
+                _inputField("CIN", "Enter CIN", _cinController),
                 _ageInputField("Age", _ageController),
                 _genderDropDown(),
+                _checkRamid(_hasRamid),
+                _checkCnss(_hasCnss),
+                _familySituationDropDown(),
                 _emailInputField(),
-                _phnNumInputField(),
+                _phnNumInputField("Phone numbre", _phoneNumberController),
               ],
             ),
           );
@@ -244,18 +341,32 @@ class _UserProfilePageState extends State<UserProfilePage> {
         isConn = true;
       });
       
-    final user = await UserService.getData();
+      final user = await UserService.getData();
 
-    _emailController.text = user[0].email;
-    _lastNameController.text = user[0].lastName;
-    _firstNameController.text = user[0].firstName;
-    _firstNameController.text = user[0].firstName;
-    _phoneNumberController.text = user[0].pNo;
-    _cityController.text = user[0].city;
-    _uIdController.text = user[0].uId;
-    _ageController.text = user[0].age;
-    _selectedGender = user[0].gender;
+      _emailController.text = user[0].email;
+      _lastNameController.text = user[0].lastName;
+      _firstNameController.text = user[0].firstName;
+      _firstNameController.text = user[0].firstName;
+      _phoneNumberController.text = user[0].pNo;
+      _cityController.text = user[0].city;
+      _uIdController.text = user[0].uId;
+      _cinController.text = user[0].cin;
+      _ageController.text = user[0].age;
+      _selectedGender = user[0].gender;
+      _selectedfamilySituation = user[0].familySituation;
 
+      if (user[0].hasRamid == "1"){
+        setState((){
+          _hasRamid = true;
+        });
+      }
+
+      if (user[0].hasCnss == "1"){
+        setState((){
+          _hasCnss = true;
+        });
+      }
+      
     }else{
       setState(() {
         isConn = false;

@@ -27,7 +27,6 @@ class DrProfileService {
   }
 
   static Future<List<DrProfileModel>> getDataById(userId) async {
-    log("message: "+userId);
     final response = await http.get(Uri.parse("$_viewUrlId?id=$userId"));
     if (response.statusCode == 200) {
       List<DrProfileModel> list = dataFromJson(response.body);

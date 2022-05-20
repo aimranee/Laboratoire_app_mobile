@@ -1,11 +1,12 @@
+import 'package:get/get.dart';
+import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/SetData/screen_arg.dart';
-import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/inputfields.dart';
-import 'package:laboratoire_app/utilities/toast_msg.dart';
 import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:laboratoire_app/widgets/loading_indicator.dart';
 
 class RegisterPatient extends StatefulWidget {
   const RegisterPatient({Key key}) : super(key: key);
@@ -23,9 +24,14 @@ class _RegisterPatientState extends State<RegisterPatient> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController _desController = TextEditingController();
-  String _selectedGender = 'Gender';
 
+  bool _isLoading = false;
   final _isBtnDisable = "false";
+  @override
+  void initState(){
+    _setData();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -49,33 +55,26 @@ class _RegisterPatientState extends State<RegisterPatient> {
           title: "Next",
           onPressed: () {
             if (_formKey.currentState.validate()) {
-              if (_selectedGender == "Gender") {
-                ToastMsg.showToastMsg("Please select gender");
-              } else {
-                Navigator.pushNamed(
-                  context,
+              
+                Get.toNamed(
                   '/ConfirmationPage',
                   arguments: PatientDetailsArg(
                       _firstNameController.text,
                       _lastNameController.text,
                       _phoneNumberController.text,
                       _emailController.text,
-                      ageController.text,
-                      _selectedGender,
-                      _cityController.text,
                       _desController.text,
-                      _chooseTimeScrArgs.serviceName,
+                      _chooseTimeScrArgs.appointmentType,
                       _chooseTimeScrArgs.serviceTimeMIn,
                       _chooseTimeScrArgs.selectedTime,
                       _chooseTimeScrArgs.selectedDate, 
                     ),
                 );
-              }
             }
           },
           clickable: _isBtnDisable,
         ),
-        body: Stack(
+        body: _isLoading ? LoadingIndicatorWidget() : Stack(
           clipBehavior: Clip.none,
           children: <Widget>[
             CAppBarWidget(title: "Register Patient", isConn: true),
@@ -97,93 +96,11 @@ class _RegisterPatientState extends State<RegisterPatient> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          InputFields.textInputFormField(
-                            context,
-                            "First Name*",
-                            TextInputType.text,
-                            _firstNameController,
-                            1,
-                            (item) {
-                              return item.length > 0
-                                  ? null
-                                  : "Enter your first name";
-                            },
-                          ),
-                          InputFields.textInputFormField(
-                            context,
-                            "Last Name*",
-                            TextInputType.text,
-                            _lastNameController,
-                            1,
-                            (item) {
-                              return item.length > 0 ? null : "Enter last name";
-                            },
-                          ),
-                          InputFields.textInputFormField(
-                            context,
-                            "Phone Number*",
-                            TextInputType.number,
-                            _phoneNumberController,
-                            1,
-                            (item) {
-                              return item.length == 10
-                                  ? null
-                                  : "Enter a valid Phone number (10 digit)";
-                            },
-                          ),
-                          InputFields.textInputFormField(
-                            context,
-                            "Email",
-                            TextInputType.emailAddress,
-                            _emailController,
-                            1,
-                            (item) {
-                              Pattern pattern =
-                                  r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
-                                  r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
-                                  r"{0,253}[a-zA-Z0-9])?)*$";
-                              RegExp regex = RegExp(pattern);
-                              if (item.length > 0) {
-                                if (!regex.hasMatch(item) || item == null) {
-                                  return 'Enter a valid email address';
-                                } else {
-                                  return null;
-                                }
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          InputFields.ageInputFormField(
-                            context,
-                            "Age*",
-                            TextInputType.number,
-                            ageController,
-                            false,
-                            (item) {
-                              if (item.length > 0 && item.length <= 3) {
-                                return null;
-                              } else if (item.length > 3) {
-                                return "Enter valid age";
-                              } else {
-                                return "Enter age";
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: _genderDropDown(),
-                          ),
-                          InputFields.textInputFormField(
-                            context,
-                            "City*",
-                            TextInputType.text,
-                            _cityController,
-                            1,
-                            (item) {
-                              return item.length > 0 ? null : "Enter city";
-                            },
-                          ),
+                          _InputField(_firstNameController, "firstName"),
+                          _InputField(_lastNameController, "lastName"),
+                          _InputField(_cityController, "city"),
+                          _InputField(_phoneNumberController, "Phone numbre"),
+                          _InputField(_emailController, "Email"),
                           InputFields.textInputFormField(
                             context,
                             "Description, About your Problem",
@@ -211,39 +128,26 @@ class _RegisterPatientState extends State<RegisterPatient> {
         ));
   }
 
-  _genderDropDown() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 0, right: 15),
-      child: DropdownButton<String>(
-        focusColor: Colors.white,
-        value: _selectedGender,
-        //elevation: 5,
-        style: const TextStyle(color: Colors.white),
-        iconEnabledColor: btnColor,
-        items: <String>[
-          'Gender',
-          'Male',
-          'Female',
-          'Other',
-        ].map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(
-              value,
-              style: const TextStyle(color: Colors.black),
-            ),
-          );
-        }).toList(),
-        hint: const Text(
-          "Select Gender",
-        ),
-        onChanged: (String value) {
-          setState(() {
-            // //print(value);
-            _selectedGender = value;
-          });
-        },
-      ),
-    );
+  Widget _InputField(controller,String name,) {
+    return InputFields.readableInputField(
+        controller, name, 1);
+  } 
+
+  _setData() async {
+    setState(() {
+      _isLoading = true;
+    });
+    final user = await UserService.getData();
+
+      _emailController.text = user[0].email;
+      _lastNameController.text = user[0].lastName;
+      _firstNameController.text = user[0].firstName;
+      _firstNameController.text = user[0].firstName;
+      _phoneNumberController.text = user[0].pNo;
+      _cityController.text = user[0].city;
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

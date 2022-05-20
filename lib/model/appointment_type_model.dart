@@ -5,7 +5,6 @@ class AppointmentTypeModel{
   int forTimeMin;
   String openingTime;
   String closingTime;
-  String day;
 
   AppointmentTypeModel({
     this.title,
@@ -13,7 +12,6 @@ class AppointmentTypeModel{
     this.forTimeMin,
     this.openingTime,
     this.closingTime,
-    this.day
   });
 
   factory AppointmentTypeModel.fromJson(Map<String,dynamic> json){
@@ -22,8 +20,7 @@ class AppointmentTypeModel{
       imageUrl: json['imageUrl'],
       forTimeMin:  int.parse(json['forTimeMin']),
       openingTime: json['openingTime'],
-      closingTime: json['closingTime'],
-      day: json['day']
+      closingTime: json['closingTime']
     );
   }
 

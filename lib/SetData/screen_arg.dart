@@ -1,20 +1,20 @@
 
 
 // class ServiceScrAr {
-//   final String serviceName;
+//   final String appointmentType;
 //   final int serviceTimeMin;
 //   final String openingTime;
 //   final String closingTime;
-//   ServiceScrArg(this.serviceName, this.serviceTimeMin,this.openingTime,this.closingTime);
+//   ServiceScrArg(this.appointmentType, this.serviceTimeMin,this.openingTime,this.closingTime);
 // }
 
 class ChooseTimeScrArg {
-  final String serviceName;
+  final String appointmentType;
   final int serviceTimeMIn;
   final String selectedTime;
   final String selectedDate;
 
-  ChooseTimeScrArg(this.serviceName, this.serviceTimeMIn, this.selectedTime,
+  ChooseTimeScrArg(this.appointmentType, this.serviceTimeMIn, this.selectedTime,
       this.selectedDate);
 }
 
@@ -23,11 +23,8 @@ class PatientDetailsArg {
   final String pLastName;
   final String pPhn;
   final String pEmail;
-  final String age;
-  final String gender;
-  final String pCity;
   final String desc;
-  final String serviceName;
+  final String appointmentType;
   final int serviceTimeMIn;
   final String selectedTime;
   final String selectedDate;
@@ -36,11 +33,8 @@ class PatientDetailsArg {
       this.pLastName,
       this.pPhn,
       this.pEmail,
-      this.age,
-      this.gender,
-      this.pCity,
       this.desc,
-      this.serviceName,
+      this.appointmentType,
       this.serviceTimeMIn,
       this.selectedTime,
       this.selectedDate,

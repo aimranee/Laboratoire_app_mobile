@@ -32,7 +32,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   void initState() {
      
     super.initState();
-    _setAdminFcmId();
+    // _setAdminFcmId();
     _getAndSetUserData();
   }
 
@@ -65,11 +65,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               _patientDetailsArgs.pLastName,
               _patientDetailsArgs.pPhn,
               _patientDetailsArgs.pEmail,
-              _patientDetailsArgs.age,
-              _patientDetailsArgs.gender,
-              _patientDetailsArgs.pCity,
               _patientDetailsArgs.desc,
-              _patientDetailsArgs.serviceName,
+              _patientDetailsArgs.appointmentType,
               _patientDetailsArgs.serviceTimeMIn,
               _patientDetailsArgs.selectedTime,
               _patientDetailsArgs.selectedDate, 
@@ -162,7 +159,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               "Patient Name - ${args.pFirstName} ${args.pLastName}", style: kCardSubTitleStyle,
             ),
             const SizedBox(height: 10),
-            Text("Service Name - ${args.serviceName}", style: kCardSubTitleStyle),
+            Text("Service Name - ${args.appointmentType}", style: kCardSubTitleStyle),
             const SizedBox(height: 10),
             Text("Service Time - ${args.serviceTimeMIn} Minute", style: kCardSubTitleStyle),
             const SizedBox(height: 10),
@@ -177,33 +174,19 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     );
   }
 
-  void _updateBookedSlot(pFirstName, pLastName, pPhn, pEmail, age, gender,
-      pCity, desc, serviceName, serviceTimeMin, setTime, selectedDate) async {
+  void _updateBookedSlot(pFirstName, pLastName, pPhn, pEmail, desc, appointmentType, serviceTimeMin, setTime, selectedDate) async {
     setState(() {
       _isLoading = true;
       _isBtnDisable = "";
     });
-    final pattern = RegExp('\\s+'); //remove all space
-    final patientName = pFirstName + pLastName;
-    String searchByName = patientName
-        .toLowerCase()
-        .replaceAll(pattern, ""); //lowercase all letter and remove all space
 
     final appointmentModel = AppointmentModel(
-        pFirstName: pFirstName,
-        pLastName: pLastName,
-        pPhn: pPhn,
-        pEmail: pEmail,
-        age: age,
-        gender: gender,
-        pCity: pCity,
         description: desc,
-        serviceName: serviceName,
+        appointmentType: appointmentType,
         serviceTimeMin: serviceTimeMin,
         appointmentTime: setTime,
         appointmentDate: selectedDate,
         appointmentStatus: "Pending",
-        searchByName: searchByName,
         uId: _uId,
         uName: _uName); //initialize all values
     final insertStatus = await AppointmentService.addData(appointmentModel);
@@ -237,7 +220,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         //   await NotificationService.addDataForAdmin(notificationModelForAdmin);
           ToastMsg.showToastMsg("Successfully Booked");
         //   _handleSendNotification(
-        //       pFirstName, pLastName, serviceName, selectedDate, setTime);
+        //       pFirstName, pLastName, appointmentType, selectedDate, setTime);
           // Navigator.of(context).pushNamedAndRemoveUntil(
           //     '/Appointmentstatus', ModalRoute.withName('/'));
           Get.offAllNamed('/HomePage');
@@ -261,24 +244,24 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     });
   }
 
-  void _setAdminFcmId() async {
-    //loading if data till data fetched
-    setState(() {
-      _isLoading = true;
-    });
-    final res = await DrProfileService.getData(); //fetch admin fcm id for sending messages to admin
-    if (res != null) {
-      // setState(() {
-      //   _adminFCMid = res[0].fdmId;
-      // });
-    }
-    setState(() {
-      _isLoading = false;
-    });
-  }
+  // void _setAdminFcmId() async {
+  //   //loading if data till data fetched
+  //   setState(() {
+  //     _isLoading = true;
+  //   });
+  //   final res = await DrProfileService.getData(); //fetch admin fcm id for sending messages to admin
+  //   if (res != null) {
+  //     // setState(() {
+  //     //   _adminFCMid = res[0].fdmId;
+  //     // });
+  //   }
+  //   setState(() {
+  //     _isLoading = false;
+  //   });
+  // }
 
   // void _handleSendNotification(String firstName, String lastName,
-  //     String serviceName, String selectedDate, String setTime) async {
+  //     String appointmentType, String selectedDate, String setTime) async {
   //   //send local notification
 
   //   await HandleLocalNotification.showNotification(

@@ -7,7 +7,6 @@ class UserModel {
   String email;
   String fcmId;
   String pNo;
-  String searchByName;
   String createdTimeStamp;
   String updatedTimeStamp;
   String age;
@@ -26,7 +25,6 @@ class UserModel {
       this.email,
       this.fcmId,
       this.pNo,
-      this.searchByName,
       this.createdTimeStamp,
       this.updatedTimeStamp,
       this.age,
@@ -37,7 +35,6 @@ class UserModel {
       this.hasCnss});
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     firstName = json['firstName'];
     lastName = json['lastName'];
     uId = json['uId'];
@@ -45,9 +42,6 @@ class UserModel {
     email = json['email'];
     fcmId = json['fcmId'];
     pNo = json['pNo'];
-    searchByName = json['searchByName'];
-    createdTimeStamp = json['createdTimeStamp'];
-    updatedTimeStamp = json['updatedTimeStamp'];
     age = json['age'];
     gender = json['gender'];
     cin = json['cin'];
@@ -58,7 +52,7 @@ class UserModel {
 
   Map<String, dynamic> toJsonAdd() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+    // data['id'] = id;
     data['firstName'] = firstName;
     data['lastName'] = lastName;
     data['uId'] = uId;
@@ -66,9 +60,8 @@ class UserModel {
     data['email'] = email;
     data['fcmId'] = fcmId;
     data['pNo'] = pNo;
-    data['searchByName'] = searchByName;
-    data['createdTimeStamp'] = createdTimeStamp;
-    data['updatedTimeStamp'] = updatedTimeStamp;
+    // data['createdTimeStamp'] = createdTimeStamp;
+    // data['updatedTimeStamp'] = updatedTimeStamp;
     data['age'] = age;
     data['gender'] = gender;
     data['cin'] = cin;
@@ -76,5 +69,20 @@ class UserModel {
     data['hasRamid'] = hasRamid;
     data['hasCnss'] = hasCnss;
     return data;
+  }
+  Map<String,dynamic> toUpdateJson(){
+    return {
+      "firstName": firstName,
+      "lastName": lastName,
+      "city": city,
+      "age": age,
+      "email": email,
+      "gender":gender,
+      "pNo": pNo,
+      "cin": cin,
+      "familySituation": familySituation,
+      "hasRamid": hasRamid,
+      "hasCnss": hasCnss,
+    };
   }
 }

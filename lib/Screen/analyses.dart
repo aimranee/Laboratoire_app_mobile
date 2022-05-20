@@ -6,19 +6,21 @@ import 'package:laboratoire_app/widgets/error_widget.dart';
 import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:laboratoire_app/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:laboratoire_app/Service/service_service.dart';
+import 'package:laboratoire_app/Service/analyse_service.dart';
 import 'package:laboratoire_app/Screen/more_service.dart';
 import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/buttons_widget.dart';
 
-class ServicesPage extends StatefulWidget {
-  const ServicesPage({Key key}) : super(key: key);
+class AnalysesPage extends StatefulWidget {
+  // String id;
+  String title;
+  AnalysesPage({Key key, this.title}) : super(key: key);
 
   @override
-  _ServicesPageState createState() => _ServicesPageState();
+  _AnalysesPageState createState() => _AnalysesPageState();
 }
 
-class _ServicesPageState extends State<ServicesPage> {
+class _AnalysesPageState extends State<AnalysesPage> {
   bool isConn = Get.arguments;
   final bool _isLoading = false;
 
@@ -27,7 +29,6 @@ class _ServicesPageState extends State<ServicesPage> {
      
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class _ServicesPageState extends State<ServicesPage> {
       //overflow: Overflow.visible,
       children: <Widget>[
 
-        CAppBarWidget(title: 'Service', isConn: isConn),
+        CAppBarWidget(title: widget.title, isConn: isConn),
         Positioned(
           top: 90,
           left: 0,

@@ -67,10 +67,10 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
                         style: kParaStyle,
                       ),
                       const SizedBox(height: 20),
-                      const Text("Prix", style: kPageTitleStyle),
+                      const Text("price", style: kPageTitleStyle),
                       const SizedBox(height: 20),
                       Text(
-                        widget.serviceDetails.prix,
+                        widget.serviceDetails.price,
                         style: kParaStyle,
                       ),
                     ],
@@ -97,12 +97,12 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
       //               : ImageBoxFillWidget(
       //                   imageUrl: widget.serviceDetails.imageUrl))),
       // ),
-      title: const Text("Prix : ",
+      title: const Text("price : ",
           style: TextStyle(
             fontFamily: 'OpenSans-Bold',
             fontSize: 14.0,
           )),
-      subtitle: Text(widget.serviceDetails.prix,
+      subtitle: Text(widget.serviceDetails.price,
           style: const TextStyle(
             fontFamily: 'OpenSans-SemiBold',
             fontSize: 14.0,

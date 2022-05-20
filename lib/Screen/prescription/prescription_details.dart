@@ -16,7 +16,7 @@ class PrescriptionDetailsPage extends StatefulWidget {
 }
 
 class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
-  final TextEditingController _serviceNameController = TextEditingController();
+  final TextEditingController _appointmentTypeController = TextEditingController();
   final TextEditingController _patientNameController = TextEditingController();
   final TextEditingController _drNameController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -29,7 +29,7 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
   void initState() {
      
     setState(() {
-      _serviceNameController.text=widget.prescriptionDetails.appointmentName;
+      _appointmentTypeController.text=widget.prescriptionDetails.appointmentName;
       _patientNameController.text=widget.prescriptionDetails.patientName;
       _drNameController.text=widget.prescriptionDetails.drName;
       _dateController.text=widget.prescriptionDetails.appointmentDate;
@@ -45,7 +45,7 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
   @override
   void dispose() {
       
-    _serviceNameController.dispose();
+    _appointmentTypeController.dispose();
     _patientNameController.dispose();
     _drNameController.dispose();
     _dateController.dispose();
@@ -71,11 +71,11 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
               decoration:IBoxDecoration.upperBoxDecoration(),
               child: ListView(
                   children: [
-                    InputFields.readableInputField(_serviceNameController, "Service", 1),
+                    InputFields.readableInputField(_appointmentTypeController, "Service", 1),
                     InputFields.readableInputField(_patientNameController, "Name", 1),
-                    InputFields.readableInputField(_drNameController, "Dr Name", 1),
+                    // InputFields.readableInputField(_drNameController, "Dr Name", 1),
                     InputFields.readableInputField(_dateController, "Date", 1),
-                    InputFields.readableInputField(_timeController, "Time", 1),
+                    // InputFields.readableInputField(_timeController, "Time", 1),
                     InputFields.readableInputField(_messageController, "Message",null),
                     _buildImageList()
                   ],

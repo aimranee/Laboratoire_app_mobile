@@ -50,17 +50,17 @@ class _TeamDoctPageState extends State<TeamDoctPage> {
       //overflow: Overflow.visible,
       children: <Widget>[
 
-        CAppBarWidget(title: 'Doctors', isConn: isConn),
+        CAppBarWidget(title: 'Infermiers', isConn: isConn),
         Positioned(
           top: 90,
           left: 0,
           right: 0,
           bottom: 0,
-          child: !isConn ? const AuthScreen() : Container(
+          child: Container(
             height: MediaQuery.of(context).size.height,
             decoration: IBoxDecoration.upperBoxDecoration(),
             child: Padding(
-              
+               
                 padding: const EdgeInsets.only(
                   top: 0.0,
                   left: 20,

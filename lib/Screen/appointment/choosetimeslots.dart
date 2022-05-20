@@ -13,18 +13,16 @@ import 'package:intl/intl.dart';
 class ChooseTimeSlotPage extends StatefulWidget {
   final String openingTime;
   final String closingTime;
-  final String serviceName;
+  final String appointmentType;
   final int serviceTimeMin;
-  final String closedDay;
   bool isConn = false;
 
   ChooseTimeSlotPage(
       {Key key,
       this.openingTime,
       this.closingTime,
-      this.serviceName,
+      this.appointmentType,
       this.serviceTimeMin,
-      this.closedDay,
       this.isConn})
       : super(key: key);
 
@@ -38,7 +36,6 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
   var _selectedDate;
   var _selectedDay = DateTime.now().weekday;
   List _closingDate = [];
-  List _dayCode = [];
 
   List _bookedTimeSlots;
   final List<dynamic> _morningTimeSlotsList = [];
@@ -49,10 +46,6 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
   String _openingTimeMin = "";
   String _closingTimeHour = "";
   String _closingTimeMin = "";
-  String _lunchOpeningTimeHour = "";
-  String _lunchOpeningTimeMin = "";
-  String _lunchClosingTimeHour = "";
-  String _lunchClosingTimeMin = "";
 
   @override
   void initState() {
@@ -100,34 +93,12 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
   }
 
   Future<void> _getAndSetOpeningClosingTime() async {
-    
-    var openingClosingTime = await ReadData.fetchOpeningClosingTime();
-  
+     
     _openingTimeHour = (widget.openingTime).substring(0, 2);
     _openingTimeMin = (widget.openingTime).substring(3, 5);
     _closingTimeHour = (widget.closingTime).substring(0, 2);
     _closingTimeMin = (widget.closingTime).substring(3, 5);
 
-    _dayCode = openingClosingTime["dayCode"]; //get and set clinic closing days
-    final res = widget.closedDay; //get all closed day for specific appointment
-    if (res != "" && res != null) {
-      final coledDatArr = (res).split(',');
-      for (var element in coledDatArr) {
-        _dayCode.add(int.parse(element));
-      }
-    }
-    if (openingClosingTime["lunchOpeningTime"] != "" &&
-        openingClosingTime["lunchClosingTime"] != "") {
-      _lunchOpeningTimeHour =
-          (openingClosingTime["lunchOpeningTime"]).substring(0, 2);
-      _lunchOpeningTimeMin =
-          (openingClosingTime["lunchOpeningTime"]).substring(3, 5);
-      _lunchClosingTimeHour =
-          (openingClosingTime["lunchClosingTime"]).substring(0, 2);
-      _lunchClosingTimeMin =
-          (openingClosingTime["lunchClosingTime"]).substring(3, 5);
-    }
-    
   }
 
   _getAndsetTimeSlots(String openingTimeHour, String openingTimeMin,
@@ -142,9 +113,6 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
         serviceTime
     ); //calculate all the possible time slots between opening and closing time
 
-    //  //print("Service Time" + " " + "$serviceTime");
-    // //print("...................." + "$timeSlots");
-
     if (_bookedTimeSlots != null) {
       //if any booked time exists on the selected day
       timeSlots = TimeCalculation.reCalculateTimeSlots(
@@ -155,8 +123,6 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
           closingTimeMin,
           widget.serviceTimeMin); // Recalculate the time according to the booked time slots and date
     }
-    // //print("+++++++++++++++++++++++++ $timeSlots");
-
     _arrangeTimeSlots(
         timeSlots); //separate the time according to morning, afternoon and evening slots
   }
@@ -191,7 +157,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
           onPressed: () {
             Get.toNamed("/RegisterPatientPage",
                 arguments: ChooseTimeScrArg(
-                  widget.serviceName,
+                  widget.appointmentType,
                   widget.serviceTimeMin,
                   _setTime,
                   _selectedDate,
@@ -232,8 +198,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
                                 const Divider(),
                                 _isLoading
                                     ? LoadingIndicatorWidget()
-                                    : _closingDate.contains(_selectedDate) ||
-                                            _dayCode.contains(_selectedDay)
+                                    : _closingDate.contains(_selectedDate) 
                                         ? const Center(
                                             child: Text(
                                             "Sorry! we can't take appointments in this day",
@@ -367,12 +332,9 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
 
     //print("dddddddddddddddddd ");
     final todayDate = _setTodayDateFormate();
-    // //print("tooooooooodddddddddddd $todayDate");
 
     if (_selectedDate == todayDate) {
-      // //print(DateTime.now().month);
       if (int.parse(time.substring(0, 2)) < DateTime.now().hour) {
-        //true the time is over
 
         _isNoRemainingTime = true;
       } else if (int.parse(time.substring(0, 2)) == DateTime.now().hour) {
@@ -382,39 +344,9 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
         }
       }
     }
-    // //print(time);
-    // //print(_isNoRemainingTime);
-    if (_openingTimeHour != "" &&
-        _closingTimeHour != "" &&
-        _openingTimeMin != "" &&
-        _closingTimeMin != "") {
-      if (int.parse(time.substring(0, 2)) > int.parse(_lunchOpeningTimeHour) &&
-          int.parse(time.substring(0, 2)) < int.parse(_lunchClosingTimeHour)) {
-        //true the time is over
-
-        _isNoRemainingTime = true;
-      } else if (int.parse(time.substring(0, 2)) ==
-          int.parse(_lunchOpeningTimeHour)) {
-        if (int.parse(time.substring(3, 5)) >= int.parse(_lunchOpeningTimeMin)) {
-          _isNoRemainingTime = true;
-        }
-      } else if (int.parse(time.substring(0, 2)) ==
-          int.parse(_lunchClosingTimeHour)) {
-        if (int.parse(time.substring(3, 5)) <= int.parse(_lunchClosingTimeMin)) {
-          _isNoRemainingTime = true;
-        }
-      }
-    }
-
-    var bookedTimeSlots = [];
-
-    if (bookedTime != null) {
-      bookedTimeSlots = TimeCalculation.calculateBookedTime(
-          time, bookedTime, serviceTimeMin); //get all disabled time
-    }
 
     return GestureDetector(
-      onTap: _isNoRemainingTime || bookedTimeSlots.contains(time)
+      onTap: _isNoRemainingTime 
           ? null
           : () {
               setState(() {
@@ -424,7 +356,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
         child: Card(
           color: time == _setTime
               ? btnColor
-              : _isNoRemainingTime || bookedTimeSlots.contains(time)
+              : _isNoRemainingTime 
                   ? Colors.red
                   : Colors.green,
           shape: RoundedRectangleBorder(

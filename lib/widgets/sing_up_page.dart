@@ -171,12 +171,9 @@ void _handleUpload() async {
     });
 
     var fcmId = await FirebaseMessaging.instance.getToken();
-    final pattern = RegExp('\\s+'); //remove all space
-    final fullName = _firstNameController.text + _lastNameController.text;
-    String searchByName = fullName.toLowerCase().replaceAll(pattern, "");
+
     final userModel = UserModel(
         uId: widget.uId,
-        searchByName: searchByName,
         city: _cityController.text,
         age: _ageController.text,
         gender: _selectedGender,
@@ -187,7 +184,7 @@ void _handleUpload() async {
         pNo: widget.pNo);
     final insertStatus = await UserService.addData(userModel);
     if (insertStatus != "success") {
-      await AddData.addRegisterDetails(widget.uId,searchByName,_cityController.text, _ageController.text,_selectedGender, _emailController.text,fcmId,_firstNameController.text, "", _lastNameController.text, widget.pNo);
+      await AddData.addRegisterDetails(widget.uId,_cityController.text, _ageController.text,_selectedGender, _emailController.text,fcmId,_firstNameController.text, "", _lastNameController.text, widget.pNo);
      // await AddData.addRegisterDetails(widget.uId);
       ToastMsg.showToastMsg("Registered Logged In");
     } else {
@@ -210,7 +207,6 @@ void _handleUpload() async {
           'Gender',
           'Male',
           'Female',
-          'Other',
         ].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,

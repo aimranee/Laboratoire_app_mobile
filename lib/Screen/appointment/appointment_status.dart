@@ -151,9 +151,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
                                 fontSize: 12,
                               )),
                           Text(
-                              appointmentDetails[index].pFirstName +
-                                  " " +
-                                  appointmentDetails[index].pLastName,
+                              appointmentDetails[index].uName,
                               style: const TextStyle(
                                 fontFamily: 'OpenSans-SemiBold',
                                 fontSize: 15,
@@ -215,7 +213,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
                             fontFamily: 'OpenSans-Regular',
                             fontSize: 12,
                           )),
-                      Text(appointmentDetails[index].serviceName,
+                      Text(appointmentDetails[index].appointmentType,
                           style: const TextStyle(
                             fontFamily: 'OpenSans-SemiBold',
                             fontSize: 15,
