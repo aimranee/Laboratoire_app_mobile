@@ -22,13 +22,13 @@ class _LoginPageState extends State<LoginPage> {
   bool isRememberMe = false;
   bool _isLoading = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _userIdController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
    @override
   void dispose() {
       
-    _userIdController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -83,12 +83,11 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-    Widget _EmailField(
-      IconData icon, String hintText) {
+    Widget _EmailField(IconData icon, String hintText) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: TextFormField(
-        controller: _userIdController,
+        controller: _emailController,
         keyboardType: TextInputType.emailAddress,
         validator: (item) {
           Pattern pattern =
@@ -168,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLoading = true;
       });
-      final res = await AuthService.signIn(_userIdController.text, _passwordController.text);
+      final res = await AuthService.signIn(_emailController.text, _passwordController.text);
       if (res) {
         final FirebaseAuth auth = FirebaseAuth.instance;
         await setData(auth.currentUser.uid);

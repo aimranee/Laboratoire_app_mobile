@@ -26,6 +26,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   bool _isLoading = false;
   String _selectedGender = "";
   String _selectedfamilySituation = "";
+  String _selectedBloodType = "";
   String _isEnableBtn = "false";
   bool isConn = false;
   bool _hasRamid = false;
@@ -100,7 +101,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   _handleUpdate() {
     if (_formKey.currentState.validate()) {
-      if ((_selectedGender == "" || _selectedGender == null) && (_selectedfamilySituation =="" || _selectedfamilySituation == null)) {
+      if ((_selectedGender == "" || _selectedGender == null) && (_selectedfamilySituation =="" || _selectedfamilySituation == null) && (_selectedBloodType =="" || _selectedBloodType == null)) {
         ToastMsg.showToastMsg("Please select gender");
       } else {
         setState(() {
@@ -131,9 +132,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
         city: _cityController.text,
         gender: _selectedGender,
         familySituation: _selectedfamilySituation,
+        bloodType: _selectedBloodType,
         hasRamid: R,
         hasCnss: C,
-        // uId: _uIdController.text,
+        uId: _uIdController.text,
         pNo: _phoneNumberController.text,
 
       );
@@ -217,7 +219,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
         items: <String>[
           'Male',
           'Female',
-          'Other',
         ].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -273,6 +274,43 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
+    _bloodTypeDropDown() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+      child: DropdownButton<String>(
+        focusColor: Colors.white,
+        value: _selectedBloodType,
+        //elevation: 5,
+        style: const TextStyle(color: Colors.white),
+        iconEnabledColor: appBarColor,
+        items: <String>[
+          'A+',
+          'A-',
+          'B+',
+          'B-',
+          'AB',
+          'O',
+        ].map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(
+              value,
+              style: const TextStyle(color: Colors.black),
+            ),
+          );
+        }).toList(),
+        hint: const Text(
+          "blood Type",
+        ),
+        onChanged: (String value) {
+          setState(() {
+            _selectedBloodType = value;
+          });
+        },
+      ),
+    );
+  }
+
   _checkRamid(bool _checked){
     return CheckboxListTile(
         title: const Text("RAMID"),
@@ -322,6 +360,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 _checkRamid(_hasRamid),
                 _checkCnss(_hasCnss),
                 _familySituationDropDown(),
+                _bloodTypeDropDown(),
                 _emailInputField(),
                 _phnNumInputField("Phone numbre", _phoneNumberController),
               ],
@@ -354,6 +393,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       _ageController.text = user[0].age;
       _selectedGender = user[0].gender;
       _selectedfamilySituation = user[0].familySituation;
+      _selectedBloodType= user[0].bloodType;
 
       if (user[0].hasRamid == "1"){
         setState((){

@@ -53,5 +53,5 @@ class AuthService {
     }
     return isLoggedIn;
   }
-
 }
+  

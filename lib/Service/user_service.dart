@@ -10,22 +10,22 @@ class UserService {
   static const _addUrl = "$apiUrl/add_user";
   static const _update = "$apiUrl/update_user_fcm";
   static const _updateUrl = "$apiUrl/update_user";
+  static const _registreUrl = "http://192.168.33.92/laboratoire/api/add_user";
   static List<UserModel> dataFromJson(String jsonString) {
     
     final data = json.decode(jsonString);
     // log(data.toString());
     return List<UserModel>.from(data.map((item) => UserModel.fromJson(item)));
   }
-
+  
   static Future<List<UserModel>> getData() async {
     final userId = FirebaseAuth.instance.currentUser.uid;
     
     final response = await http.get(Uri.parse("$_viewUrl?uid=$userId"));
     
     if (response.statusCode == 200) {
-      
       List<UserModel> list = dataFromJson(response.body);
-      // log("message : "+list[0].uId);
+      
       return list;
     } else {
       return []; //if any error occurs then it return a blank list
@@ -63,4 +63,17 @@ class UserService {
       return "error";
     }
   }
+
+  static register(UserModel userModel) async {
+    
+    final res = await http.post(Uri.parse("http://192.168.33.92/laboratoire/api/add_user"), body: userModel.toJsonAdd());
+    log("message : "+res.body);
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return "error";
+    }
+  }
+  
 }
+

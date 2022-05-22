@@ -6,15 +6,15 @@ import 'package:laboratoire_app/widgets/error_widget.dart';
 import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:laboratoire_app/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:laboratoire_app/Service/analyse_service.dart';
+import 'package:laboratoire_app/Service/analyses_service.dart';
 import 'package:laboratoire_app/Screen/more_service.dart';
 import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/buttons_widget.dart';
 
 class AnalysesPage extends StatefulWidget {
-  // String id;
+  String id;
   String title;
-  AnalysesPage({Key key, this.title}) : super(key: key);
+  AnalysesPage({Key key, this.title, this.id}) : super(key: key);
 
   @override
   _AnalysesPageState createState() => _AnalysesPageState();
@@ -64,7 +64,7 @@ class _AnalysesPageState extends State<AnalysesPage> {
                   right: 20,
                 ),
                 child: FutureBuilder(
-                    future: ServiceService.getData(),
+                    future: AnalysesServices.getDataId(widget.id),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return snapshot.data.length == 0
@@ -82,18 +82,18 @@ class _AnalysesPageState extends State<AnalysesPage> {
     );
   }
 
-  Widget _buildGridView(service) {
+  Widget _buildGridView(analyses) {
     return GridView.count(
       childAspectRatio: .8, //you can change the size of items
       crossAxisCount: 2,
       shrinkWrap: true,
-      children: List.generate(service.length, (index) {
-        return _cardImg(service[index]);
+      children: List.generate(analyses.length, (index) {
+        return _cardImg(analyses[index]);
       }),
     );
   }
 
-  Widget _cardImg(serviceDetails) {
+  Widget _cardImg(analysesDetails) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: GestureDetector(
@@ -125,21 +125,21 @@ class _AnalysesPageState extends State<AnalysesPage> {
                     //   child: ClipOval(
                     //       child: Padding(
                     //           padding: const EdgeInsets.all(00.0),
-                    //           child: serviceDetails. == ""
+                    //           child: analysesDetails. == ""
                     //               ? Icon(Icons.category_outlined,
                     //                   color: appBarColor)
                     //               : ImageBoxFillWidget(
-                    //                   imageUrl: serviceDetails.imageUrl))),
+                    //                   imageUrl: analysesDetails.imageUrl))),
                     // ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
-                      child: Text(serviceDetails.title,
+                      child: Text(analysesDetails.name,
                           style: const TextStyle(
                             fontFamily: 'OpenSans-Bold',
                             fontSize: 12.0,
                           )),
                     ),
-                    // Text(serviceDetails,
+                    // Text(analysesDetails,
                     //     style: const TextStyle(
                     //       fontFamily: 'OpenSans-SemiBold',
                     //       fontSize: 12.0,
@@ -158,7 +158,7 @@ class _AnalysesPageState extends State<AnalysesPage> {
                     child: RoundedBtnWidget(
                       title: "More",
                       onPressed: () {
-                        Get.to(() => MoreServiceScreen(serviceDetails: serviceDetails), //send to data to the next screen
+                        Get.to(() => MoreServiceScreen(analysesDetails: analysesDetails), //send to data to the next screen
                         );
                       },
                     )),

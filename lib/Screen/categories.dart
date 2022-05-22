@@ -105,7 +105,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
             onTap: () {
               Get.to(() => AnalysesPage(
                       title: catDetails[index].name,
-                      // id: catDetails[index].id
+                      id: catDetails[index].id
                     ),arguments: isConn
               );
 

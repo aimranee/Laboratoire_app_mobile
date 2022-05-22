@@ -11,6 +11,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  bool isSignupScreen = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +45,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                           children: [
                             TextSpan(
-                              text: " Back,",
+                              text: isSignupScreen ? " Laboratoire," : " Back,",
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
@@ -56,8 +57,11 @@ class _AuthScreenState extends State<AuthScreen> {
                     const SizedBox(
                       height: 5,
                     ),
-                    const Text("Signin to Continue",
-                      style: TextStyle(
+                    Text(
+                      isSignupScreen
+                          ? "Signup to Continue"
+                          : "Signin to Continue",
+                      style: const TextStyle(
                         letterSpacing: 1,
                         color: Colors.white,
                       ),
@@ -70,11 +74,11 @@ class _AuthScreenState extends State<AuthScreen> {
           AnimatedPositioned(
             duration: const Duration(milliseconds: 700),
             curve: Curves.bounceInOut,
-            top: 230,
+            top: isSignupScreen ? 200 : 230,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 700),
               curve: Curves.bounceInOut,
-              height: 320,
+              height: isSignupScreen ? 380 : 320,
               padding: const EdgeInsets.all(20),
               width: MediaQuery.of(context).size.width - 40,
               margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -93,16 +97,24 @@ class _AuthScreenState extends State<AuthScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        GestureDetector(                           
+                        GestureDetector(   
+                          onTap: () {
+                            setState(() {
+                              isSignupScreen = false;
+                            });
+                          },                        
                           child: Column(
                             children: [
-                              const Text(
+                              Text(
                                 "LOGIN",
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: Palette.activeColor),
+                                    color: !isSignupScreen
+                                        ? Palette.activeColor
+                                        : Palette.textColor1),
                               ),
+                              if (!isSignupScreen)
                                 Container(
                                   margin: const EdgeInsets.only(top: 3),
                                   height: 2,
@@ -112,9 +124,37 @@ class _AuthScreenState extends State<AuthScreen> {
                             ],
                           ),
                         ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isSignupScreen = true;
+                            });
+                          },
+                          child: Column(
+                            children: [
+                              Text(
+                                "SIGNUP",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: isSignupScreen
+                                        ? Palette.activeColor
+                                        : Palette.textColor1),
+                              ),
+                              if (isSignupScreen)
+                                Container(
+                                  margin: const EdgeInsets.only(top: 3),
+                                  height: 2,
+                                  width: 55,
+                                  color: Colors.orange,
+                                )
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                    const LoginPage(),
+                    if (!isSignupScreen) const LoginPage(),
+                    if (isSignupScreen) const SignUpPage(),
                   ],
                 ),
               ),

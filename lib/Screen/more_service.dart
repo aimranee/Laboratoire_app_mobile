@@ -4,9 +4,9 @@ import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:flutter/material.dart';
 
 class MoreServiceScreen extends StatefulWidget {
-  final serviceDetails;
+  final analysesDetails;
 
-  const MoreServiceScreen({Key key, this.serviceDetails}) : super(key: key);
+  const MoreServiceScreen({Key key, this.analysesDetails}) : super(key: key);
   @override
   _MoreServiceScreenState createState() => _MoreServiceScreenState();
 }
@@ -28,7 +28,7 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
       //overflow: Overflow.visible,
       children: <Widget>[
         CAppBarWidget(
-          title: widget.serviceDetails.title, isConn: true
+          title: widget.analysesDetails.name, isConn: true
         ),
         Positioned(
           top: 90,
@@ -53,24 +53,59 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 20),
-                      const Text("Description", style: kPageTitleStyle),
+                      const Text("Titre", style: kPageTitleStyle),
                       const SizedBox(height: 20),
                       Text(
-                        widget.serviceDetails.desc,
+                        widget.analysesDetails.titre,
                         style: kParaStyle,
                       ),
                       const SizedBox(height: 20),
-                      const Text("Duree", style: kPageTitleStyle),
+                      const Text("Name", style: kPageTitleStyle),
                       const SizedBox(height: 20),
                       Text(
-                        widget.serviceDetails.duree,
+                        widget.analysesDetails.name,
+                        style: kParaStyle,
+                      ),
+                      const SizedBox(height: 20),
+                      const Text("Description", style: kPageTitleStyle),
+                      const SizedBox(height: 20),
+                      Text(
+                        widget.analysesDetails.description,
                         style: kParaStyle,
                       ),
                       const SizedBox(height: 20),
                       const Text("price", style: kPageTitleStyle),
                       const SizedBox(height: 20),
                       Text(
-                        widget.serviceDetails.price,
+                        widget.analysesDetails.price,
+                        style: kParaStyle,
+                      ),
+                      const SizedBox(height: 20),
+                      const Text("Bilan", style: kPageTitleStyle),
+                      const SizedBox(height: 20),
+                      Text(
+                        widget.analysesDetails.libBilan,
+                        style: kParaStyle,
+                      ),
+                      const SizedBox(height: 20),
+                      const Text("Valeur Reference", style: kPageTitleStyle),
+                      const SizedBox(height: 20),
+                      Text(
+                        widget.analysesDetails.valeurReference,
+                        style: kParaStyle,
+                      ),
+                      const SizedBox(height: 20),
+                      const Text("Unite", style: kPageTitleStyle),
+                      const SizedBox(height: 20),
+                      Text(
+                        widget.analysesDetails.unite,
+                        style: kParaStyle,
+                      ),
+                      const SizedBox(height: 20),
+                      const Text("Category Name", style: kPageTitleStyle),
+                      const SizedBox(height: 20),
+                      Text(
+                        widget.analysesDetails.categoryName,
                         style: kParaStyle,
                       ),
                     ],
@@ -82,10 +117,10 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
     );
   }
 
-  _buildCard() {
-    return ListTile(
-      contentPadding: const EdgeInsets.all(00.0),
-      trailing: const Icon(Icons.arrow_drop_down_outlined, size: 30, color: appBarColor),
+  // _buildCard() {
+  //   return ListTile(
+  //     contentPadding: const EdgeInsets.all(00.0),
+  //     trailing: const Icon(Icons.arrow_drop_down_outlined, size: 30, color: appBarColor),
       // leading: CircleAvatar(
       //   backgroundColor: bgColor,
       //   radius: 30,
@@ -97,17 +132,17 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
       //               : ImageBoxFillWidget(
       //                   imageUrl: widget.serviceDetails.imageUrl))),
       // ),
-      title: const Text("price : ",
-          style: TextStyle(
-            fontFamily: 'OpenSans-Bold',
-            fontSize: 14.0,
-          )),
-      subtitle: Text(widget.serviceDetails.price,
-          style: const TextStyle(
-            fontFamily: 'OpenSans-SemiBold',
-            fontSize: 14.0,
-          )),
+  //     title: const Text("price : ",
+  //         style: TextStyle(
+  //           fontFamily: 'OpenSans-Bold',
+  //           fontSize: 14.0,
+  //         )),
+  //     subtitle: Text(widget.analysesDetails.price,
+  //         style: const TextStyle(
+  //           fontFamily: 'OpenSans-SemiBold',
+  //           fontSize: 14.0,
+  //         )),
           
-    );
-  }
+  //   );
+  // }
 }

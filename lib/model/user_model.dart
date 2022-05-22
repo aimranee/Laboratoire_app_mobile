@@ -15,6 +15,8 @@ class UserModel {
   String familySituation;
   String hasRamid;
   String hasCnss;
+  String bloodType;
+  String diseaseState;
 
   UserModel(
       {this.id,
@@ -32,7 +34,9 @@ class UserModel {
       this.cin,
       this.familySituation,
       this.hasRamid,
-      this.hasCnss});
+      this.hasCnss,
+      this.bloodType,
+      this.diseaseState});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     firstName = json['firstName'];
@@ -48,30 +52,32 @@ class UserModel {
     familySituation = json['familySituation'];
     hasRamid = json['hasRamid'];
     hasCnss = json['hasCnss'];
+    bloodType = json['bloodType'];
+    diseaseState = json['diseaseState'];
   }
 
-  Map<String, dynamic> toJsonAdd() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    // data['id'] = id;
-    data['firstName'] = firstName;
-    data['lastName'] = lastName;
-    data['uId'] = uId;
-    data['city'] = city;
-    data['email'] = email;
-    data['fcmId'] = fcmId;
-    data['pNo'] = pNo;
-    // data['createdTimeStamp'] = createdTimeStamp;
-    // data['updatedTimeStamp'] = updatedTimeStamp;
-    data['age'] = age;
-    data['gender'] = gender;
-    data['cin'] = cin;
-    data['familySituation'] = familySituation;
-    data['hasRamid'] = hasRamid;
-    data['hasCnss'] = hasCnss;
-    return data;
+    Map<String,dynamic> toJsonAdd(){
+    return {
+      'firstName':firstName,
+      'lastName':lastName,
+      'email':email,
+      'bloodType':bloodType,
+      'cin':cin,
+      'uId':uId,
+      'city':city,
+      'pNo':pNo,
+      'age':age,
+      'gender':gender,
+      'familySituation':familySituation,
+      'hasRamid':hasRamid,
+      'hasCnss':hasCnss,
+      'fcmId':fcmId,
+    };
+
   }
   Map<String,dynamic> toUpdateJson(){
     return {
+      "uId": uId,
       "firstName": firstName,
       "lastName": lastName,
       "city": city,
@@ -83,6 +89,7 @@ class UserModel {
       "familySituation": familySituation,
       "hasRamid": hasRamid,
       "hasCnss": hasCnss,
+      "bloodType": bloodType,
     };
   }
 }

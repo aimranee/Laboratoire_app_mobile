@@ -200,7 +200,7 @@ class SignInBtnWidget extends StatelessWidget {
               const LoginSignupScreen();
             }),
         const Text(
-          "LogOut",
+          "Log In",
           style: TextStyle(color: Colors.white),
         )
       ],
