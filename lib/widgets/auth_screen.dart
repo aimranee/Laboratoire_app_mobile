@@ -78,7 +78,7 @@ class _AuthScreenState extends State<AuthScreen> {
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 700),
               curve: Curves.bounceInOut,
-              height: isSignupScreen ? 380 : 320,
+              height: isSignupScreen ? 480 : 320,
               padding: const EdgeInsets.all(20),
               width: MediaQuery.of(context).size.width - 40,
               margin: const EdgeInsets.symmetric(horizontal: 20),

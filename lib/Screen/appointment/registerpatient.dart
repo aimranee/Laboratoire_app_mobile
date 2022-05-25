@@ -1,12 +1,19 @@
+import 'dart:developer';
+import 'package:laboratoire_app/utilities/color.dart';
 import 'package:get/get.dart';
+import 'package:laboratoire_app/Screen/appointment/chooseanalyses.dart';
+import 'package:laboratoire_app/Service/analyses_select_services.dart';
 import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/SetData/screen_arg.dart';
+import 'package:laboratoire_app/model/analyses_category_model.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/inputfields.dart';
+import 'package:laboratoire_app/utilities/toast_msg.dart';
 import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:laboratoire_app/widgets/loading_indicator.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class RegisterPatient extends StatefulWidget {
   const RegisterPatient({Key key}) : super(key: key);
@@ -22,13 +29,15 @@ class _RegisterPatientState extends State<RegisterPatient> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
-  final TextEditingController ageController = TextEditingController();
   final TextEditingController _desController = TextEditingController();
 
   bool _isLoading = false;
   final _isBtnDisable = "false";
   @override
   void initState(){
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.getSubjectData();
+    });
     _setData();
     super.initState();
   }
@@ -39,38 +48,48 @@ class _RegisterPatientState extends State<RegisterPatient> {
     _lastNameController.dispose();
     _phoneNumberController.dispose();
     _emailController.dispose();
-    ageController.dispose();
     _cityController.dispose();
     _desController.dispose();
       
     super.dispose();
   }
-
+  final AppDataController controller = Get.put(AppDataController());
+  List subjectData = [];
+  List subjectDataPrice = [];
+  double summ = 0;
+  String analyses;
   @override
   Widget build(BuildContext context) {
-    final ChooseTimeScrArg _chooseTimeScrArgs =
-        ModalRoute.of(context).settings.arguments;
+        
+    final ChooseTimeScrArg _chooseTimeScrArgs = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         bottomNavigationBar: BottomNavigationStateWidget(
           title: "Next",
           onPressed: () {
-            if (_formKey.currentState.validate()) {
-              
-                Get.toNamed(
-                  '/ConfirmationPage',
-                  arguments: PatientDetailsArg(
-                      _firstNameController.text,
-                      _lastNameController.text,
-                      _phoneNumberController.text,
-                      _emailController.text,
-                      _desController.text,
-                      _chooseTimeScrArgs.appointmentType,
-                      _chooseTimeScrArgs.serviceTimeMIn,
-                      _chooseTimeScrArgs.selectedTime,
-                      _chooseTimeScrArgs.selectedDate, 
-                    ),
-                );
-            }
+            // log("message 124: "+_emailController.text);
+            // if (subjectData.isNotEmpty) {
+              if (_formKey.currentState.validate()) {
+                if (analyses == "" || summ == 0) {
+                  ToastMsg.showToastMsg("Veuillez sélectionner les analyses");
+                } else {
+                    Get.toNamed(
+                    '/ConfirmationPage',
+                    arguments: PatientDetailsArg(
+                        _firstNameController.text,
+                        _lastNameController.text,
+                        _phoneNumberController.text,
+                        _emailController.text,
+                        _cityController.text,
+                        _desController.text,
+                        analyses,
+                        summ,
+                        _chooseTimeScrArgs.appointmentType,
+                        _chooseTimeScrArgs.serviceTimeMIn,
+                        _chooseTimeScrArgs.selectedTime,
+                        _chooseTimeScrArgs.selectedDate),
+                  );
+                }
+              }
           },
           clickable: _isBtnDisable,
         ),
@@ -96,14 +115,15 @@ class _RegisterPatientState extends State<RegisterPatient> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          _InputField(_firstNameController, "firstName"),
-                          _InputField(_lastNameController, "lastName"),
-                          _InputField(_cityController, "city"),
-                          _InputField(_phoneNumberController, "Phone numbre"),
+                          _InputField(_firstNameController, "Prenom"),
+                          _InputField(_lastNameController, "Nom"),
+                          _InputField(_cityController, "Ville"),
+                          _InputField(_phoneNumberController, "Numero de telephone"),
                           _InputField(_emailController, "Email"),
+                          _getAnalyses(),
                           InputFields.textInputFormField(
                             context,
-                            "Description, About your Problem",
+                            "Description, À propos de votre problème",
                             TextInputType.text,
                             _desController,
                             5,
@@ -113,7 +133,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
                               } else {
                                 return item.length > 0
                                     ? null
-                                    : "Enter Description";
+                                    : "Entrez la description";
                               }
                             },
                           ),
@@ -139,15 +159,72 @@ class _RegisterPatientState extends State<RegisterPatient> {
     });
     final user = await UserService.getData();
 
-      _emailController.text = user[0].email;
-      _lastNameController.text = user[0].lastName;
-      _firstNameController.text = user[0].firstName;
-      _firstNameController.text = user[0].firstName;
-      _phoneNumberController.text = user[0].pNo;
-      _cityController.text = user[0].city;
+    _emailController.text = user[0].email;
+    _lastNameController.text = user[0].lastName;
+    _firstNameController.text = user[0].firstName;
+    _firstNameController.text = user[0].firstName;
+    _phoneNumberController.text = user[0].pNo;
+    _cityController.text = user[0].city;
 
     setState(() {
       _isLoading = false;
+    });
+  }
+
+  Widget _getAnalyses(){
+    return GetBuilder<AppDataController>(builder: (controller) {
+      return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: MultiSelectDialogField(
+          items: controller.dropDownData,
+          title: const Text(
+            "Sélectionnez Analyses",
+            style: TextStyle(color: Colors.black),
+          ),
+          selectedColor: Colors.black,
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: const BorderRadius.all(Radius.circular(30)),
+            border: Border.all(
+              color: bgColor,
+              width: 2,
+            ),
+          ),
+          buttonIcon: const Icon(
+            Icons.keyboard_arrow_down_outlined, color: iconsColor,
+            size: 20,
+          ),
+          buttonText: const Text(
+            "Sélectionnez les analyses",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+            ),
+          ),
+          onConfirm: (results) {
+            subjectData = [];
+            subjectDataPrice = [];
+            for (var i = 0; i < results.length; i++) {
+              AnalysesCatModel data = results[i];
+              // log(data.analysesId);
+              // log(data.analysesPrice);
+              subjectData.add(data.analysesName);
+              subjectDataPrice.add(data.analysesPrice);
+            }
+            // log("data $subjectData");
+            // log("data : "+subjectData);
+            // List<int> intList = subjectDataPrice.cast<int>();
+            // List <int> lint = subjectDataPrice.map(int.parse).toList();
+
+            for (var i = 0; i < subjectDataPrice.length; i++) {
+              summ += subjectDataPrice[i];
+              analyses = subjectData.join(", ");
+            }
+            log("message: $analyses");
+            //_selectedAnimals = results;
+          },
+        ),
+      );
     });
   }
 }

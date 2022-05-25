@@ -58,9 +58,9 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
       _isLoading = true;
     });
     _selectedDate = await _initializeDate(); //Initialize start time
-    await _getAndSetbookedTimeSlots();
+    // await _getAndSetbookedTimeSlots();
     await _getAndSetOpeningClosingTime();
-    await _setClosingDate();
+    // await _setClosingDate();
     _getAndsetTimeSlots(_openingTimeHour, _openingTimeMin, _closingTimeHour, _closingTimeMin);
     setState(() {
       _isLoading = false;
@@ -71,7 +71,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
     setState(() {
       _isLoading = true;
     });
-    await _getAndSetbookedTimeSlots();
+    // await _getAndSetbookedTimeSlots();
     _getAndsetTimeSlots(
         _openingTimeHour, _openingTimeMin, _closingTimeHour, _closingTimeMin);
     setState(() {
@@ -88,9 +88,9 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
     return formattedDate;
   }
 
-  Future<void> _getAndSetbookedTimeSlots() async {
-    _bookedTimeSlots = await ReadData.fetchBookedTime(_selectedDate);
-  }
+  // Future<void> _getAndSetbookedTimeSlots() async {
+  //   _bookedTimeSlots = await ReadData.fetchBookedTime(_selectedDate);
+  // }
 
   Future<void> _getAndSetOpeningClosingTime() async {
      
@@ -376,12 +376,12 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
     );
   }
 
-  _setClosingDate() async {
-    final res = await ReadData.fetchSettings();
-    if (res != null) {
-      setState(() {
-        _closingDate = res["closingDate"];
-      });
-    }
-  }
+  // _setClosingDate() async {
+  //   final res = await ReadData.fetchSettings();
+  //   if (res != null) {
+  //     setState(() {
+  //       _closingDate = res["closingDate"];
+  //     });
+  //   }
+  // }
 }

@@ -149,8 +149,8 @@ class _NotificationPageState extends State<NotificationPage> {
       _userCreatedDat = prefs.getString("createdDate");
     });
 
-    await UpdateData.updateIsAnyNotification(
-        "usersList", FirebaseAuth.instance.currentUser.uid, false);
+    // await UpdateData.updateIsAnyNotification(
+    //     "usersList", FirebaseAuth.instance.currentUser.uid, false);
     setState(() {
       _isLoading = false;
     });

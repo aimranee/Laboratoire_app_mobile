@@ -5,6 +5,8 @@ class AppointmentModel{
   String appointmentType;
   int serviceTimeMin;
   String uId;
+  String price;
+  String analyses;
   String description;
   String uName;
   String id;
@@ -18,6 +20,8 @@ class AppointmentModel{
     this.appointmentType,
     this.serviceTimeMin,
     this.uId,
+    this.price,
+    this.analyses,
     this.description,
     this.uName,
     this.id,
@@ -33,6 +37,8 @@ class AppointmentModel{
       appointmentType:json['appointmentType'],
       serviceTimeMin:int.parse(json['serviceTimeMin'],),
       uId:json['uId'],
+      price:json['price'],
+      analyses:json['analyses'],
       description:json['description'],
       uName:json['uName'],
       id:json['id'],
@@ -49,6 +55,8 @@ class AppointmentModel{
       "appointmentType":appointmentType,
       "serviceTimeMin":(serviceTimeMin).toString(),
       "uId":uId,
+      "price":price,
+      "analyses":analyses,
       "description":description,
       "uName":uName,
 

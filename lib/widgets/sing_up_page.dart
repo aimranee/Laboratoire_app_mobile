@@ -37,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _cinController = TextEditingController();
   
   String _selectedGender = 'Gender';
-  String _selectedBloodType = 'A+';
+  String _selectedBloodType = 'Groupe Sanguin';
   String _selectedfamilySituation = "Family Situation";
   bool _hasRamid = false;
   bool _hasCnss = false;
@@ -63,7 +63,6 @@ class _SignUpPageState extends State<SignUpPage> {
           buildTextField(MaterialCommunityIcons.email_outline, "CIN", _cinController),
           buildTextField(MaterialCommunityIcons.email_outline, "Age", _ageController),
           buildTextField(MaterialCommunityIcons.email_outline, "Ville", _cityController),
-          
           _familySituationDropDown(),
           _bloodTypeDropDown(),
 
@@ -409,6 +408,7 @@ _handleUpload() async {
         style: const TextStyle(color: Colors.white),
         iconEnabledColor: btnColor,
         items: <String>[
+          'Groupe Sanguin',
           'A+',
           'A-',
           'B+',
@@ -425,7 +425,7 @@ _handleUpload() async {
           );
         }).toList(),
         hint: const Text(
-          "Select Blood Type",
+          "Sélectionnez le groupe sanguin",
         ),
         onChanged: (String value) {
           setState(() {

@@ -12,11 +12,6 @@ void main() async {
   await FlutterDownloader.initialize(debug: true,);
   initializeDateFormatting();
 
-  // if (USE_FIRESTORE_EMULATOR) {
-  //   FirebaseFirestore.instance.settings = Settings(
-  //       host: 'localhost:8080', sslEnabled: false, persistenceEnabled: false);
-  // }
-
   runApp(const MyApp());
 }
 

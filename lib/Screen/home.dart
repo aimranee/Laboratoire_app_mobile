@@ -48,12 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     if (pref.getString("fcm") != "") {
-      // log(pref.getString("fcm"));
       setState(() {
           isConn = true;
         });
       final user = await UserService.getData();
-// pref.getString("fcm");
       pref.setString("firstName", user[0].firstName);
       pref.setString("lastName", user[0].lastName);
       pref.setString("uid", user[0].uId);

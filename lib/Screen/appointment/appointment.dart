@@ -86,7 +86,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             const Padding(
                 padding: EdgeInsets.only(top: 10.0, left: 20, right: 10),
                 child: Center(
-                  child: Text("What type of appointment", style: kPageTitleStyle))),
+                  child: Text("Quel type de rendez-vous", style: kPageTitleStyle))),
             FutureBuilder(
                 future: AppointmentTypeService.getData(), //fetch all appointment types
                 builder: (context, snapshot) {

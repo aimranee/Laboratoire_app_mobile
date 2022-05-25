@@ -64,7 +64,7 @@ class _AnalysesPageState extends State<AnalysesPage> {
                   right: 20,
                 ),
                 child: FutureBuilder(
-                    future: AnalysesServices.getDataId(widget.id),
+                    future: AnalysesService.getDataId(widget.id),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return snapshot.data.length == 0
@@ -75,7 +75,9 @@ class _AnalysesPageState extends State<AnalysesPage> {
                       } else {
                         return LoadingIndicatorWidget();
                       }
-                    })),
+                    }
+                  )
+                ),
           ),
         ),
       ],

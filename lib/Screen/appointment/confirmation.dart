@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
-import 'package:laboratoire_app/Service/Firebase/update_data.dart';
 import 'package:laboratoire_app/Service/appointment_service.dart';
-import 'package:laboratoire_app/Service/dr_profile_service.dart';
 import 'package:laboratoire_app/SetData/screen_arg.dart';
 import 'package:laboratoire_app/model/appointment_model.dart';
 import 'package:laboratoire_app/utilities/color.dart';
@@ -65,7 +63,10 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               _patientDetailsArgs.pLastName,
               _patientDetailsArgs.pPhn,
               _patientDetailsArgs.pEmail,
+              _patientDetailsArgs.pCity,
               _patientDetailsArgs.desc,
+              _patientDetailsArgs.analyses,
+              _patientDetailsArgs.price,
               _patientDetailsArgs.appointmentType,
               _patientDetailsArgs.serviceTimeMIn,
               _patientDetailsArgs.selectedTime,
@@ -92,13 +93,12 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                          padding: const EdgeInsets.only(
-                              top: 20.0, left: 10, right: 10),
+                          padding: const EdgeInsets.only(top: 20.0, left: 10, right: 10),
                           child: _isLoading
                               ? Center(child: LoadingIndicatorWidget())
                               : Center(
                                   child: SizedBox(
-                                      height: 250,
+                                      height: 500,
                                       width: double.infinity,
                                       child: _cardView(_patientDetailsArgs)),
                                 )),
@@ -131,13 +131,13 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
       ),
       elevation: 20,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(18.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 40,
+              height: 50,
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -155,26 +155,30 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               ),
             ),
             const Divider(),
-            Text(
-              "Patient Name - ${args.pFirstName} ${args.pLastName}", style: kCardSubTitleStyle,
-            ),
-            const SizedBox(height: 10),
-            Text("Service Name - ${args.appointmentType}", style: kCardSubTitleStyle),
-            const SizedBox(height: 10),
-            Text("Service Time - ${args.serviceTimeMIn} Minute", style: kCardSubTitleStyle),
-            const SizedBox(height: 10),
-            Text("Date - ${args.selectedDate}", style: kCardSubTitleStyle),
-            const SizedBox(height: 10),
-            Text("Time - ${args.selectedTime}", style: kCardSubTitleStyle),
-            const SizedBox(height: 10),
-            Text("Mobile Number - ${args.pPhn}", style: kCardSubTitleStyle)
+            Text("Patient Name : ${args.pFirstName} ${args.pLastName}", style: kCardSubTitleStyle),
+            const SizedBox(height: 17),
+            Text("Service Type - ${args.appointmentType}", style: kCardSubTitleStyle),
+            const SizedBox(height: 17),
+            Text("Service Time : ${args.serviceTimeMIn} Minute", style: kCardSubTitleStyle),
+            const SizedBox(height: 17),
+            Text("Date : ${args.selectedDate}", style: kCardSubTitleStyle),
+            const SizedBox(height: 17),
+            Text("Time : ${args.selectedTime}", style: kCardSubTitleStyle),
+            const SizedBox(height: 17),
+            Text("Mobile Number : ${args.pPhn}", style: kCardSubTitleStyle),
+            const SizedBox(height: 17),
+            Text("Total Price : ${args.price} DHs", style: kCardSubTitleStyle),
+            const SizedBox(height: 17),
+            const Text("Analyses : ", style: kCardSubTitleStyle),
+            const SizedBox(height: 7),
+            Text(args.analyses, style: kCardSubTitleStyle),
           ],
         ),
       ),
     );
   }
 
-  void _updateBookedSlot(pFirstName, pLastName, pPhn, pEmail, desc, appointmentType, serviceTimeMin, setTime, selectedDate) async {
+  void _updateBookedSlot(pFirstName, pLastName, pPhn, pEmail, pCity, desc, analyses, price, appointmentType, serviceTimeMin, setTime, selectedDate) async {
     setState(() {
       _isLoading = true;
       _isBtnDisable = "";
@@ -188,16 +192,18 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         appointmentDate: selectedDate,
         appointmentStatus: "Pending",
         uId: _uId,
+        price: price.toString(),
+        analyses: analyses,
         uName: _uName); //initialize all values
     final insertStatus = await AppointmentService.addData(appointmentModel);
 
     if (insertStatus != "error") {
       // //print(":::::::::::::::::::::;$insertStatus");
-      final updatedTimeSlotsStatus = await UpdateData.updateTimeSlot(
-          serviceTimeMin, setTime, selectedDate, insertStatus);
+      // final updatedTimeSlotsStatus = await UpdateData.updateTimeSlot(
+      //     serviceTimeMin, setTime, selectedDate, insertStatus);
       //if appoint details added successfully added
 
-      if (updatedTimeSlotsStatus == "") {
+      // if (updatedTimeSlotsStatus == "") {
         // final notificationModel = NotificationModel(
         //     title: "Successfully Booked",
         //     body:
@@ -229,10 +235,10 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
           // Navigator.pop(context);
         // }
-      } else {
-        ToastMsg.showToastMsg("Something went wrong. try again");
-        Navigator.pop(context);
-      }
+      // } else {
+      //   ToastMsg.showToastMsg("Something went wrong. try again");
+      //   Navigator.pop(context);
+      // }
     } else {
       ToastMsg.showToastMsg("Something went wrong. try again");
       Navigator.pop(context);

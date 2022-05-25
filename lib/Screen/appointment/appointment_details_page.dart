@@ -162,11 +162,11 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
       _isBtnDisable = "";
       _isLoading = true;
     });
-    final res = await DeleteData.deleteBookedAppointment(
-      widget.appointmentDetails.id,
-      widget.appointmentDetails.appointmentDate,
-    );
-    if (res == "success") {
+    // final res = await DeleteData.deleteBookedAppointment(
+    //   widget.appointmentDetails.id,
+    //   widget.appointmentDetails.appointmentDate,
+    // );
+    // if (res == "success") {
       final appointmentModel=AppointmentModel(
           id: widget.appointmentDetails.id,
           appointmentStatus: "Canceled"
@@ -198,9 +198,9 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
         ToastMsg.showToastMsg("Something went wrong");
       }
 
-    } else {
-      ToastMsg.showToastMsg("Something went wrong");
-    }
+    // } else {
+    //   ToastMsg.showToastMsg("Something went wrong");
+    // }
     setState(() {
       _isBtnDisable = "false";
       _isLoading = false;

@@ -88,7 +88,8 @@ class _CategoryListPageState extends State<CategoryListPage> {
                     } else {
                       return LoadingIndicatorWidget();
                     }
-                  }),
+                  }
+                ),
             ),
           ),
         ],
