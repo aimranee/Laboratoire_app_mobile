@@ -57,12 +57,12 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationWidget(route: "/ContactUsPage", title:"Contact us"),
+      bottomNavigationBar: BottomNavigationWidget(route: "/ContactUsPage", title:"Contactez-nous"),
       drawer : CustomDrawer(isConn: isConn),
       body: _isLoading ? LoadingIndicatorWidget() : Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
-          CAppBarWidget(title:"Prescriptions", isConn: isConn),
+          CAppBarWidget(title:"Resultats", isConn: isConn),
           Positioned(
             top: 90,
             left: 0,
@@ -146,9 +146,6 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
           );
         });
   }
-
-  
-
 }
 
 

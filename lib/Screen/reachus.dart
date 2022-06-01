@@ -23,7 +23,7 @@ class _ReachUSState extends State<ReachUS> {
       body: Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
-          CAppBarWidget(title: "Reach us", isConn: isConn),
+          CAppBarWidget(title: "Nous joindre", isConn: isConn),
           Positioned(
             top: 90,
             left: 0,

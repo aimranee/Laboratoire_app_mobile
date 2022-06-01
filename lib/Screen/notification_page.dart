@@ -1,4 +1,3 @@
-import 'package:laboratoire_app/Service/Firebase/update_data.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/utilities/style.dart';
@@ -37,7 +36,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationWidget(
-          route: "/AppoinmentPage", title: "Book an appointment"),
+          route: "/AppoinmentPage", title: "Demander Rendez-vous"),
       body: Stack(
         clipBehavior: Clip.none,
         children: <Widget>[

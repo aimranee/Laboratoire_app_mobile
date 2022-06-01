@@ -15,7 +15,6 @@ import 'package:laboratoire_app/Screen/notification_page.dart';
 import 'package:laboratoire_app/Screen/prescription/prescription_list_page.dart';
 import 'package:laboratoire_app/Screen/reachus.dart';
 import 'package:laboratoire_app/Screen/analyses.dart';
-import 'package:laboratoire_app/Screen/team_doctor.dart';
 import 'package:laboratoire_app/Screen/user_profiel.dart';
 
 class AppRoutes {
@@ -106,11 +105,6 @@ class AppRoutes {
     GetPage(
       name: profile,
       page: () => const UserProfilePage(),
-    ),
-    
-    GetPage(
-      name: team,
-      page: () => const TeamDoctPage(),
     ),
 
     GetPage(

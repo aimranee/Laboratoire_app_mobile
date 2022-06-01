@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class IBoxDecoration {
   static upperBoxDecoration() {
-    return BoxDecoration(
+    return const BoxDecoration(
         color: bgColor,
-        borderRadius: const BorderRadius.only(
+        borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10), topRight: Radius.circular(10)));
   }
 }

@@ -31,12 +31,12 @@ class _PrescriptionListByIDPageState extends State<PrescriptionListByIDPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationWidget(route: "/ContactUsPage", title:"Contact us"),
+      bottomNavigationBar: BottomNavigationWidget(route: "/ContactUsPage", title:"Contactez-nous"),
       drawer : CustomDrawer(isConn: true),
       body: Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
-          CAppBarWidget(title:"Prescriptions", isConn: true),
+          CAppBarWidget(title:"Rsultats", isConn: true),
           Positioned(
             top: 90,
             left: 0,

@@ -1,6 +1,6 @@
 import 'package:laboratoire_app/Screen/login_signup.dart';
 import 'package:laboratoire_app/service/authService/authService.dart';
-import 'package:laboratoire_app/utilities/colors.dart';
+import 'package:laboratoire_app/utilities/color.dart';
 import 'package:flutter/material.dart';
 
 class LoginButtonsWidget extends StatelessWidget {

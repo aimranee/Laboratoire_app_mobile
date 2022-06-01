@@ -1,15 +1,8 @@
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Screen/home.dart';
 import 'package:laboratoire_app/Screen/prescription/prescription_list_by_id_page.dart';
-import 'package:laboratoire_app/Service/Firebase/delet_data.dart';
-import 'package:laboratoire_app/Service/Firebase/update_data.dart';
-import 'package:laboratoire_app/Service/Noftification/handle_firebase_notification.dart';
-import 'package:laboratoire_app/Service/Noftification/handle_local_notification.dart';
 import 'package:laboratoire_app/Service/appointment_service.dart';
-import 'package:laboratoire_app/Service/dr_profile_service.dart';
-import 'package:laboratoire_app/Service/notification_service.dart';
 import 'package:laboratoire_app/model/appointment_model.dart';
-import 'package:laboratoire_app/model/notification_model.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/dialog_box.dart';
 import 'package:laboratoire_app/utilities/toast_msg.dart';
@@ -82,7 +75,7 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomNavigationStateWidget(
-            title:widget.appointmentDetails.appointmentStatus=="Visited"?"Get Prescription":"Cancel",
+            title:widget.appointmentDetails.appointmentStatus=="Visited"?"Obtenir les resultats":"Annuler",
             onPressed: widget.appointmentDetails.appointmentStatus=="Visited"?_handlePrescription:_takeConfirmation,
             clickable: _isBtnDisable
         ),
@@ -113,15 +106,15 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        _inputTextField("Appointment Status", _statusController, 1),
-                        _inputTextField("Appointment Date", _dateController, 1),
-                        _inputTextField("Appointment Time", _timeController, 1),
+                        _inputTextField("Statut du rendez-vous", _statusController, 1),
+                        _inputTextField("Date du rendez-vous", _dateController, 1),
+                        _inputTextField("Heure du rendez-vous", _timeController, 1),
                         // _inputTextField("Appointment Minute", _serviceTimeController, 1),
                         // _inputTextField("Appointment ID", _appointmentIdController, 1),
                         // _inputTextField("User ID", _uIdController, 1),
                         // _inputTextField("Created on", _createdDateTimeController, 1),
                         // _inputTextField("Last update on", _lastUpdatedController, 1),
-                        _inputTextField("Description, About your problem", _descController, null),
+                        _inputTextField("Description, A propos de votre problème", _descController, null),
                       ],
                     ),
                   ),
@@ -192,10 +185,10 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
         // await NotificationService.addData(notificationModel);
         // _handleSendNotification();
         // await NotificationService.addDataForAdmin(notificationModelForAdmin);
-        ToastMsg.showToastMsg("Successfully Canceled");
+        ToastMsg.showToastMsg("Annulé avec succès");
         Get.off(()=>const HomeScreen());
       } else {
-        ToastMsg.showToastMsg("Something went wrong");
+        ToastMsg.showToastMsg("Quelque chose a mal tourné");
       }
 
     // } else {
@@ -230,6 +223,6 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
   // }
   _takeConfirmation() {
     DialogBoxes.confirmationBox(
-        context, "Cancel", "Are you sure want to cancel appointment", _handleCancelBtn);
+        context, "Annuler", "Êtes-vous sûr de vouloir annuler le rendez-vous", _handleCancelBtn);
   }
 }

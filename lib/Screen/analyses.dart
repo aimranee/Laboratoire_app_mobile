@@ -36,7 +36,7 @@ class _AnalysesPageState extends State<AnalysesPage> {
         bottomNavigationBar:  _isLoading
               ? LoadingIndicatorWidget()
               : BottomNavigationWidget(
-          title: "Book an appointment",
+          title: "Demander Rendez-vous",
           route: '/AppoinmentPage',
         ),
         drawer : CustomDrawer(isConn: isConn),
@@ -158,7 +158,7 @@ class _AnalysesPageState extends State<AnalysesPage> {
                 child: SizedBox(
                     height: 30,
                     child: RoundedBtnWidget(
-                      title: "More",
+                      title: "Plus",
                       onPressed: () {
                         Get.to(() => MoreServiceScreen(analysesDetails: analysesDetails), //send to data to the next screen
                         );

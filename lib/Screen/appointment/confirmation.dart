@@ -55,7 +55,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     return Scaffold(
       drawer : CustomDrawer(isConn: true),
         bottomNavigationBar: BottomNavigationStateWidget(
-          title: "Confirm Appointment",
+          title: "Confirmer le rendez-vous",
           onPressed: () {
             //  Service.myfb(); //if you want to add something in all documents of one collection then you can invoke this method. this is for only the developing part.
             _updateBookedSlot(
@@ -78,7 +78,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         body: Stack(
           clipBehavior: Clip.none,
           children: <Widget>[
-            _isLoading ? Container() : CAppBarWidget(title: "Booking Confirmation", isConn: true),
+            _isLoading ? Container() : CAppBarWidget(title: "Confirmation Réservation", isConn: true),
             Positioned(
               top: 90,
               left: 0,
@@ -145,7 +145,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               ),
               child: const Center(
                 child: Text(
-                  "Please Confirm All Details",
+                  "Veuillez confirmer tous les détails",
                   style: TextStyle(
                     fontFamily: 'OpenSans-SemiBold',
                     color: Colors.white,
@@ -155,19 +155,19 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               ),
             ),
             const Divider(),
-            Text("Patient Name : ${args.pFirstName} ${args.pLastName}", style: kCardSubTitleStyle),
+            Text("Nom du patient : ${args.pFirstName} ${args.pLastName}", style: kCardSubTitleStyle),
             const SizedBox(height: 17),
-            Text("Service Type - ${args.appointmentType}", style: kCardSubTitleStyle),
+            Text("Type de service : ${args.appointmentType}", style: kCardSubTitleStyle),
             const SizedBox(height: 17),
-            Text("Service Time : ${args.serviceTimeMIn} Minute", style: kCardSubTitleStyle),
+            Text("Temps de service : ${args.serviceTimeMIn} Minute", style: kCardSubTitleStyle),
             const SizedBox(height: 17),
             Text("Date : ${args.selectedDate}", style: kCardSubTitleStyle),
             const SizedBox(height: 17),
-            Text("Time : ${args.selectedTime}", style: kCardSubTitleStyle),
+            Text("Temps : ${args.selectedTime}", style: kCardSubTitleStyle),
             const SizedBox(height: 17),
-            Text("Mobile Number : ${args.pPhn}", style: kCardSubTitleStyle),
+            Text("Numéro de téléphone : ${args.pPhn}", style: kCardSubTitleStyle),
             const SizedBox(height: 17),
-            Text("Total Price : ${args.price} DHs", style: kCardSubTitleStyle),
+            Text("Prix total : ${args.price} DHs", style: kCardSubTitleStyle),
             const SizedBox(height: 17),
             const Text("Analyses : ", style: kCardSubTitleStyle),
             const SizedBox(height: 7),
@@ -224,7 +224,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
         // if (msgAdded == "success") {
         //   await NotificationService.addDataForAdmin(notificationModelForAdmin);
-          ToastMsg.showToastMsg("Successfully Booked");
+          ToastMsg.showToastMsg("Réservé avec succès");
         //   _handleSendNotification(
         //       pFirstName, pLastName, appointmentType, selectedDate, setTime);
           // Navigator.of(context).pushNamedAndRemoveUntil(
@@ -240,7 +240,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
       //   Navigator.pop(context);
       // }
     } else {
-      ToastMsg.showToastMsg("Something went wrong. try again");
+      ToastMsg.showToastMsg("Quelque chose s'est mal passé. Essayez à nouveau");
       Navigator.pop(context);
     }
 

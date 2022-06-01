@@ -31,10 +31,10 @@ class ImageBoxContainWidget extends StatelessWidget {
   const ImageBoxContainWidget({this.imageUrl});
   @override
   Widget build(BuildContext context) {
-    return      Image(
+    return Image(
       image:CachedNetworkImageProvider(imageUrl),
       fit: BoxFit.contain,
-      // height: double.infinity,
+      height: 200,
       // width: double.infinity,
       loadingBuilder: (BuildContext context, Widget child,
           ImageChunkEvent loadingProgress) {

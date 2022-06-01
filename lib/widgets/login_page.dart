@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:laboratoire_app/utilities/colors.dart';
+import 'package:laboratoire_app/utilities/color.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:laboratoire_app/Service/AuthService/authservice.dart';
 import 'package:laboratoire_app/Service/dr_profile_service.dart';

@@ -23,7 +23,7 @@ class IErrorWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          const Text("Sorry it's error!",style: TextStyle(
+          const Text("Désolé, c'est une erreur !",style: TextStyle(
             fontFamily: 'OpenSans-SemiBold',
             fontSize: 14,
           )),

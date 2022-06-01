@@ -31,7 +31,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
       bottomNavigationBar: _isLoading
         ? LoadingIndicatorWidget() : 
         BottomNavigationWidget(
-        title: "Book an appointment",
+        title: "Demander Rendez-vous",
         route: "/AppoinmentPage",
       ),
       drawer : CustomDrawer(isConn: isConn),
@@ -39,7 +39,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
         clipBehavior: Clip.none,
         children: <Widget>[
           
-          CAppBarWidget(title: "Availability", isConn : isConn),
+          CAppBarWidget(title: "Disponibilité", isConn : isConn),
           Positioned(
             top: 90,
             left: 0,
@@ -75,8 +75,8 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         const Padding(
-            padding: EdgeInsets.only(top: 20.0, left: 20, right: 20),
-            child: Text("We are available on",
+            padding: EdgeInsets.only(top: 25.0, left: 20, right: 20),
+            child: Text("Nous sommes disponibles sur",
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'OpenSans-Bold',
@@ -91,24 +91,24 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
 
   Widget buildTable(day) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
       child: Column(
         children: [
-          rowContent("Day", "Time"),
+          rowContent("Jour", "Temps"),
           const Divider(),
-          rowContent("Monday", "${day.mon}"),
+          rowContent("Lundi", "${day.mon}"),
           const Divider(),
-          rowContent("Tuesday", "${day.tue}"),
+          rowContent("Mardi", "${day.tue}"),
           const Divider(),
-          rowContent("Wednesday", "${day.wed}"),
+          rowContent("Mercredi", "${day.wed}"),
           const Divider(),
-          rowContent("Thursday", "${day.thu}"),
+          rowContent("Jeudi", "${day.thu}"),
           const Divider(),
-          rowContent("Friday", "${day.fri}"),
+          rowContent("Vendredi", "${day.fri}"),
           const Divider(),
-          rowContent("Saturday", "${day.sat}"),
+          rowContent("Samedi", "${day.sat}"),
           const Divider(),
-          rowContent("Sunday", "${day.sun}"),
+          rowContent("Dimanche", "${day.sun}"),
           const Divider(),
         ],
       ),

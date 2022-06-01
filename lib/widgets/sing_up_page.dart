@@ -5,11 +5,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
-import 'package:laboratoire_app/Service/AuthService/authservice.dart';
 import 'package:laboratoire_app/Service/dr_profile_service.dart';
 import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/model/user_model.dart';
-import 'package:laboratoire_app/utilities/colors.dart';
+import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/toast_msg.dart';
 import 'package:laboratoire_app/widgets/buttons_widget.dart';
 import 'package:laboratoire_app/widgets/loading_indicator.dart';
@@ -321,7 +320,7 @@ _handleUpload() async {
     String R = "0";
     String C = "0";
       if (_hasRamid == true){
-          R = "1";
+          R = "1"; 
       }
       if (_hasCnss == true){
           C = "1";

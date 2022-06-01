@@ -64,8 +64,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
     !isConn ? Container() : 
     DialogBoxes.confirmationBox(
         context,
-        "Update",
-        "Are you sure you want to update profile details",
+        "Mise à jour",
+        "Êtes-vous sûr de vouloir mettre à jour les détails du profil",
         _handleUpdate
     ); //take a confirmation form the user
   }
@@ -76,7 +76,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       bottomNavigationBar: _isLoading
         ? LoadingIndicatorWidget() : 
         BottomNavigationStateWidget(
-        title: "Update",
+        title: "Mise à jour",
         onPressed: _takeConfirmation,
         clickable: _isEnableBtn,
       ),
@@ -102,7 +102,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   _handleUpdate() {
     if (_formKey.currentState.validate()) {
       if ((_selectedGender == "" || _selectedGender == null) && (_selectedfamilySituation =="" || _selectedfamilySituation == null) && (_selectedBloodType =="" || _selectedBloodType == null)) {
-        ToastMsg.showToastMsg("Please select gender");
+        ToastMsg.showToastMsg("Veuillez choisir le sexe");
       } else {
         setState(() {
           _isEnableBtn = "";
@@ -147,9 +147,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
       prefs.setString("firstName", _firstNameController.text);
       prefs.setString("lastName", _lastNameController.text);
 
-      ToastMsg.showToastMsg("Successfully Updated");
+      ToastMsg.showToastMsg("Mis à jour avec succès");
     } else if (res == "error") {
-      ToastMsg.showToastMsg("Something went wrong");
+      ToastMsg.showToastMsg("Quelque chose a mal tourné");
     }
     setState(() {
       _isEnableBtn = "false";
@@ -199,9 +199,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
       if (item.length == 10) {
         return null;
       } else if (item.length < 10 || item.length > 10) {
-        return "Enter valid phone numbre";
+        return "Entrez un numéro de téléphone valide";
       } else {
-        return "Enter phone numbre";
+        return "Entrez un numéro de téléphone";
       }
     }, TextInputType.number, 1);
   }
@@ -229,7 +229,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           );
         }).toList(),
         hint: const Text(
-          "Gender",
+          "Genre",
         ),
         onChanged: (String value) {
           setState(() {
@@ -263,7 +263,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           );
         }).toList(),
         hint: const Text(
-          "Family Situation",
+          "Situation familiale",
         ),
         onChanged: (String value) {
           setState(() {
@@ -300,7 +300,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           );
         }).toList(),
         hint: const Text(
-          "blood Type",
+          "Groupe sanguin",
         ),
         onChanged: (String value) {
           setState(() {
@@ -351,10 +351,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
             child: ListView(
               children: [
                 const SizedBox(height: 20),
-                _inputField("First Name", "Enter first name", _firstNameController),
-                _inputField("Last Name", "Enter last name", _lastNameController),
-                _inputField("City", "Enter city", _cityController),
-                _inputField("CIN", "Enter CIN", _cinController),
+                _inputField("Prénom", "Entrez le prénom", _firstNameController),
+                _inputField("Nom", "Entrez le nom de famille", _lastNameController),
+                _inputField("Ville", "Entrez la ville", _cityController),
+                _inputField("CIN", "Entrez le CIN", _cinController),
                 _ageInputField("Age", _ageController),
                 _genderDropDown(),
                 _checkRamid(_hasRamid),
@@ -362,7 +362,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 _familySituationDropDown(),
                 _bloodTypeDropDown(),
                 _emailInputField(),
-                _phnNumInputField("Phone numbre", _phoneNumberController),
+                _phnNumInputField("Numéro de téléphone", _phoneNumberController),
               ],
             ),
           );

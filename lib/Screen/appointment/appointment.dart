@@ -43,7 +43,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
         bottomNavigationBar: _isLoading
           ? LoadingIndicatorWidget()
           : BottomNavigationStateWidget(
-          title: "Next",
+          title: "Suivant",
           onPressed: () {
             Get.to(() => 
               ChooseTimeSlotPage(

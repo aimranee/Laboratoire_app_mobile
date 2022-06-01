@@ -57,7 +57,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
       bottomNavigationBar: _isLoading
         ? LoadingIndicatorWidget() : 
         BottomNavigationWidget(
-        title: "Book an appointment",
+        title: "Demander Rendez-vous",
         route: "/AppoinmentPage",
       ),
       drawer : CustomDrawer(isConn: isConn),

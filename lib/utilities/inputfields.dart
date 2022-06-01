@@ -85,7 +85,7 @@ class InputFields {
     return TextFormField(
       cursorColor: btnColor,
       validator: (item) {
-        return item.length == 10 ? null : "Enter a valid 10 digit Phone number";
+        return item.length == 10 ? null : "Entrez un numéro de téléphone valide à 10 chiffres";
       },
       controller: __phnNumberControlller,
       keyboardType: TextInputType.number,
@@ -102,7 +102,7 @@ class InputFields {
             Icons.phone,
             color: appBarColor,
           ),
-          labelText: 'Enter Mobile Number',
+          labelText: 'Entrez le numéro de téléphone',
           labelStyle: const TextStyle(fontSize: 12, color: appBarColor),
           //hintStyle: TextStyle(fontSize: 16),
           border: OutlineInputBorder(
@@ -136,7 +136,7 @@ class InputFields {
             Icons.flag,
             color: appBarColor,
           ),
-          labelText: 'Select Country Code',
+          labelText: 'Sélectionnez le code du pays',
           labelStyle: const TextStyle(fontSize: 12, color: appBarColor),
           //hintStyle: TextStyle(fontSize: 16),
           border: OutlineInputBorder(

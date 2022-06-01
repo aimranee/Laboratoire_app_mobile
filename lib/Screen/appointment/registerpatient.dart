@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:get/get.dart';
-import 'package:laboratoire_app/Screen/appointment/chooseanalyses.dart';
 import 'package:laboratoire_app/Service/analyses_select_services.dart';
 import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/SetData/screen_arg.dart';
@@ -64,10 +63,9 @@ class _RegisterPatientState extends State<RegisterPatient> {
     final ChooseTimeScrArg _chooseTimeScrArgs = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         bottomNavigationBar: BottomNavigationStateWidget(
-          title: "Next",
+          title: "Suivant",
           onPressed: () {
-            // log("message 124: "+_emailController.text);
-            // if (subjectData.isNotEmpty) {
+            
               if (_formKey.currentState.validate()) {
                 if (analyses == "" || summ == 0) {
                   ToastMsg.showToastMsg("Veuillez sélectionner les analyses");
@@ -96,7 +94,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
         body: _isLoading ? LoadingIndicatorWidget() : Stack(
           clipBehavior: Clip.none,
           children: <Widget>[
-            CAppBarWidget(title: "Register Patient", isConn: true),
+            CAppBarWidget(title: "Enregistrer le patient", isConn: true),
             Positioned(
               top: 90,
               left: 0,
@@ -206,22 +204,14 @@ class _RegisterPatientState extends State<RegisterPatient> {
             subjectDataPrice = [];
             for (var i = 0; i < results.length; i++) {
               AnalysesCatModel data = results[i];
-              // log(data.analysesId);
-              // log(data.analysesPrice);
               subjectData.add(data.analysesName);
               subjectDataPrice.add(data.analysesPrice);
             }
-            // log("data $subjectData");
-            // log("data : "+subjectData);
-            // List<int> intList = subjectDataPrice.cast<int>();
-            // List <int> lint = subjectDataPrice.map(int.parse).toList();
 
             for (var i = 0; i < subjectDataPrice.length; i++) {
               summ += subjectDataPrice[i];
               analyses = subjectData.join(", ");
             }
-            log("message: $analyses");
-            //_selectedAnimals = results;
           },
         ),
       );

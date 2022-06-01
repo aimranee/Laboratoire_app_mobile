@@ -70,7 +70,7 @@ class _ShowPrescriptionFilePageState extends State<ShowPrescriptionFilePage> {
             var perStatus = await Permission.storage.request();
             if(perStatus.isGranted) {
               final externalDir=await getExternalStorageDirectory();
-              ToastMsg.showToastMsg("Download Stated");
+              ToastMsg.showToastMsg("Téléchargement Démarré");
               await FlutterDownloader.enqueue(
                 url: _selectedFileUrl,
                 savedDir: externalDir.path,
@@ -143,8 +143,6 @@ class _ShowPrescriptionFilePageState extends State<ShowPrescriptionFilePage> {
   }
 
   void _forwardImg() {
-    // //print(_index);
-    ////print(totalImg);
     if (_index + 1 <= totalImg - 1) {
       // check more images is remain or not by indexes
       setState(() {
@@ -159,8 +157,7 @@ class _ShowPrescriptionFilePageState extends State<ShowPrescriptionFilePage> {
   }
 
   void _backwardImg() {
-    if (_index - 1 >= 0) {
-      //if value is less then 0 then it show error show we are checking the value
+    if (_index - 1 >= 0) { //if value is less then 0 then it show error show we are checking the value
       setState(() {
         _selectedFileUrl = widget.fileUrls[_index - 1]; // if upper condition is true then decrement the index value and show just backward image
         _index = _index - 1;

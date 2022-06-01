@@ -36,9 +36,9 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
         drawer : _isLoading ? Container() : CustomDrawer(isConn: isConn),
           bottomNavigationBar: _isLoading
         ? Container() 
-        : BottomNavigationWidget(title: "Book an appointment", route: '/AppoinmentPage', isConn: isConn),
+        : BottomNavigationWidget(title: "Prendre un rendez-vous", route: '/AppoinmentPage', isConn: isConn),
           appBar: AppBar(
-            title: const Text("Appointments", style: kAppbarTitleStyle),
+            title: const Text("Rendez-vous", style: kAppbarTitleStyle),
             centerTitle: true,
             backgroundColor: appBarColor,
             actions: [_appBarActionWidget(isConn)],
@@ -48,11 +48,11 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
               labelPadding: EdgeInsets.all(8),
               tabs: [
                 Text(
-                  "Upcoming",
+                  "Prochainement",
                   style: kAppbarTitleStyle,
                 ),
                 Text(
-                  "Past",
+                  "Passé",
                   style: kAppbarTitleStyle,
                 ),
               ],
@@ -70,7 +70,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
     // <1> Use FutureBuilder
     return FutureBuilder(
         // <2> Pass `Future<QuerySnapshot>` to future
-        future: AppointmentService.getData("Pending,Confirmed,Rescheduled"), ////fetch appointment details according to uid
+        future: AppointmentService.getData("Pending,Confirmed"), ////fetch appointment details according to uid
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             return snapshot.data.length == 0
@@ -145,7 +145,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
                     children: <Widget>[
                       Row(
                         children: [
-                          const Text("Name: ",
+                          const Text("Nom de patient: ",
                               style: TextStyle(
                                 fontFamily: 'OpenSans-Regular',
                                 fontSize: 12,
@@ -160,7 +160,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
                       ),
                       Row(
                         children: [
-                          const Text("Time: ",
+                          const Text("Temp: ",
                               style: TextStyle(
                                 fontFamily: 'OpenSans-Regular',
                                 fontSize: 12,
@@ -184,10 +184,6 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
                                       "Pending"
                                   ? _statusIndicator(Colors.yellowAccent)
                                   : appointmentDetails[index]
-                                              .appointmentStatus ==
-                                          "Rescheduled"
-                                      ? _statusIndicator(Colors.orangeAccent)
-                                      : appointmentDetails[index]
                                                   .appointmentStatus ==
                                               "Rejected"
                                           ? _statusIndicator(Colors.red)
@@ -208,7 +204,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
                           )
                         ],
                       ),
-                      const Text("Appointment Type",
+                      const Text("Type de rendez-vous",
                           style: TextStyle(
                             fontFamily: 'OpenSans-Regular',
                             fontSize: 12,
@@ -237,13 +233,13 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
         appointmentMonth = "JAN";
         break;
       case "2":
-        appointmentMonth = "FEB";
+        appointmentMonth = "FEV";
         break;
       case "3":
-        appointmentMonth = "MARCH";
+        appointmentMonth = "MARS";
         break;
       case "4":
-        appointmentMonth = "APRIL";
+        appointmentMonth = "AVRIL";
         break;
       case "5":
         appointmentMonth = "MAY";
@@ -252,10 +248,10 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
         appointmentMonth = "JUN";
         break;
       case "7":
-        appointmentMonth = "JULY";
+        appointmentMonth = "JUILLET";
         break;
       case "8":
-        appointmentMonth = "AUG";
+        appointmentMonth = "AOUT";
         break;
       case "9":
         appointmentMonth = "SEP";

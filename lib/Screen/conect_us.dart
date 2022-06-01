@@ -238,7 +238,7 @@ class _ContactUsState extends State<ContactUs> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const Text("Mail us", style: kPageTitleStyle),
+                      const Text("Envoyez-nous un courrier", style: kPageTitleStyle),
                       Text(
                         email,
                         style: const TextStyle(

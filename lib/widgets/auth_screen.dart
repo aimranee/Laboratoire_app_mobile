@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:laboratoire_app/utilities/colors.dart';
+import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/widgets/sing_up_page.dart';
 import 'package:laboratoire_app/widgets/login_page.dart';
 

@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Service/DateAndTimeCalculation/time_calculation.dart';
-import 'package:laboratoire_app/Service/Firebase/read_data.dart';
 import 'package:laboratoire_app/SetData/screen_arg.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/widgets/appbars_widget.dart';
@@ -35,7 +34,6 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
   String _setTime = "";
   var _selectedDate;
   var _selectedDay = DateTime.now().weekday;
-  List _closingDate = [];
 
   List _bookedTimeSlots;
   final List<dynamic> _morningTimeSlotsList = [];
@@ -87,10 +85,6 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
 
     return formattedDate;
   }
-
-  // Future<void> _getAndSetbookedTimeSlots() async {
-  //   _bookedTimeSlots = await ReadData.fetchBookedTime(_selectedDate);
-  // }
 
   Future<void> _getAndSetOpeningClosingTime() async {
      
@@ -153,7 +147,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomNavigationStateWidget(
-          title: "Next",
+          title: "Suivant",
           onPressed: () {
             Get.toNamed("/RegisterPatientPage",
                 arguments: ChooseTimeScrArg(
@@ -168,7 +162,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
         body: Stack(
           clipBehavior: Clip.none,
           children: <Widget>[
-            CAppBarWidget(title: "Book an appointment", isConn: widget.isConn),
+            CAppBarWidget(title: "Demander Rendez-vous", isConn: widget.isConn),
 
             Positioned(
               top: 90,
@@ -198,16 +192,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
                                 const Divider(),
                                 _isLoading
                                     ? LoadingIndicatorWidget()
-                                    : _closingDate.contains(_selectedDate) 
-                                        ? const Center(
-                                            child: Text(
-                                            "Sorry! we can't take appointments in this day",
-                                            style: TextStyle(
-                                              fontFamily: 'OpenSans-SemiBold',
-                                              fontSize: 14,
-                                            ),
-                                          ))
-                                        : Column(
+                                      : Column(
                                             children: <Widget>[
                                               _morningTimeSlotsList.isEmpty
                                                   ? Container()
@@ -216,7 +201,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
                                                           EdgeInsets.only(
                                                               top: 20.0),
                                                       child: Text(
-                                                          "Morning Time Slot",
+                                                          "Matin",
                                                           style: TextStyle(
                                                             fontFamily:
                                                                 'OpenSans-SemiBold',
@@ -236,7 +221,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
                                                           EdgeInsets.only(
                                                               top: 20.0),
                                                       child: Text(
-                                                          "Afternoon Time Slot",
+                                                          "Après-midi",
                                                           style: TextStyle(
                                                             fontFamily:
                                                                 'OpenSans-SemiBold',
@@ -256,7 +241,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
                                                           EdgeInsets.only(
                                                               top: 20.0),
                                                       child: Text(
-                                                          "Evening Time Slot",
+                                                          "Soir",
                                                           style: TextStyle(
                                                             fontFamily:
                                                                 'OpenSans-SemiBold',
@@ -321,9 +306,6 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
     final DateTime now = DateTime.now();
     final DateFormat formatter = DateFormat('M-d-yyyy');
     String formatted = formatter.format(now);
-    // if(formatted.substring(0,1)=="0") {
-    //   formatted=formatted.substring(1,2)+formatter.format(now).substring(2);
-    // }
     return formatted;
   }
 
@@ -375,13 +357,4 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
         ),
     );
   }
-
-  // _setClosingDate() async {
-  //   final res = await ReadData.fetchSettings();
-  //   if (res != null) {
-  //     setState(() {
-  //       _closingDate = res["closingDate"];
-  //     });
-  //   }
-  // }
 }

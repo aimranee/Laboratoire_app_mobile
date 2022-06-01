@@ -8,9 +8,12 @@ import 'package:laboratoire_app/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 
 class PrescriptionDetailsPage extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final title;
+  // ignore: prefer_typing_uninitialized_variables
   final prescriptionDetails;
-  PrescriptionDetailsPage({ this.title, this.prescriptionDetails });
+  // ignore: use_key_in_widget_constructors
+  const PrescriptionDetailsPage({ this.title, this.prescriptionDetails });
   @override
   _PrescriptionDetailsPageState createState() => _PrescriptionDetailsPageState();
 }
@@ -70,15 +73,15 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
               height: MediaQuery.of(context).size.height,
               decoration:IBoxDecoration.upperBoxDecoration(),
               child: ListView(
-                  children: [
-                    InputFields.readableInputField(_appointmentTypeController, "Service", 1),
-                    InputFields.readableInputField(_patientNameController, "Name", 1),
-                    // InputFields.readableInputField(_drNameController, "Dr Name", 1),
-                    InputFields.readableInputField(_dateController, "Date", 1),
-                    // InputFields.readableInputField(_timeController, "Time", 1),
-                    InputFields.readableInputField(_messageController, "Message",null),
-                    _buildImageList()
-                  ],
+                children: [
+                  InputFields.readableInputField(_appointmentTypeController, "Type de rendez-vous", 1),
+                  InputFields.readableInputField(_patientNameController, "Nom de patient", 1),
+                  InputFields.readableInputField(_drNameController, "Nom d'infermier", 1),
+                  InputFields.readableInputField(_dateController, "Date", 1),
+                  // InputFields.readableInputField(_timeController, "Time", 1),
+                  InputFields.readableInputField(_messageController, "Message",null),
+                  _buildImageList()
+                ],
               ),
             )
           ),
@@ -102,14 +105,26 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
                      Get.to(() => ShowPrescriptionFilePage(
                             fileUrls: _fileUrls,
                             selectedFilesIndex: index,
-                            title: "Download Prescription"),
+                            title: "Télécharger les resultats"),
                      );
                 },
 
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child:ImageBoxContainWidget(imageUrl:_fileUrls[index] ,),
-                ),
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child:ImageBoxContainWidget(imageUrl:_fileUrls[index] ,),
+                    ),
+                    
+                    Container (
+                      width: MediaQuery.of(context).size.width,
+                      height: 200,
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                    Center(child : Container(height: 200,
+                      child: Icon(Icons.lock_outline,color: Colors.white, size: 50))),
+                  ]
+                )
               ),
             );
       }),

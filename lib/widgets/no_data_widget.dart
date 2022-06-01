@@ -57,7 +57,7 @@ class NoBookingWidget extends StatelessWidget {
           const SizedBox(height: 0),
           const Padding(
             padding: EdgeInsets.only(left:20.0,right:20.0),
-            child: Text("There is no appointment Found! please press Book an appointment button and make a new appointment",style: TextStyle(
+            child: Text("Il n'y a pas de rendez-vous trouvé ! veuillez appuyer sur le bouton Prendre un rendez-vous et prendre un nouveau rendez-vous",style: TextStyle(
               fontFamily: 'OpenSans-SemiBold',
               fontSize: 14,
             )),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/utilities/color.dart';
@@ -73,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: _isLoading
         ? LoadingIndicatorWidget()
         : BottomNavigationWidget(
-          title: "Book an appointment", route: "/AppoinmentPage", isConn: isConn
+          title: "Demander Rendez-vous", route: "/AppoinmentPage", isConn: isConn
         ),
 
       drawer: CustomDrawer(isConn: isConn),
@@ -81,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
             clipBehavior: Clip.none,
         children: [
-          CAppBarWidget(title: "Laboratoire", isConn: isConn),
+          CAppBarWidget(title: "ASSALAMA", isConn: isConn),
           Positioned(
             top: 90,
             left: 0,

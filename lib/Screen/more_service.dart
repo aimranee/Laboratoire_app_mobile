@@ -4,6 +4,7 @@ import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:flutter/material.dart';
 
 class MoreServiceScreen extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final analysesDetails;
 
   const MoreServiceScreen({Key key, this.analysesDetails}) : super(key: key);
@@ -60,7 +61,7 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
                         style: kParaStyle,
                       ),
                       const SizedBox(height: 20),
-                      const Text("Name", style: kPageTitleStyle),
+                      const Text("Nom de service", style: kPageTitleStyle),
                       const SizedBox(height: 20),
                       Text(
                         widget.analysesDetails.name,
@@ -74,7 +75,7 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
                         style: kParaStyle,
                       ),
                       const SizedBox(height: 20),
-                      const Text("price", style: kPageTitleStyle),
+                      const Text("Prix", style: kPageTitleStyle),
                       const SizedBox(height: 20),
                       Text(
                         widget.analysesDetails.price,
@@ -102,7 +103,7 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
                         style: kParaStyle,
                       ),
                       const SizedBox(height: 20),
-                      const Text("Category Name", style: kPageTitleStyle),
+                      const Text("Examen bilogique", style: kPageTitleStyle),
                       const SizedBox(height: 20),
                       Text(
                         widget.analysesDetails.categoryName,
