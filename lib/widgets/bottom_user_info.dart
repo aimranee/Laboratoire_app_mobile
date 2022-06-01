@@ -42,7 +42,7 @@ class BottomUserInfo extends StatelessWidget {
                                 },
                                   
                               child: const Text(
-                                "Log Out",
+                                "Déconnexion",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -58,7 +58,7 @@ class BottomUserInfo extends StatelessWidget {
                                   );
                                 },
                                 child: const Text(
-                                "Log In",
+                                "Connectez-vous",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class BottomNavigationWidget extends StatelessWidget {
 
   final String title;
@@ -46,8 +47,11 @@ class BottomNavigationStateWidget extends StatelessWidget {
 
   final String clickable;
 
+  // ignore: prefer_typing_uninitialized_variables
   final onPressed;
-  BottomNavigationStateWidget({this.title, this.onPressed, this.clickable});
+
+  // ignore: use_key_in_widget_constructors
+  const BottomNavigationStateWidget({this.title, this.onPressed, this.clickable});
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(

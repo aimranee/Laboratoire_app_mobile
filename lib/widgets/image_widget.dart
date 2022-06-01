@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class ImageBoxFillWidget extends StatelessWidget {
   final String imageUrl;
+  // ignore: use_key_in_widget_constructors
   const ImageBoxFillWidget({this.imageUrl});
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,7 @@ class ImageBoxFillWidget extends StatelessWidget {
 }
 class ImageBoxContainWidget extends StatelessWidget {
   final String imageUrl;
+  // ignore: use_key_in_widget_constructors
   const ImageBoxContainWidget({this.imageUrl});
   @override
   Widget build(BuildContext context) {

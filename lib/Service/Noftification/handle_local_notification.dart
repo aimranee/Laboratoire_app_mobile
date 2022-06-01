@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class HandleLocalNotification {
+  // ignore: prefer_typing_uninitialized_variables
   static var buildContext;
 
   static initializeFlutterNotification(context) {

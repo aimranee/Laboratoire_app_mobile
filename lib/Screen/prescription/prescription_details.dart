@@ -27,7 +27,7 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController=ScrollController();
   List _fileUrls=[];
-
+  bool isPaied = false;
   @override
   void initState() {
      
@@ -38,6 +38,9 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
       _dateController.text=widget.prescriptionDetails.appointmentDate;
       _timeController.text=widget.prescriptionDetails.appointmentTime;
       _messageController.text=widget.prescriptionDetails.prescription;
+      if(widget.prescriptionDetails.isPaied == 1) {
+        isPaied = true;
+      }
       if(widget.prescriptionDetails.fileUrl!="") {
         _fileUrls=widget.prescriptionDetails.fileUrl.toString().split(",");
       }
@@ -102,11 +105,12 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
               padding: const EdgeInsets.only(bottom: 10.0),
               child: GestureDetector(
                 onTap: (){
-                     Get.to(() => ShowPrescriptionFilePage(
-                            fileUrls: _fileUrls,
-                            selectedFilesIndex: index,
-                            title: "Télécharger les resultats"),
-                     );
+
+                    Get.to(() => ShowPrescriptionFilePage(
+                        fileUrls: _fileUrls,
+                        selectedFilesIndex: index,
+                        title: "Télécharger les resultats"),
+                    );
                 },
 
                 child: Stack(
@@ -115,14 +119,22 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
                       borderRadius: BorderRadius.circular(8.0),
                       child:ImageBoxContainWidget(imageUrl:_fileUrls[index] ,),
                     ),
-                    
+                    if (!isPaied)
                     Container (
                       width: MediaQuery.of(context).size.width,
                       height: 200,
                       color: Colors.black.withOpacity(0.5),
                     ),
-                    Center(child : Container(height: 200,
-                      child: Icon(Icons.lock_outline,color: Colors.white, size: 50))),
+                    if (!isPaied)
+                    const Center(
+                      child :  SizedBox(
+                        height: 200,
+                        child: Icon(
+                          Icons.lock_outline,color: Colors.white, size: 50
+                        )
+                      )
+                    ),
+                    
                   ]
                 )
               ),

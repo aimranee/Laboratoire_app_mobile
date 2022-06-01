@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class ChooseTimeSlotPage extends StatefulWidget {
   final String openingTime;
   final String closingTime;
@@ -32,8 +33,8 @@ class ChooseTimeSlotPage extends StatefulWidget {
 class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
   bool _isLoading = false;
   String _setTime = "";
+  // ignore: prefer_typing_uninitialized_variables
   var _selectedDate;
-  var _selectedDay = DateTime.now().weekday;
 
   List _bookedTimeSlots;
   final List<dynamic> _morningTimeSlotsList = [];
@@ -191,7 +192,7 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
                                 _buildCalendar(),
                                 const Divider(),
                                 _isLoading
-                                    ? LoadingIndicatorWidget()
+                                    ? const LoadingIndicatorWidget()
                                       : Column(
                                             children: <Widget>[
                                               _morningTimeSlotsList.isEmpty
@@ -282,7 +283,6 @@ class _ChooseTimeSlotPageState extends State<ChooseTimeSlotPage> {
 
           _selectedDate =
               "${dateParse.month}-${dateParse.day}-${dateParse.year}";
-          _selectedDay = date.weekday;
           _reCallMethodes();
         });
       },

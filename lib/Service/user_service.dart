@@ -10,7 +10,7 @@ class UserService {
   static const _addUrl = "$apiUrl/add_user";
   static const _update = "$apiUrl/update_user_fcm";
   static const _updateUrl = "$apiUrl/update_user";
-  static const _registreUrl = "http://192.168.33.92/laboratoire/api/add_user";
+  static const _registreUrl = "$apiUrl/add_user";
   static List<UserModel> dataFromJson(String jsonString) {
     
     final data = json.decode(jsonString);
@@ -53,7 +53,6 @@ class UserService {
   }
 
   static updateData(UserModel userModel) async {
-    // log("hhhhhhhhhhhhhhh");
     
     final res = await http.post(Uri.parse(_updateUrl), body: userModel.toUpdateJson());
     log(">>>>>>>>>>>>>>>>>>>>>>${userModel.toUpdateJson()}");
@@ -66,7 +65,7 @@ class UserService {
 
   static register(UserModel userModel) async {
     
-    final res = await http.post(Uri.parse("http://192.168.33.92/laboratoire/api/add_user"), body: userModel.toJsonAdd());
+    final res = await http.post(Uri.parse(_registreUrl), body: userModel.toJsonAdd());
     log("message : "+res.body);
     if (res.statusCode == 200) {
       return res.body;

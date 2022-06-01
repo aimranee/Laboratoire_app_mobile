@@ -4,7 +4,6 @@ import 'package:laboratoire_app/Service/category_service.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/widgets/appbars_widget.dart';
-import 'package:laboratoire_app/widgets/auth_screen.dart';
 import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/error_widget.dart';
@@ -30,6 +29,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
     super.initState();
   }
 
+  // ignore: non_constant_identifier_names
   _TestConnection() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   setState(() {
@@ -55,13 +55,13 @@ class _CategoryListPageState extends State<CategoryListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: _isLoading
-        ? LoadingIndicatorWidget() : 
+        ? const LoadingIndicatorWidget() : 
         BottomNavigationWidget(
         title: "Demander Rendez-vous",
         route: "/AppoinmentPage",
       ),
       drawer : CustomDrawer(isConn: isConn),
-      body: _isLoading ? LoadingIndicatorWidget() : Stack(
+      body: _isLoading ? const LoadingIndicatorWidget() : Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
           CAppBarWidget(title:"Branches Biologiques", isConn: isConn),
@@ -86,7 +86,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                     } else if (snapshot.hasError) {
                       return const IErrorWidget();
                     } else {
-                      return LoadingIndicatorWidget();
+                      return const LoadingIndicatorWidget();
                     }
                   }
                 ),

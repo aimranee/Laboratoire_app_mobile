@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
       
       backgroundColor: Colors.grey[200],
       bottomNavigationBar: _isLoading
-        ? LoadingIndicatorWidget()
+        ? const LoadingIndicatorWidget()
         : BottomNavigationWidget(
           title: "Demander Rendez-vous", route: "/AppoinmentPage", isConn: isConn
         ),

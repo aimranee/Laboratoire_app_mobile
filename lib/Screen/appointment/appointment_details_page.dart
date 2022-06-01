@@ -12,7 +12,9 @@ import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class AppointmentDetailsPage extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final appointmentDetails;
   bool isConn;
   AppointmentDetailsPage({Key key, this.appointmentDetails, this.isConn}) : super(key: key);
@@ -99,7 +101,7 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10))),
-                child:_isLoading?LoadingIndicatorWidget(): SingleChildScrollView(
+                child:_isLoading ? const LoadingIndicatorWidget(): SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(
                         top: 8.0, bottom: 8.0, left: 0, right: 0),

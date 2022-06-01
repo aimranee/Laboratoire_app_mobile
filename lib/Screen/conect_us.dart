@@ -42,7 +42,7 @@ class _ContactUsState extends State<ContactUs> {
               } else if (snapshot.hasError) {
                 return const IErrorWidget();
               } else {
-                return LoadingIndicatorWidget();
+                return const LoadingIndicatorWidget();
               }
             })
     );

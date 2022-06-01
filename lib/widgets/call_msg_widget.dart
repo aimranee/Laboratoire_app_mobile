@@ -8,6 +8,7 @@ class CallMsgWidget extends StatelessWidget {
 
   final String whatsAppNo;
 
+  // ignore: use_key_in_widget_constructors
   const CallMsgWidget({this.primaryNo, this.whatsAppNo});
   @override
   Widget build(BuildContext context) {

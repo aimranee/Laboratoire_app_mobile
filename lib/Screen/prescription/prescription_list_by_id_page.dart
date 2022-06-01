@@ -13,7 +13,9 @@ import 'package:flutter/material.dart';
 
 
 class PrescriptionListByIDPage extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final appointmentId;
+  // ignore: use_key_in_widget_constructors
   const PrescriptionListByIDPage({this.appointmentId});
   @override
   _PrescriptionListByIDPageState createState() => _PrescriptionListByIDPageState();
@@ -58,7 +60,7 @@ class _PrescriptionListByIDPageState extends State<PrescriptionListByIDPage> {
                     } else if (snapshot.hasError) {
                       return const IErrorWidget();
                     } else {
-                      return LoadingIndicatorWidget();
+                      return const LoadingIndicatorWidget();
                     }
                   }),
             ),

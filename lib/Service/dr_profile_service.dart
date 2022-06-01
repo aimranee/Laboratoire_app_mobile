@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:laboratoire_app/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:laboratoire_app/model/dr_profiel_model.dart';

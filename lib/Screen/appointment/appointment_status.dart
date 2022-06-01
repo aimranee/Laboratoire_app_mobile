@@ -86,7 +86,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
           } else if (snapshot.hasError) {
             return const IErrorWidget();
           } else {
-            return LoadingIndicatorWidget();
+            return const LoadingIndicatorWidget();
           }
         });
   }
@@ -111,7 +111,7 @@ class _AppointmentStatusState extends State<AppointmentStatus> {
           } else if (snapshot.hasError) {
             return const IErrorWidget();
           } else {
-            return LoadingIndicatorWidget();
+            return const LoadingIndicatorWidget();
           }
         });
   }

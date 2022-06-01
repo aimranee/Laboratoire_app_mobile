@@ -95,7 +95,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                       Padding(
                           padding: const EdgeInsets.only(top: 20.0, left: 10, right: 10),
                           child: _isLoading
-                              ? Center(child: LoadingIndicatorWidget())
+                              ? const Center(child: LoadingIndicatorWidget())
                               : Center(
                                   child: SizedBox(
                                       height: 500,

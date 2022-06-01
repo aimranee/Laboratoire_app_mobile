@@ -11,6 +11,7 @@ import 'package:laboratoire_app/Screen/more_service.dart';
 import 'package:laboratoire_app/widgets/appbars_widget.dart';
 import 'package:laboratoire_app/widgets/buttons_widget.dart';
 
+// ignore: must_be_immutable
 class AnalysesPage extends StatefulWidget {
   String id;
   String title;
@@ -34,7 +35,7 @@ class _AnalysesPageState extends State<AnalysesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar:  _isLoading
-              ? LoadingIndicatorWidget()
+              ? const LoadingIndicatorWidget()
               : BottomNavigationWidget(
           title: "Demander Rendez-vous",
           route: '/AppoinmentPage',
@@ -73,7 +74,7 @@ class _AnalysesPageState extends State<AnalysesPage> {
                       } else if (snapshot.hasError) {
                         return const IErrorWidget();
                       } else {
-                        return LoadingIndicatorWidget();
+                        return const LoadingIndicatorWidget();
                       }
                     }
                   )

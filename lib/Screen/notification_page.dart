@@ -5,7 +5,6 @@ import 'package:laboratoire_app/widgets/bottom_navigation_bar_widget.dart';
 import 'package:laboratoire_app/widgets/error_widget.dart';
 import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:laboratoire_app/widgets/no_data_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:laboratoire_app/Service/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,7 +59,7 @@ class _NotificationPageState extends State<NotificationPage> {
               height: MediaQuery.of(context).size.height,
               decoration: IBoxDecoration.upperBoxDecoration(),
               child: _isLoading
-                  ? LoadingIndicatorWidget()
+                  ? const LoadingIndicatorWidget()
                   : FutureBuilder(
                       future:
                           NotificationService.getData(_limit, _userCreatedDat),
@@ -76,7 +75,7 @@ class _NotificationPageState extends State<NotificationPage> {
                         } else if (snapshot.hasError) {
                           return const IErrorWidget();
                         } else {
-                          return LoadingIndicatorWidget();
+                          return const LoadingIndicatorWidget();
                         }
                       }),
             ),

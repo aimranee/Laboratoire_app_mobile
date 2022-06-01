@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:laboratoire_app/config.dart';
 import 'package:laboratoire_app/model/prescription_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';

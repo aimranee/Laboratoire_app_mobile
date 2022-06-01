@@ -7,7 +7,9 @@ class LoginButtonsWidget extends StatelessWidget {
   @required
   final String title;
   @required
+  // ignore: prefer_typing_uninitialized_variables
   final onPressed;
+  // ignore: use_key_in_widget_constructors
   const LoginButtonsWidget({this.title, this.onPressed});
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class LoginButtonsWidget extends StatelessWidget {
 class MoreButtonsWidget extends StatelessWidget {
   @required
   final String title;
+  // ignore: use_key_in_widget_constructors
   const MoreButtonsWidget({this.title});
   @override
   Widget build(BuildContext context) {
@@ -59,8 +62,10 @@ class EditBtnWidget extends StatelessWidget {
   @required
   final String title;
   @required
+  // ignore: prefer_typing_uninitialized_variables
   final onPressed;
 
+  // ignore: use_key_in_widget_constructors
   const EditBtnWidget({this.title, this.onPressed});
   @override
   Widget build(BuildContext context) {
@@ -82,8 +87,10 @@ class EditBtnWidget extends StatelessWidget {
 
 class EditIconBtnWidget extends StatelessWidget {
   @required
+  // ignore: prefer_typing_uninitialized_variables
   final onTap;
-  EditIconBtnWidget({this.onTap});
+  // ignore: use_key_in_widget_constructors
+  const EditIconBtnWidget({this.onTap});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -107,7 +114,9 @@ class DeleteButtonWidget extends StatelessWidget {
   @required
   final String title;
   @required
+  // ignore: prefer_typing_uninitialized_variables
   final onPressed;
+  // ignore: use_key_in_widget_constructors
   const DeleteButtonWidget({this.onPressed, this.title});
   @override
   Widget build(BuildContext context) {
@@ -141,7 +150,9 @@ class RoundedBtnWidget extends StatelessWidget {
   @required
   final String title;
   @required
+  // ignore: prefer_typing_uninitialized_variables
   final onPressed;
+  // ignore: use_key_in_widget_constructors
   const RoundedBtnWidget({this.onPressed, this.title});
   @override
   Widget build(BuildContext context) {
@@ -210,9 +221,12 @@ class SignInBtnWidget extends StatelessWidget {
 
 class SearchBtnWidget extends StatelessWidget {
   @required
+  // ignore: prefer_typing_uninitialized_variables
   final isEnableBtn;
   @required
+  // ignore: prefer_typing_uninitialized_variables
   final onPressed;
+  // ignore: use_key_in_widget_constructors
   const SearchBtnWidget({this.isEnableBtn, this.onPressed});
   @override
   Widget build(BuildContext context) {

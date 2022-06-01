@@ -37,7 +37,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   children: [
                     RichText(
                       text: TextSpan(
-                          text: "Welcome to",
+                          text: "Bienvenue",
                           style: TextStyle(
                             fontSize: 25,
                             letterSpacing: 2,
@@ -45,7 +45,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                           children: [
                             TextSpan(
-                              text: isSignupScreen ? " Laboratoire," : " Back,",
+                              text: isSignupScreen ? " à Laboratoire," : ",",
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
@@ -59,8 +59,8 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     Text(
                       isSignupScreen
-                          ? "Signup to Continue"
-                          : "Signin to Continue",
+                          ? "S'inscrire pour continuer"
+                          : "Se connecter pour continuer",
                       style: const TextStyle(
                         letterSpacing: 1,
                         color: Colors.white,
@@ -106,7 +106,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           child: Column(
                             children: [
                               Text(
-                                "LOGIN",
+                                "Se connecter",
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -133,7 +133,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           child: Column(
                             children: [
                               Text(
-                                "SIGNUP",
+                                "S'inscrire",
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,

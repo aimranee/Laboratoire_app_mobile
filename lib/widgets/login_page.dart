@@ -72,8 +72,8 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             _isLoading
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
+              ? const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: LoadingIndicatorWidget(),
                 )
               : _loginBtn(),
@@ -83,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+    // ignore: non_constant_identifier_names
     Widget _EmailField(IconData icon, String hintText) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),

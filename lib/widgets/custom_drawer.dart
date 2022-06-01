@@ -1,10 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/widgets/bottom_user_info.dart';
 import 'package:laboratoire_app/widgets/custom_list_tile.dart';
 import 'package:laboratoire_app/widgets/header.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: must_be_immutable
 class CustomDrawer extends StatefulWidget {
   bool isConn = false;
   CustomDrawer({Key key, this.isConn}) : super(key: key);
@@ -15,24 +16,21 @@ class CustomDrawer extends StatefulWidget {
 
 class _CustomDrawerState extends State<CustomDrawer> {
   bool _isCollapsed = false;
-  // bool isConn = widget.isConn;
-  String username = "Laboratoire";
-
+  String username = "ASSALAMA";
 
   @override
   void initState() {
-    _getAndSetUserData();
+    _getUserData();
     super.initState();
   }
-_getAndSetUserData() async {
+_getUserData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    final user =
-        await UserService.getData();
-        if (user != null) {
-          setState(() {
-            username = user[0].firstName + " " + user[0].lastName;
-          });
-        }
+      if (pref.getString("fcm") != "") {
+        setState(() {
+          username = pref.getString("firstName") + " " + pref.getString("lastName");
+        });
+      }
 
   }
   @override

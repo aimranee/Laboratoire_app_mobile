@@ -11,7 +11,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:swipedetector/swipedetector.dart';
 
 class ShowPrescriptionFilePage extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final title;
+  // ignore: prefer_typing_uninitialized_variables
   final fileUrls;
   final int selectedFilesIndex;
   const ShowPrescriptionFilePage({Key key, this.fileUrls, this.title, this.selectedFilesIndex})

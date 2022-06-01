@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:get/get.dart';
 import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/model/user_model.dart';
 import 'package:laboratoire_app/utilities/color.dart';
@@ -74,7 +71,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: _isLoading
-        ? LoadingIndicatorWidget() : 
+        ? const LoadingIndicatorWidget() : 
         BottomNavigationStateWidget(
         title: "Mise à jour",
         onPressed: _takeConfirmation,
@@ -345,7 +342,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   _buildContent() {
     return _isLoading
-        ? LoadingIndicatorWidget()
+        ? const LoadingIndicatorWidget()
         : Form(
             key: _formKey,
             child: ListView(

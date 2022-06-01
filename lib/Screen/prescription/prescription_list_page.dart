@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Screen/prescription/prescription_details.dart';
 import 'package:laboratoire_app/Service/prescription_service.dart';
@@ -33,6 +31,7 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
     super.initState();
   }
 
+  // ignore: non_constant_identifier_names
   _TestConnection() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   setState(() {
@@ -59,7 +58,7 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationWidget(route: "/ContactUsPage", title:"Contactez-nous"),
       drawer : CustomDrawer(isConn: isConn),
-      body: _isLoading ? LoadingIndicatorWidget() : Stack(
+      body: _isLoading ? const LoadingIndicatorWidget() : Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
           CAppBarWidget(title:"Resultats", isConn: isConn),
@@ -84,7 +83,7 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
                     } else if (snapshot.hasError) {
                       return const IErrorWidget();
                     } else {
-                      return LoadingIndicatorWidget();
+                      return const LoadingIndicatorWidget();
                     }
                   }),
             ),

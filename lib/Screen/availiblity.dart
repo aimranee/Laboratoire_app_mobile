@@ -29,7 +29,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: _isLoading
-        ? LoadingIndicatorWidget() : 
+        ? const LoadingIndicatorWidget() : 
         BottomNavigationWidget(
         title: "Demander Rendez-vous",
         route: "/AppoinmentPage",
@@ -60,7 +60,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
                     } else if (snapshot.hasError) {
                       return const IErrorWidget();
                     } else {
-                      return LoadingIndicatorWidget();
+                      return const LoadingIndicatorWidget();
                     }
                   }),
             ),

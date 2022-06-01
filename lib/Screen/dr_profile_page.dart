@@ -15,6 +15,7 @@ import 'package:laboratoire_app/Service/dr_profile_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// ignore: must_be_immutable
 class DoctorProfilePage extends StatefulWidget {
   String id;
   DoctorProfilePage({Key key, this.id}) : super(key: key);
@@ -54,7 +55,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
     
     return Scaffold(
       drawer : CustomDrawer(isConn: isConn),
-        body: _isLoading ? LoadingIndicatorWidget() : FutureBuilder(
+        body: _isLoading ? const LoadingIndicatorWidget() : FutureBuilder(
             future: DrProfileService.getDataById(widget.id), //fetch doctors profile details like name, profileImage, description etc
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -64,7 +65,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               } else if (snapshot.hasError) {
                 return const IErrorWidget();
               } else {
-                return LoadingIndicatorWidget();
+                return const LoadingIndicatorWidget();
               }
             })
     );

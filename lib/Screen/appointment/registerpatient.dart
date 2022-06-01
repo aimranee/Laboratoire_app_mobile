@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Service/analyses_select_services.dart';
@@ -91,7 +90,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
           },
           clickable: _isBtnDisable,
         ),
-        body: _isLoading ? LoadingIndicatorWidget() : Stack(
+        body: _isLoading ? const LoadingIndicatorWidget() : Stack(
           clipBehavior: Clip.none,
           children: <Widget>[
             CAppBarWidget(title: "Enregistrer le patient", isConn: true),
@@ -146,6 +145,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
         ));
   }
 
+  // ignore: non_constant_identifier_names
   Widget _InputField(controller,String name,) {
     return InputFields.readableInputField(
         controller, name, 1);

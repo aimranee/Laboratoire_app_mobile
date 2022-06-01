@@ -41,7 +41,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     return Scaffold(
 
         bottomNavigationBar: _isLoading
-          ? LoadingIndicatorWidget()
+          ? const LoadingIndicatorWidget()
           : BottomNavigationStateWidget(
           title: "Suivant",
           onPressed: () {
@@ -97,7 +97,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                   } else if (snapshot.hasError) {
                     return const IErrorWidget();
                   } else {
-                    return LoadingIndicatorWidget();
+                    return const LoadingIndicatorWidget();
                   }
                 }),
           ],

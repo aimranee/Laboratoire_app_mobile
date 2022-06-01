@@ -27,7 +27,6 @@ class _SignUpPageState extends State<SignUpPage> {
   
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmedController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
@@ -38,10 +37,9 @@ class _SignUpPageState extends State<SignUpPage> {
   String _selectedGender = 'Gender';
   String _selectedBloodType = 'Groupe Sanguin';
   String _selectedfamilySituation = "Family Situation";
-  bool _hasRamid = false;
-  bool _hasCnss = false;
+  final bool _hasRamid = false;
+  final bool _hasCnss = false;
 
-  var _isBtnEnable = "true";
   bool _isLoading = false;
 
   @override
@@ -161,8 +159,8 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           _isLoading
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
+              ? const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: LoadingIndicatorWidget(),
                 )
               : _loginBtn(),
@@ -313,7 +311,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
 _handleUpload() async {
     setState(() {
-      _isBtnEnable = "";
       _isLoading = true;
     });
 
@@ -358,7 +355,6 @@ _handleUpload() async {
       ToastMsg.showToastMsg("Something went wrong");
     }
     setState(() {
-      _isBtnEnable = "true";
       _isLoading = false;
     });
   }
