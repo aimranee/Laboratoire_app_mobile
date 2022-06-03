@@ -30,3 +30,6 @@ class Palette {
  static const Color googleColor = Color(0xFFDE4B39);
  static const Color backgroundColor = Color(0xFFECF3F9);
 }
+class SnkConstants {
+  static final Color kPrimaryColor = Color(0xFF000000);
+}

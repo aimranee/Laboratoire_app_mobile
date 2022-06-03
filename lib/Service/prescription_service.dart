@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 
 class PrescriptionService {
   static const _viewUrl = "$apiUrl/get_prescription";
-  static const _viewUrlById = "$apiUrl/get_prescription_byid";
-
+  static const _viewUrlById = "$apiUrl/get_prescription_byid"; 
+  static const _updateIsPaiedUrl = "$apiUrl/update_prescription_isPaied";
 
   static List<PrescriptionModel> dataFromJson(String jsonString) {
     final data = json.decode(jsonString);
@@ -34,6 +34,16 @@ class PrescriptionService {
       return list;
     } else {
       return []; //if any error occurs then it return a blank list
+    }
+  }
+
+  static updateIsPaied(PrescriptionModel prescriptionModel) async {
+    final res = await http.post(Uri.parse(_updateIsPaiedUrl),
+        body: prescriptionModel.toJsonUpdateStatus());
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return "error";
     }
   }
 }

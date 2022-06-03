@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
             clipBehavior: Clip.none,
         children: [
-          CAppBarWidget(title: "ASSALAMA", isConn: isConn),
+          CAppBarWidget(title: "SYSLAB", isConn: isConn),
           Positioned(
             top: 90,
             left: 0,
@@ -164,20 +164,21 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           const SizedBox(height: 20),
           SizedBox(
-            height: MediaQuery.of(context).size.height * .20,
-            width: MediaQuery.of(context).size.width *.8,
+            // height: MediaQuery.of(context).size.height * .20,
+            width: MediaQuery.of(context).size.width *.5,
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(0.0),
                 child: Container(            
                     margin: const EdgeInsets.all(6),
                     color: bgColor,
                     child: Image.asset(
-                      'assets/images/image1.png',
+                      'assets/images/image11.png',
                       fit: BoxFit.cover,
                     ) //recommended 200*300 pixel
-                    )),
+                  )
+            ),
           ),
-          const SizedBox(height: 45),
+          const SizedBox(height: 30),
           Padding(
             padding: const EdgeInsets.only(right: 20.0, left: 20, top: 8.0),
             child: Container(

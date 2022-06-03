@@ -4,11 +4,7 @@ import 'package:laboratoire_app/utilities/curverdpath.dart';
 import 'package:laboratoire_app/utilities/style.dart';
 import 'package:laboratoire_app/widgets/call_msg_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
-import 'package:laboratoire_app/widgets/error_widget.dart';
-import 'package:laboratoire_app/widgets/loading_indicator.dart';
-import 'package:laboratoire_app/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:laboratoire_app/Service/dr_profile_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUs extends StatefulWidget {
@@ -23,7 +19,6 @@ class _ContactUsState extends State<ContactUs> {
   @override
   void initState() {
      
-
     super.initState();
   }
 
@@ -31,25 +26,7 @@ class _ContactUsState extends State<ContactUs> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer : CustomDrawer(isConn: isConn),
-        body: FutureBuilder(
-            future: DrProfileService
-                .getData(), //fetch doctors profile details like name, profileImage, description etc
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return snapshot.data.length==0
-                    ? const NoDataWidget()
-                    : _buildContent(snapshot.data[0]);
-              } else if (snapshot.hasError) {
-                return const IErrorWidget();
-              } else {
-                return const LoadingIndicatorWidget();
-              }
-            })
-    );
-  }
-
-  Widget _buildContent(profile) {
-    return SingleChildScrollView(
+        body: SingleChildScrollView(
       child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.start,
@@ -61,7 +38,7 @@ class _ContactUsState extends State<ContactUs> {
           clipBehavior: Clip.none,
           children: <Widget>[
             SizedBox(
-              height: 150,
+              height: 130,
               width: MediaQuery.of(context).size.width,
               // color: Colors.red,
               child: CustomPaint(
@@ -69,7 +46,7 @@ class _ContactUsState extends State<ContactUs> {
               ),
             ),
             Positioned(
-                top: 20,
+                top: 30,
                 left: 0,
                 right: 0,
                 child: Row(
@@ -82,7 +59,7 @@ class _ContactUsState extends State<ContactUs> {
                       },
                     ),
                     const Text(
-                      " Dr Profile",
+                      "Contactez-nous",
                       style: kAppbarTitleStyle,
                     ),
                     IconButton(
@@ -92,12 +69,12 @@ class _ContactUsState extends State<ContactUs> {
                         ),
                         onPressed: () {
                           Navigator.popUntil(
-                              context, ModalRoute.withName('/'));
+                              context, ModalRoute.withName('/HomePage'));
                         })
                   ],
                 )),
             Positioned(
-              top: 80,
+              top: 70,
               left: 25,
               right: 25,
               child: Row(
@@ -108,14 +85,14 @@ class _ContactUsState extends State<ContactUs> {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const SizedBox(height: 30),
+                      children: const [
+                        SizedBox(height: 30),
                         Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
+                          padding: EdgeInsets.only(top: 30, left: 30.0),
                           child: Text(
-                              "Dr ${profile.firstName} ${profile.lastName}",
+                              "Laboratoire P2M SYSLAB",
                               //doctors first name and last name
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.black,
                                 //change colors form here
                                 fontFamily: 'OpenSans-Bold',
@@ -124,12 +101,12 @@ class _ContactUsState extends State<ContactUs> {
                               )),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
+                          padding: EdgeInsets.only(left: 30.0),
                           child: Text(
                               //"jhdsvdsh",
-                              profile.subTitle,
+                              "POTENTIEL 2 MAROC",
                               //doctor subtitle
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.black,
                                 //change colors form here
                                 fontFamily: 'OpenSans-Bold',
@@ -138,8 +115,8 @@ class _ContactUsState extends State<ContactUs> {
                               )),
                         ),
                         CallMsgWidget(
-                          primaryNo: profile.pNo1,
-                          whatsAppNo: profile.whatsAppNo,
+                          primaryNo: "0604440684",
+                          whatsAppNo: "0604440684",
                         )
                       ],
                     ),
@@ -151,15 +128,14 @@ class _ContactUsState extends State<ContactUs> {
         ),
       ),
       Padding(
-          padding: const EdgeInsets.only(left: 25.0, right: 25, top: 10),
-          child:
-              _callUsMailUsBox(profile.pNo1, profile.pNo2, profile.email)),
+          padding: const EdgeInsets.only(left: 40.0, right: 25, top: 10),
+          child: _callUsMailUsBox("0604440684", "KHAOULA.TOUIJER@P2M.MA")),
       const Padding(
-        padding: EdgeInsets.only(top: 8, left: 25.0, right: 25),
+        padding: EdgeInsets.only(top: 8, left: 40.0, right: 25),
         child: Text("Location", style: kPageTitleStyle),
       ),
       Padding(
-        padding: const EdgeInsets.only(left: 25.0, right: 25, top: 8.0),
+        padding: const EdgeInsets.only(left: 40.0, right: 25, top: 8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,32 +149,43 @@ class _ContactUsState extends State<ContactUs> {
                   },
                   child: Card(
                     elevation: 10.0,
-                    child: ClipRRect(
+                    child: 
+                    GestureDetector(
+                      onTap: () async {
+                        const _url =
+                            'https://goo.gl/maps/Vb85pHShfgGXTSWC6';
+                        await canLaunch(_url)
+                            ? await launch(_url)
+                            : throw 'Could not launch $_url'; //launch google map
+                      },
+                      
+                      child : ClipRRect(
                         borderRadius: BorderRadius.circular(10.0),
                         child: Image.asset(
                           'assets/images/map.png',
                           fit: BoxFit.fill,
-                        ) //this is a asset image only not a google map integration
-
                         ),
+                         //this is a asset image only not a google map integration
+
+                      ),
                   ),
-                )),
+                )),)
             
           ],
         ),
       )
     ],
       ),
-    );
+    ));
   }
 
-  Widget _callUsMailUsBox(String phn, String phn2, String email) {
-    return Row(
+  Widget _callUsMailUsBox(String phn, String email) {
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         SizedBox(
-          height: MediaQuery.of(context).size.height * .15,
-          width: MediaQuery.of(context).size.width * .4,
+          height: MediaQuery.of(context).size.height * .10,
+          width: MediaQuery.of(context).size.width * .8,
           child: Card(
             elevation: 5.0,
             shape: RoundedRectangleBorder(
@@ -210,9 +197,9 @@ class _ContactUsState extends State<ContactUs> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Text("Call us", style: kPageTitleStyle),
+                    const Text("appelez-nous", style: kPageTitleStyle),
                     Text(
-                      "$phn\n$phn2",
+                      phn,
                       style: const TextStyle(
                         fontFamily: 'OpenSans-Regular',
                         fontSize: 12.0,
@@ -225,8 +212,8 @@ class _ContactUsState extends State<ContactUs> {
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * .15,
-          width: MediaQuery.of(context).size.width * .4,
+          height: MediaQuery.of(context).size.height * .1,
+          width: MediaQuery.of(context).size.width * .8,
           child: Card(
               elevation: 5.0,
               shape: RoundedRectangleBorder(
@@ -251,28 +238,6 @@ class _ContactUsState extends State<ContactUs> {
                 ),
               )),
         ),
-        Positioned(
-            right: 25,
-            bottom: 12,
-            child: GestureDetector(
-              onTap: () async {
- //take clinic longitude from google map
-                const _url =
-                    'https://goo.gl/maps/Vb85pHShfgGXTSWC6';
-                await canLaunch(_url)
-                    ? await launch(_url)
-                    : throw 'Could not launch $_url'; //launch google map
-              },
-              child: const CircleAvatar(
-                radius: 25,
-                backgroundColor: btnColor,
-                child: Icon(
-                  Icons.near_me,
-                  color: appBarIconColor,
-                ),
-              ),
-            ),
-          )
       ],
     );
   }

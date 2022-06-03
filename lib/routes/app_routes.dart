@@ -13,7 +13,6 @@ import 'package:laboratoire_app/Screen/home.dart';
 import 'package:laboratoire_app/Screen/more_service.dart';
 import 'package:laboratoire_app/Screen/notification_page.dart';
 import 'package:laboratoire_app/Screen/prescription/prescription_list_page.dart';
-import 'package:laboratoire_app/Screen/reachus.dart';
 import 'package:laboratoire_app/Screen/analyses.dart';
 import 'package:laboratoire_app/Screen/user_profiel.dart';
 
@@ -64,10 +63,6 @@ class AppRoutes {
     GetPage(
       name: appointmentStatus,
       page: () => const AppointmentStatus(),
-    ),
-    GetPage(
-      name: reachUS,
-      page: () => const ReachUS(),
     ),
     GetPage(
       name: analysesPage,

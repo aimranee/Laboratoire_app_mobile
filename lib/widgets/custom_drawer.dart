@@ -16,7 +16,7 @@ class CustomDrawer extends StatefulWidget {
 
 class _CustomDrawerState extends State<CustomDrawer> {
   bool _isCollapsed = false;
-  String username = "ASSALAMA";
+  String username = "SYSLAB";
 
   @override
   void initState() {

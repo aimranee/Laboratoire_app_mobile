@@ -1,4 +1,5 @@
 import 'package:flutter_downloader/flutter_downloader.dart';
+// import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ void main() async {
   await Firebase.initializeApp();
   await FlutterDownloader.initialize(debug: true,);
   initializeDateFormatting();
+  // Stripe.publishableKey = 'pk_test_51L5terGwqZ9fHWymgPqbertK1y3uH71QFgPBIaSBuegAhrw9ClYypmglh1ifEmkmMkPbZH3tEEjD1XPvaviAu1YK002PzXuYGp';
 
   runApp(const MyApp());
 }
@@ -29,9 +31,9 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return //      <--- ChangeNotifierProvider
+    return //<--- ChangeNotifierProvider
 
-        GetMaterialApp(
+      GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.homeScreen,
       getPages: AppRoutes.pages,
