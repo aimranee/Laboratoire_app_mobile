@@ -4,7 +4,7 @@ import 'package:laboratoire_app/model/appointment_type_model.dart';
 import 'package:http/http.dart' as http;
 
 class AppointmentTypeService {
-  static const _viewUrl = "$apiUrl/get_appointmentType";
+  static const _viewUrl = "$apiUrl/get_appointment_type";
 
   static List<AppointmentTypeModel> availabilityFromJson(String jsonString) {
     final data = json.decode(jsonString);

@@ -99,7 +99,11 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
                   // InputFields.readableInputField(_timeController, "Time", 1),
                   InputFields.readableInputField(_priceController, "Price",1),
                   InputFields.readableInputField(_messageController, "Message",null),
-                  
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8, left: 25.0, right: 25),
+                    child: Text("Les resultats : ", style: kPageTitleStyle),
+                  ),
+                  const SizedBox(height: 25),
                   SizedBox(
                     height: MediaQuery.of(context).size.height*.26,
                     
@@ -122,7 +126,7 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
                               Text(
                                 "Les frais de dossier se sont pas effectués", 
                                 textAlign: TextAlign.center,
-                                style: kAppbarTitleStyle,
+                                style: kPageTitleStyle
                               )
                             ]
                           ),
