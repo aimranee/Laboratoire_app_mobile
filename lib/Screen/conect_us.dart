@@ -145,7 +145,6 @@ class _ContactUsState extends State<ContactUs> {
                 width: MediaQuery.of(context).size.width * .8,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/ReachUsPage');
                   },
                   child: Card(
                     elevation: 10.0,
@@ -169,7 +168,9 @@ class _ContactUsState extends State<ContactUs> {
 
                       ),
                   ),
-                )),)
+                )
+                ),
+                )
             
           ],
         ),
