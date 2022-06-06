@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/utilities/color.dart';
@@ -42,25 +43,29 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _isLoading = false;
     });
-
-    SharedPreferences pref = await SharedPreferences.getInstance();
-
-    if (pref.getString("fcm") != "") {
+    final res = await FirebaseMessaging.instance.getToken();
+    // print(res);
+    
+    if (res != null) {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      final user = await UserService.getData();
       setState(() {
           isConn = true;
-        });
-      final user = await UserService.getData();
+      });
+        
+      pref.setString("fcm", user[0].fcmId);
       pref.setString("firstName", user[0].firstName);
       pref.setString("lastName", user[0].lastName);
       pref.setString("uid", user[0].uId);
-
-      }
       setState(() {
         _isLoading = false;
       });
-    
-    // //stop loading indicator
-    
+    }else{
+      setState(() {
+        _isLoading = false;
+      });
+    }
+
   }
 
   @override
@@ -104,24 +109,24 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
 
         TableRow(children: [
-          _cardImg('assets/icon/patient.svg', 'Profile', "/Profile"),
-          _cardImg('assets/icon/teeth.svg', 'Analyses', "/CategoryList"),
+          _cardImg('assets/icon/patient.svg', 'Profile', "/Profile", isConn),
+          _cardImg('assets/icon/teeth.svg', 'Analyses', "/CategoryList", isConn),
         ]),
 
         TableRow(children: [
-          _cardImg("assets/icon/appoin.svg", "Rendez-vous", '/Appointmentstatus'),
-          _cardImg('assets/icon/sch.svg', 'Disponibilité', '/AvailabilityPage'),
+          _cardImg("assets/icon/appoin.svg", "Rendez-vous", '/Appointmentstatus', isConn),
+          _cardImg('assets/icon/sch.svg', 'Disponibilité', '/AvailabilityPage', isConn),
         ]),
 
         TableRow(children: [     
-          _cardImg('assets/icon/documents.svg', 'Resultas', "/Documents"),
-          _cardImg("assets/icon/call.svg", "Contactez-nous", "/ContactUsPage"),
+          _cardImg('assets/icon/documents.svg', 'Resultas', "/Documents", isConn),
+          _cardImg("assets/icon/call.svg", "Contactez-nous", "/ContactUsPage", isConn),
         ]),
       ],
     );
   }
 
-  Widget _cardImg(String path, String title, String routeName) {
+  Widget _cardImg(String path, String title, String routeName, bool isConn) {
     return GestureDetector(
       onTap: () {
         //  Check.addData();

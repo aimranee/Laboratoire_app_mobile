@@ -39,6 +39,7 @@ class _AnalysesPageState extends State<AnalysesPage> {
               : BottomNavigationWidget(
           title: "Demander Rendez-vous",
           route: '/AppoinmentPage',
+          isConn: isConn,
         ),
         drawer : CustomDrawer(isConn: isConn),
         body: _buildContent());

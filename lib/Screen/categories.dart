@@ -59,6 +59,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
         BottomNavigationWidget(
         title: "Demander Rendez-vous",
         route: "/AppoinmentPage",
+        isConn: isConn
       ),
       drawer : CustomDrawer(isConn: isConn),
       body: _isLoading ? const LoadingIndicatorWidget() : Stack(
