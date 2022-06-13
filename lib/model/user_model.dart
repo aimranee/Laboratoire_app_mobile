@@ -32,9 +32,9 @@ class UserModel {
       this.age,
       this.gender,
       this.cin,
-      this.familySituation,
       this.hasRamid,
       this.hasCnss,
+      this.familySituation,
       this.bloodType,
       this.diseaseState});
 

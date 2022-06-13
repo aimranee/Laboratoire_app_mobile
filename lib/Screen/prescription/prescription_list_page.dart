@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Screen/prescription/prescription_details.dart';
 import 'package:laboratoire_app/Service/prescription_service.dart';
+import 'package:laboratoire_app/Service/user_service.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/decoration.dart';
 import 'package:laboratoire_app/widgets/appbars_widget.dart';
@@ -33,11 +37,17 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
 
   // ignore: non_constant_identifier_names
   _TestConnection() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  setState(() {
-    _isLoading = true;
-  });
-  if (prefs.getString("fcm") != ""){
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    if (prefs.getString("fcm") != null) {
+      setState(() {
+        isConn = true;
+      });
+    // log("message"+user.toString());
     setState(() {
       isConn = true;
     });
@@ -67,7 +77,7 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: !isConn ? const AuthScreen() : Container(
+            child: ! isConn ? const AuthScreen() : Container(
               height: MediaQuery.of(context).size.height,
               decoration:IBoxDecoration.upperBoxDecoration(),
               child:FutureBuilder(

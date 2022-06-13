@@ -60,8 +60,8 @@ class _MoreServiceScreenState extends State<MoreServiceScreen> {
                         widget.analysesDetails.titre,
                         style: kParaStyle,
                       ),
-                      const SizedBox(height: 20),
-                      const Text("Nom de service", style: kPageTitleStyle),
+                      // const SizedBox(height: 20),
+                      // const Text("Nom de service", style: kPageTitleStyle),
                       const SizedBox(height: 20),
                       Text(
                         widget.analysesDetails.name,

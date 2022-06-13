@@ -140,7 +140,7 @@ class _AnalysesPageState extends State<AnalysesPage> {
                       child: Text(analysesDetails.name,
                           style: const TextStyle(
                             fontFamily: 'OpenSans-Bold',
-                            fontSize: 12.0,
+                            fontSize: 16.0,
                           )),
                     ),
                     // Text(analysesDetails,

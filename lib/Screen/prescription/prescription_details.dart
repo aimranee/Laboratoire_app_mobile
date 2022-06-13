@@ -205,7 +205,7 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
   _getUserData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-      if (pref.getString("fcm") != "") {
+      if (pref.getString("fcm") != null) {
         setState(() {
           username = pref.getString("firstName") + " " + pref.getString("lastName");
         });

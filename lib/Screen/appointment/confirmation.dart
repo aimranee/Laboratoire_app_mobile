@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Service/appointment_service.dart';
 import 'package:laboratoire_app/SetData/screen_arg.dart';
@@ -51,7 +53,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   @override
   Widget build(BuildContext context) {
     final PatientDetailsArg _patientDetailsArgs = ModalRoute.of(context).settings.arguments;
-    
+    log("message");
     return Scaffold(
       drawer : CustomDrawer(isConn: true),
         bottomNavigationBar: BottomNavigationStateWidget(
@@ -95,7 +97,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                       Padding(
                           padding: const EdgeInsets.only(top: 20.0, left: 10, right: 10),
                           child: _isLoading
-                              ? const Center(child: LoadingIndicatorWidget())
+                              ? const Center(
+                                child: LoadingIndicatorWidget())
                               : Center(
                                   child: SizedBox(
                                       height: 500,

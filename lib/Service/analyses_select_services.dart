@@ -31,7 +31,7 @@ class AppDataController extends GetxController {
       List<AnalysesCatModel> tempSubjectData = [];
       
       for (var data in list) {
-        log("message");
+        log("message123");
         tempSubjectData.add(
           AnalysesCatModel(
             analysesId: data.analysesId,

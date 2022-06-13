@@ -372,7 +372,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       _isLoading = true;
     });
 
-    if (prefs.getString("fcm") != "") {
+    if (prefs.getString("fcm") != null) {
       setState(() {
         isConn = true;
       });
