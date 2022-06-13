@@ -28,34 +28,12 @@ class PrescriptionListPage extends StatefulWidget {
 class _PrescriptionListPageState extends State<PrescriptionListPage> {
  final ScrollController _scrollController = ScrollController();
  bool _isLoading = false;
- bool isConn = false;
+ bool isConn = Get.arguments;
   @override
   void initState() {
-    _TestConnection();
+    // _TestConnection();
     super.initState();
   }
-
-  // ignore: non_constant_identifier_names
-  _TestConnection() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    if (prefs.getString("fcm") != null) {
-      setState(() {
-        isConn = true;
-      });
-    // log("message"+user.toString());
-    setState(() {
-      isConn = true;
-    });
-  }
-  setState(() {
-    _isLoading = false;
-  });
-}
 
  @override
   void dispose() {

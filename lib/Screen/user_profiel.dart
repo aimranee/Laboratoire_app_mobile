@@ -12,6 +12,7 @@ import 'package:laboratoire_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:laboratoire_app/utilities/toast_msg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({Key key}) : super(key: key);
@@ -25,7 +26,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   String _selectedfamilySituation = "";
   String _selectedBloodType = "";
   String _isEnableBtn = "false";
-  bool isConn = false;
+  bool isConn = Get.arguments;
   bool _hasRamid = false;
   bool _hasCnss = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -90,7 +91,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               child: Container(
                   height: MediaQuery.of(context).size.height,
                   decoration: IBoxDecoration.upperBoxDecoration(),
-                  child: ! isConn ? const AuthScreen() : _buildContent())),
+                  child: _isLoading? const LoadingIndicatorWidget() :!isConn ? const AuthScreen() : _buildContent())),
         ],
       ),
     );
@@ -372,10 +373,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       _isLoading = true;
     });
 
-    if (prefs.getString("fcm") != null) {
-      setState(() {
-        isConn = true;
-      });
+    if (isConn == true) {
       
       final user = await UserService.getData();
 
@@ -404,10 +402,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
         });
       }
       
-    }else{
-      setState(() {
-        isConn = false;
-      });
     }
     setState(() {
       _isLoading = false;

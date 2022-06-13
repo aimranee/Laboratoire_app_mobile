@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:laboratoire_app/Screen/appointment/my_location.dart';
 import 'package:laboratoire_app/Screen/categories.dart';
 import 'package:laboratoire_app/Screen/dr_profile_page.dart';
 import 'package:laboratoire_app/Screen/login_signup.dart';
@@ -38,6 +39,7 @@ class AppRoutes {
   static String  team = '/Team';
   static String  doctorProfile = '/DoctorProfile';
   static String  categoryList = '/CategoryList';
+  static String  myLocation = '/MyLocation';
   
   static List<GetPage> pages = [
     GetPage(
@@ -95,6 +97,11 @@ class AppRoutes {
     GetPage(
       name: authScreen,
       page: () => const LoginSignupScreen(),
+    ),
+
+    GetPage(
+      name: myLocation,
+      page: () => MyLocation(),
     ),
 
     GetPage(

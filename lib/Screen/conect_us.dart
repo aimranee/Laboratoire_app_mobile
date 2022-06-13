@@ -1,11 +1,12 @@
+import 'dart:async';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:laboratoire_app/utilities/curverdpath.dart';
 import 'package:laboratoire_app/utilities/style.dart';
 import 'package:laboratoire_app/widgets/call_msg_widget.dart';
 import 'package:laboratoire_app/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ContactUs extends StatefulWidget {
   const ContactUs({Key key}) : super(key: key);
@@ -22,8 +23,28 @@ class _ContactUsState extends State<ContactUs> {
     super.initState();
   }
 
+  final Completer<GoogleMapController> _controller = Completer();
+
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target:  LatLng(30.4031875, -9.5285625),
+    zoom: 15.6
+  );
+
+  final List<Marker> _markers = [];
+    
+
+
   @override
   Widget build(BuildContext context) {
+    _markers.add(
+      const Marker(
+        markerId: MarkerId('SomeId'),
+        position: LatLng(30.4031875, -9.5285625),
+        infoWindow: InfoWindow(
+        title: 'P2M location'
+        )
+      )
+    );
     return Scaffold(
       drawer : CustomDrawer(isConn: isConn),
         body: SingleChildScrollView(
@@ -146,28 +167,19 @@ class _ContactUsState extends State<ContactUs> {
                 child: GestureDetector(
                   onTap: () {
                   },
-                  child: Card(
+                  child: 
+                  Card(
+                    // color: Colors.black,
                     elevation: 10.0,
                     child: 
-                    GestureDetector(
-                      onTap: () async {
-                        const _url =
-                            'https://goo.gl/maps/Vb85pHShfgGXTSWC6';
-                        await canLaunch(_url)
-                            ? await launch(_url)
-                            : throw 'Could not launch $_url'; //launch google map
-                      },
-                      
-                      child : ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.asset(
-                          'assets/images/map.png',
-                          fit: BoxFit.fill,
-                        ),
-                         //this is a asset image only not a google map integration
-
-                      ),
-                  ),
+                    GoogleMap(
+                      initialCameraPosition: _kGooglePlex,
+                      // myLocationEnabled: true,
+                      markers: Set<Marker>.of(_markers),
+                      onMapCreated: (GoogleMapController controller){
+                        _controller.complete(controller);
+                      }
+                    )
                 )
                 ),
                 )

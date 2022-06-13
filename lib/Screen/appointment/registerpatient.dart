@@ -52,6 +52,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
     super.dispose();
   }
   final AppDataController controller = Get.put(AppDataController());
+  
   List subjectData = [];
   List subjectDataPrice = [];
   double summ = 0;
@@ -69,9 +70,11 @@ class _RegisterPatientState extends State<RegisterPatient> {
                 if (analyses == "" || summ == 0) {
                   ToastMsg.showToastMsg("Veuillez sélectionner les analyses");
                 } else {
+                  if (_chooseTimeScrArgs.appointmentType=="A domicile"){
                     Get.toNamed(
-                    '/ConfirmationPage',
-                    arguments: PatientDetailsArg(
+                    
+                      '/MyLocation',
+                      arguments: PatientDetailsArg(
                         _firstNameController.text,
                         _lastNameController.text,
                         _phoneNumberController.text,
@@ -84,7 +87,26 @@ class _RegisterPatientState extends State<RegisterPatient> {
                         _chooseTimeScrArgs.serviceTimeMIn,
                         _chooseTimeScrArgs.selectedTime,
                         _chooseTimeScrArgs.selectedDate),
-                  );
+                    );
+                  }else{
+                    Get.toNamed(
+                    
+                      '/ConfirmationPage',
+                      arguments: PatientDetailsArg(
+                        _firstNameController.text,
+                        _lastNameController.text,
+                        _phoneNumberController.text,
+                        _emailController.text,
+                        _cityController.text,
+                        _desController.text,
+                        analyses,
+                        summ,
+                        _chooseTimeScrArgs.appointmentType,
+                        _chooseTimeScrArgs.serviceTimeMIn,
+                        _chooseTimeScrArgs.selectedTime,
+                        _chooseTimeScrArgs.selectedDate),
+                    );
+                  }
                 }
               }
           },
