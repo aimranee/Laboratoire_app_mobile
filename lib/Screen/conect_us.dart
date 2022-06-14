@@ -174,7 +174,6 @@ class _ContactUsState extends State<ContactUs> {
                     child: 
                     GoogleMap(
                       initialCameraPosition: _kGooglePlex,
-                      // myLocationEnabled: true,
                       markers: Set<Marker>.of(_markers),
                       onMapCreated: (GoogleMapController controller){
                         _controller.complete(controller);

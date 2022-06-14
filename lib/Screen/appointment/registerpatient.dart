@@ -31,6 +31,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
 
   bool _isLoading = false;
   final _isBtnDisable = "false";
+  final String location = "";
   @override
   void initState(){
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -86,7 +87,8 @@ class _RegisterPatientState extends State<RegisterPatient> {
                         _chooseTimeScrArgs.appointmentType,
                         _chooseTimeScrArgs.serviceTimeMIn,
                         _chooseTimeScrArgs.selectedTime,
-                        _chooseTimeScrArgs.selectedDate),
+                        _chooseTimeScrArgs.selectedDate,
+                        location),
                     );
                   }else{
                     Get.toNamed(
@@ -104,7 +106,8 @@ class _RegisterPatientState extends State<RegisterPatient> {
                         _chooseTimeScrArgs.appointmentType,
                         _chooseTimeScrArgs.serviceTimeMIn,
                         _chooseTimeScrArgs.selectedTime,
-                        _chooseTimeScrArgs.selectedDate),
+                        _chooseTimeScrArgs.selectedDate,
+                        location),
                     );
                   }
                 }

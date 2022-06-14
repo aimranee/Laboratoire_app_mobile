@@ -19,6 +19,7 @@ class PatientDetailsArg {
   final int serviceTimeMIn;
   final String selectedTime;
   final String selectedDate;
+  final String location;
   PatientDetailsArg(
       this.pFirstName,
       this.pLastName,
@@ -32,5 +33,6 @@ class PatientDetailsArg {
       this.serviceTimeMIn,
       this.selectedTime,
       this.selectedDate,
+      this.location
   );
 }

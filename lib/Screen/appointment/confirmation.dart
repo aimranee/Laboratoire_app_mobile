@@ -53,7 +53,6 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   @override
   Widget build(BuildContext context) {
     final PatientDetailsArg _patientDetailsArgs = ModalRoute.of(context).settings.arguments;
-    log("message");
     return Scaffold(
       drawer : CustomDrawer(isConn: true),
         bottomNavigationBar: BottomNavigationStateWidget(
@@ -72,7 +71,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               _patientDetailsArgs.appointmentType,
               _patientDetailsArgs.serviceTimeMIn,
               _patientDetailsArgs.selectedTime,
-              _patientDetailsArgs.selectedDate, 
+              _patientDetailsArgs.selectedDate,
+              _patientDetailsArgs.location
             ); // Method handles all the booking system operation.
           },
           clickable: _isBtnDisable,
@@ -181,7 +181,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     );
   }
 
-  void _updateBookedSlot(pFirstName, pLastName, pPhn, pEmail, pCity, desc, analyses, price, appointmentType, serviceTimeMin, setTime, selectedDate) async {
+  void _updateBookedSlot(pFirstName, pLastName, pPhn, pEmail, pCity, desc, analyses, price, appointmentType, serviceTimeMin, setTime, selectedDate, location) async {
+    log("message : $location");
     setState(() {
       _isLoading = true;
       _isBtnDisable = "";
@@ -197,7 +198,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         uId: _uId,
         price: price.toString(),
         analyses: analyses,
-        uName: _uName); //initialize all values
+        uName: _uName,
+        location: location); //initialize all values
     final insertStatus = await AppointmentService.addData(appointmentModel);
 
     if (insertStatus != "error") {

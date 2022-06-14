@@ -10,6 +10,7 @@ class AppointmentModel{
   String description;
   String uName;
   String id;
+  String location;
   String createdTimeStamp;
   String updatedTimeStamp;
 
@@ -25,6 +26,7 @@ class AppointmentModel{
     this.description,
     this.uName,
     this.id,
+    this.location,
     this.createdTimeStamp,
     this.updatedTimeStamp,
   });
@@ -42,6 +44,7 @@ class AppointmentModel{
       description:json['description'],
       uName:json['uName'],
       id:json['id'],
+      location:json['location'],
       createdTimeStamp:json['createdTimeStamp'],
       updatedTimeStamp:json['updatedTimeStamp'],
 
@@ -59,7 +62,7 @@ class AppointmentModel{
       "analyses":analyses,
       "description":description,
       "uName":uName,
-
+      "location":location
     };
 
   }
