@@ -50,8 +50,8 @@ class UserModel {
     gender = json['gender'];
     cin = json['cin'];
     familySituation = json['familySituation'];
-    hasRamid = json['hasRamid'];
-    hasCnss = json['hasCnss'];
+    hasRamid = json['hasRamid'].toString();
+    hasCnss = json['hasCnss'].toString();
     bloodType = json['bloodType'];
     diseaseState = json['diseaseState'];
   }

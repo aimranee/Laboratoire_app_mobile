@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:laboratoire_app/model/category_model.dart';
 import 'package:laboratoire_app/config.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,7 @@ class CategoryService {
 
   static Future<List<CategoryModel>> getData() async {
     final response = await http.get(Uri.parse(_viewUrl));
+    log(response.body.toString());
     if (response.statusCode == 200) {
       List<CategoryModel> list = dataFromJson(response.body);
       return list;

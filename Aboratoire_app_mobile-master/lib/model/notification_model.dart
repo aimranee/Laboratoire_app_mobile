@@ -30,7 +30,7 @@ class NotificationModel{
       sendTo:json['sendTo'],
       routeTo:json['routeTo'],
       uId:json['uId'],
-        createdTimeStamp:json['createdTimeStamp']
+      createdTimeStamp:json['createdTimeStamp']
 
     );
   }

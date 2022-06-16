@@ -39,7 +39,7 @@ class AnalysesModel {
       this.updatedAt});
 
   AnalysesModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['id'].toString();
     name = json['name'];
     libBilan = json['lib_bilan'];
     libAutomat = json['lib_automat'];

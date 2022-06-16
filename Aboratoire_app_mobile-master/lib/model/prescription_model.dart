@@ -28,7 +28,7 @@ class PrescriptionModel {
 
   factory PrescriptionModel.fromJson(Map<String,dynamic> json){
     return PrescriptionModel(
-      id: json['id'],
+      id: json['id'].toString(),
       appointmentTime: json['appointmentTime'],
       appointmentDate: json['appointmentDate'],
       appointmentId: json['appointmentId'],

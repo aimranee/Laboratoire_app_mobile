@@ -43,7 +43,7 @@ class AppointmentModel{
       analyses:json['analyses'],
       description:json['description'],
       uName:json['uName'],
-      id:json['id'],
+      id:json['id'].toString(),
       location:json['location'],
       createdTimeStamp:json['createdTimeStamp'],
       updatedTimeStamp:json['updatedTimeStamp'],

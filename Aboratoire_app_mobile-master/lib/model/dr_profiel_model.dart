@@ -44,7 +44,7 @@ class DrProfileModel {
         address: json['address'],
         aboutUs: json['aboutUs'],
         fdmId: json['fcmId'],
-        id: json['id']
+        id: json['id'].toString()
     );
   }
 

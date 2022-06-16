@@ -9,7 +9,7 @@ class AnalysesCatModel {
   });
   
   AnalysesCatModel.fromJson(Map<String, dynamic> json) {
-    analysesId = json['id'];
+    analysesId = json['id'].toString();
     analysesName = json['name'];
     analysesPrice = double.parse(json['price'].toString());
   }
