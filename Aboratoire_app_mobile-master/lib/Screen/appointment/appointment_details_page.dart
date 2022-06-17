@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Screen/home.dart';
 import 'package:laboratoire_app/Screen/prescription/prescription_list_by_id_page.dart';
@@ -167,6 +169,7 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
           appointmentStatus: "Canceled"
       );
       final isUpdated=await AppointmentService.updateStatus(appointmentModel);
+      log(isUpdated.toString());
       if(isUpdated=="success"){
         // final notificationModel = NotificationModel(
         //     title: "Canceled",

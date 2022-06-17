@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:laboratoire_app/config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
@@ -40,9 +41,12 @@ class AppointmentService {
   }
 
   static updateStatus(AppointmentModel appointmentModel) async {
-    final res = await http.post(Uri.parse(_updateStatusUrl),
+    
+    final res = await http.put(Uri.parse(_updateStatusUrl),
         body: appointmentModel.toJsonUpdateStatus());
+        
     if (res.statusCode == 200) {
+      // log("response : "+res.statusCode.toString());
       return res.body;
     } else {
       return "error";

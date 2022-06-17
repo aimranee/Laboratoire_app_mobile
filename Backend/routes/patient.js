@@ -5,8 +5,6 @@ const appointmentsController = require("../controllers/appointmentsController");
 const patientController = require("../controllers/patientController");
 const prescriptionController = require("../controllers/prescriptionController");
 
-const { route } = require("./admin");
-
 const routes = express.Router();
 
 routes.route("/get_availability").get(availabilityController.get_availability);

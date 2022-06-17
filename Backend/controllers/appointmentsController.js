@@ -62,9 +62,8 @@ exports.update_appointment_status = function (req, res) {
       [params.appointmentStatus, params.id],
       (err, rows) => {
         connection.release();
-        if (!err) res.send(`Bien Enregistrer!!`);
+        if (!err) res.send(`success`);
         else console.log(err);
-
         console.log("The data from appointments table \n", rows);
       }
     );
