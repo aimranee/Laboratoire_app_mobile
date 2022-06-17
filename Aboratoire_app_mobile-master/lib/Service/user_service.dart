@@ -54,8 +54,8 @@ class UserService {
 
   static updateData(UserModel userModel) async {
     
-    final res = await http.post(Uri.parse(_updateUrl), body: userModel.toUpdateJson());
-    log(">>>>>>>>>>>>>>>>>>>>>>${userModel.toUpdateJson()}");
+    final res = await http.put(Uri.parse(_updateUrl), body: userModel.toUpdateJson());
+    // log(">>>>>>>>>>>>>>>>>>>>>>${userModel.toUpdateJson()}");
     if (res.statusCode == 200) {
       return res.body;
     } else {

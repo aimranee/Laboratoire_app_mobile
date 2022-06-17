@@ -43,7 +43,7 @@ exports.update_user = function (req, res) {
       ],
       (err, rows) => {
         connection.release();
-        if (!err) res.send(`Bien Enregistrer!! ID : ${params.uId} bien`);
+        if (!err) res.send(`success`);
         else console.log(err);
 
         console.log("The data from user table \n", rows);

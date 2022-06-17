@@ -146,7 +146,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       prefs.setString("lastName", _lastNameController.text);
 
       ToastMsg.showToastMsg("Mis à jour avec succès");
-    } else if (res == "error") {
+    } else {
       ToastMsg.showToastMsg("Quelque chose a mal tourné");
     }
     setState(() {
