@@ -49,7 +49,7 @@ class AnalysesModel {
     description = json['description'];
     min = json['min'];
     max = json['max'];
-    categoryId = json['category_id'];
+    categoryId = json['category_id'].toString();
     categoryName = json['category_name'];
     titre = json['titre'];
     dispo = json['dispo'];

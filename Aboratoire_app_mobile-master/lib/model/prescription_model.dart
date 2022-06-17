@@ -35,10 +35,10 @@ class PrescriptionModel {
       appointmentName: json['appointmentName'],
       prescription: json['prescription'],
       patientName: json['patientName'],
-      price: json['price'],
+      price: json['price'].toString(),
       drName: json['drName'],
       fileUrl: json['fileUrl'],
-      isPaied: json['isPaied']
+      isPaied: json['isPaied'].toString()
     );
   }
     Map<String,dynamic> toJsonUpdateStatus(){

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:laboratoire_app/config.dart';
 import 'package:laboratoire_app/model/prescription_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +18,8 @@ class PrescriptionService {
   static Future<List<PrescriptionModel>> getData() async {
     final userId =  FirebaseAuth.instance.currentUser.uid;
     
-    final response = await http.post(Uri.parse(_viewUrl),body: {"uId":userId});
+    final response = await http.get(Uri.parse("$_viewUrl/$userId"));
+    log("message : "+response.body.toString());
     if (response.statusCode == 200) {
       List<PrescriptionModel> list = dataFromJson(response.body);
       return list;

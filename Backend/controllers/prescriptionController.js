@@ -23,8 +23,9 @@ exports.get_prescription_byid = function (req, res) {
 exports.get_prescription = function (req, res) {
   db.getConnection((err, connection) => {
     if (err) throw err;
+    // const params = req.body;
     connection.query(
-      "SELECT * FROM prescription where patientId = ? ORDER BY createdTimeStamp DESC",
+      "SELECT * FROM prescription WHERE patientId = ? ORDER BY createdTimeStamp DESC",
       [req.params.uId],
       (err, rows) => {
         connection.release();
@@ -44,7 +45,7 @@ exports.update_prescription_isPaied = function (req, res) {
     if (err) throw err;
     const params = req.body;
     connection.query(
-      "UPDATE prescription SET isPaied = ? where id = ?",
+      "UPDATE prescription SET isPaied = ? WHERE id = ?",
       [params.isPaied, params.id],
       (err, rows) => {
         connection.release();

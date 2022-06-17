@@ -19,19 +19,15 @@ class AppDataController extends GetxController {
   }
 
   getSubjectData() async {
-    // subjectData.clear();
-    // dropDownData.clear();
 
     final apiResponse = await http.get(Uri.parse(_viewUrl));
     
     if (apiResponse.statusCode == 200) {
       List<AnalysesCatModel> list = dataFromJson(apiResponse.body);
-      // log("message");
       
       List<AnalysesCatModel> tempSubjectData = [];
       
       for (var data in list) {
-        log("message123");
         tempSubjectData.add(
           AnalysesCatModel(
             analysesId: data.analysesId,

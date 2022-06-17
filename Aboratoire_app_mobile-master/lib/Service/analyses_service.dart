@@ -24,7 +24,7 @@ class AnalysesService {
   }
 
   static Future<List<AnalysesModel>> getDataId(id) async {
-    final response = await http.get(Uri.parse(_viewUrlId+"?category_id=$id"));
+    final response = await http.get(Uri.parse("$_viewUrlId/$id"));
     if (response.statusCode == 200) {
       List<AnalysesModel> list = dataFromJson(response.body);
       return list;

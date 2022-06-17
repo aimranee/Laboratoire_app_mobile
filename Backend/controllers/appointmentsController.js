@@ -17,15 +17,18 @@ exports.add_appointment = function (req, res) {
 exports.get_appointment_by_status = function (req, res) {
   db.getConnection((err, connection) => {
     if (err) throw err;
-    const params = req.body;
-    // console.log(params);
-    // const rep = params.
+    // const params = req.body;
+    const str = req.params.status;
+    console.log(str);
+    const arr = str.split(",");
+    console.log("loste : " + arr);
+
     connection.query(
       "SELECT * FROM appointments WHERE uId = ? AND appointmentStatus IN (?)",
-      [params.uId, params.status],
+      [req.params.uId, arr],
       (err, rows) => {
         connection.release();
-        if (!err) res.send(`Bien Enregistrer!!`);
+        if (!err) res.send(rows);
         else console.log(err);
 
         console.log("The data from appointments table \n", rows);

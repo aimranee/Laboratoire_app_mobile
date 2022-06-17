@@ -18,7 +18,7 @@ routes
 routes.route("/get_categories").get(analysesController.get_categories);
 routes.route("/get_cat_analyse").get(analysesController.get_cat_analyse);
 routes
-  .route("/get_appointment_by_status")
+  .route("/get_appointment_by_status/:uId/:status")
   .get(appointmentsController.get_appointment_by_status);
 
 routes.route("/add_appointment").post(appointmentsController.add_appointment);
@@ -28,6 +28,10 @@ routes
 
 routes.route("/add_user").post(patientController.add_user);
 routes.route("/get_user/:uId").get(patientController.get_user);
+
+routes
+  .route("/get_prescription/:uId")
+  .get(prescriptionController.get_prescription);
 routes
   .route("/get_prescription_byid")
   .get(prescriptionController.get_prescription_byid);

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:laboratoire_app/utilities/color.dart';
 import 'package:get/get.dart';
 import 'package:laboratoire_app/Service/analyses_select_services.dart';

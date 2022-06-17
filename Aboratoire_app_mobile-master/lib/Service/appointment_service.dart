@@ -20,7 +20,7 @@ class AppointmentService {
     final status = forStatus;
     // //print(status);
 
-    final response = await http.get(Uri.parse("$_viewUrl?uid=$userId&status=$status"));
+    final response = await http.get(Uri.parse("$_viewUrl/$userId/$status"));
     if (response.statusCode == 200) {
       List<AppointmentModel> list = dataFromJson(response.body);
       return list;
