@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:patient/Service/user_service.dart';
@@ -43,23 +46,24 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _isLoading = false;
     });
-    final res = await FirebaseMessaging.instance.getToken();
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString("token");
+
     // print(res);
-    
-    if (res != null) {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      final user = await UserService.getData();
-      setState(() {
-          isConn = true;
-      });
-        
+    if (token != null) {
+      String uId = pref.getString("uId");
+      
+      final user = await UserService.getData(uId);
+
       pref.setString("fcm", user[0].fcmId);
       pref.setString("firstName", user[0].firstName);
       pref.setString("lastName", user[0].lastName);
-      pref.setString("uid", user[0].uId);
+
       setState(() {
+        isConn = true;
         _isLoading = false;
       });
+      
     }else{
       setState(() {
         _isLoading = false;

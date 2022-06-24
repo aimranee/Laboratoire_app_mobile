@@ -14,6 +14,7 @@ import 'package:patient/widgets/bottom_navigation_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/widgets/loading_indicator.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPatient extends StatefulWidget {
   const RegisterPatient({Key key}) : super(key: key);
@@ -182,7 +183,10 @@ class _RegisterPatientState extends State<RegisterPatient> {
     setState(() {
       _isLoading = true;
     });
-    final user = await UserService.getData();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uId = prefs.getString("uId");
+
+    final user = await UserService.getData(uId);
 
     _emailController.text = user[0].email;
     _lastNameController.text = user[0].lastName;

@@ -1,4 +1,6 @@
 // import 'package:patient/Service/Firebase/readData.dart';
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:patient/utilities/color.dart';
 import 'package:patient/utilities/style.dart';
@@ -20,6 +22,7 @@ class CAppBarWidget extends StatefulWidget {
 class _CAppBarWidgetState extends State<CAppBarWidget> {
   @override
   Widget build(BuildContext context) {
+    // log ("isCon : ${widget.isConn}");
     return AppBar(
       iconTheme: const IconThemeData(color: appBarIconColor //change your color here
           ),
@@ -31,7 +34,8 @@ class _CAppBarWidgetState extends State<CAppBarWidget> {
       backgroundColor: appBarColor,
       actions: 
       <Widget>[ 
-        widget.isConn ? IconButton(
+        if(widget.isConn)
+        IconButton(
             icon: Stack(
               children: [
                 const Icon(
@@ -44,7 +48,8 @@ class _CAppBarWidgetState extends State<CAppBarWidget> {
             onPressed: () {
 
             }
-        ):
+        )
+        else
         TextButton(
         onPressed: () {
           Get.toNamed("/AuthScreen",arguments: false);

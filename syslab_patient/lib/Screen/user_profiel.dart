@@ -374,8 +374,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
     });
 
     if (isConn == true) {
-      
-      final user = await UserService.getData();
+      String uId = prefs.getString("uId");
+      final user = await UserService.getData(uId);
 
       _emailController.text = user[0].email;
       _lastNameController.text = user[0].lastName;

@@ -3,48 +3,49 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 exports.login = function (req, res) {
-  db.getConnection((err, connection) => {
-    try {
-      const params = req.body;
-      connection.query(
-        `select * from patient where email = ?`,
-        [params.email],
-        (err, results) => {
-          if (err) {
-            console.log(err);
-          }
-          if (!results) {
-            return res.json({
-              success: 0,
-              data: "Invalid email or password",
-            });
-          }
-          return res.send("hereeee " + results.password);
-          const result = bcrypt.compareSync(params.password, results.password);
-          if (result) {
-            results.password = undefined;
-            const jsontoken = jwt.sign({ result: results }, "qwe1234", {
-              expiresIn: "1h",
-            });
-            return res.json({
-              success: 1,
-              message: "login successfully",
-              token: jsontoken,
-            });
-          } else {
-            return res.json({
-              success: 0,
-              data: "Invalid email or password",
-            });
-          }
+  try {
+    const params = req.body;
+    db.query(
+      `SELECT * FROM patient WHERE email = ?`,
+      [params.email],
+      (err, results) => {
+        if (err) {
+          console.log(err);
         }
-      );
-    } catch (e) {
-      console.log("here");
-      // console.log(error);
-      return res.send("error in server");
-    }
-  });
+        if (!results) {
+          return res.json({
+            success: 0,
+            data: "Invalid email or password",
+          });
+        }
+
+        // return res.send("hereee : " + results[0].password);
+
+        const result = bcrypt.compareSync(params.password, results[0].password);
+        if (result) {
+          results[0].password = undefined;
+          const jsontoken = jwt.sign({ result: results[0] }, "patientP2M", {
+            expiresIn: "1h",
+          });
+          return res.json({
+            success: 1,
+            message: "login successfully",
+            token: jsontoken,
+            uId: results[0].uId,
+          });
+        } else {
+          return res.json({
+            success: 0,
+            data: "Invalid email or password",
+          });
+        }
+      }
+    );
+  } catch (e) {
+    console.log("here");
+    // console.log(error);
+    return res.send("error in server");
+  }
 };
 
 exports.signup = function (req, res) {

@@ -1,34 +1,30 @@
 class UserModel {
-  String id;
+  String uId;
   String firstName;
   String lastName;
-  String uId;
-  String city;
   String email;
-  String fcmId;
+  String password;
   String pNo;
-  String createdTimeStamp;
-  String updatedTimeStamp;
+  String fcmId;
+  String city;
   String age;
   String gender;
   String cin;
-  String familySituation;
   String hasRamid;
   String hasCnss;
+  String familySituation;
   String bloodType;
   String diseaseState;
 
   UserModel(
-      {this.id,
+      {this.uId,
       this.firstName,
       this.lastName,
-      this.uId,
-      this.city,
       this.email,
-      this.fcmId,
+      this.password,
       this.pNo,
-      this.createdTimeStamp,
-      this.updatedTimeStamp,
+      this.fcmId,
+      this.city,
       this.age,
       this.gender,
       this.cin,
@@ -39,42 +35,44 @@ class UserModel {
       this.diseaseState});
 
   UserModel.fromJson(Map<String, dynamic> json) {
+    uId = json['uId'];
     firstName = json['firstName'];
     lastName = json['lastName'];
-    uId = json['uId'];
-    city = json['city'];
     email = json['email'];
-    fcmId = json['fcmId'];
+    password = json['password'];
     pNo = json['pNo'];
+    fcmId = json['fcmId'];
+    city = json['city'];
     age = json['age'];
     gender = json['gender'];
     cin = json['cin'];
+    hasRamid = json['hasRamid'];
+    hasCnss = json['hasCnss'];
     familySituation = json['familySituation'];
-    hasRamid = json['hasRamid'].toString();
-    hasCnss = json['hasCnss'].toString();
     bloodType = json['bloodType'];
     diseaseState = json['diseaseState'];
   }
 
-    Map<String,dynamic> toJsonAdd(){
-    return {
-      'firstName':firstName,
-      'lastName':lastName,
-      'email':email,
-      'bloodType':bloodType,
-      'cin':cin,
-      'uId':uId,
-      'city':city,
-      'pNo':pNo,
-      'age':age,
-      'gender':gender,
-      'familySituation':familySituation,
-      'hasRamid':hasRamid,
-      'hasCnss':hasCnss,
-      'fcmId':fcmId,
-    };
-
+  Map<String, dynamic> toJsonAdd() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['firstName'] = this.firstName;
+    data['lastName'] = this.lastName;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['pNo'] = this.pNo;
+    data['fcmId'] = this.fcmId;
+    data['city'] = this.city;
+    data['age'] = this.age;
+    data['gender'] = this.gender;
+    data['cin'] = this.cin;
+    data['hasRamid'] = this.hasRamid;
+    data['hasCnss'] = this.hasCnss;
+    data['familySituation'] = this.familySituation;
+    data['bloodType'] = this.bloodType;
+    data['diseaseState'] = this.diseaseState;
+    return data;
   }
+
   Map<String,dynamic> toUpdateJson(){
     return {
       "uId": uId,

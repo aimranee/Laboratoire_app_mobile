@@ -45,8 +45,8 @@ class DrProfileService {
     }
   }
 
-  static updateFcmId(String uId, String fcmId) async {
-    final res = await http.post(Uri.parse(_update), body: {"fcmId": fcmId, "uid": uId});
+  static updateFcmId(String fcmId, String fcm) async {
+    final res = await http.post(Uri.parse(_update), body: {"fcmId": fcmId});
     if (res.statusCode == 200) {
       return res.body;
     } else {

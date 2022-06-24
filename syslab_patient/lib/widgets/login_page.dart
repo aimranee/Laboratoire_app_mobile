@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:patient/utilities/color.dart';
@@ -168,26 +170,35 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLoading = true;
       });
-      final res = await AuthService.signIn(_emailController.text, _passwordController.text);
-      if (res) {
-        final FirebaseAuth auth = FirebaseAuth.instance;
-        await setData(auth.currentUser.uid);
-        ToastMsg.showToastMsg("Logged in");
-        Get.offAllNamed('/HomePage', arguments: true);
-      } else {
-        ToastMsg.showToastMsg("Smoothing went wrong");
-      }
-
-      setState(() {
+      final res = await AuthService.login(_emailController.text, _passwordController.text);
+      log ("message: " + res['success'].toString());
+      if (res['message'].toString()=="login successfully") {
+        // final FirebaseAuth auth = FirebaseAuth.instance;
+        await setData(res['uId'], res['token']);
+        setState(() {
         _isLoading = false;
       });
+        ToastMsg.showToastMsg(res['message']);
+        Get.offAllNamed('/HomePage', arguments: true);
+      } else {
+        ToastMsg.showToastMsg(res['message']);
+        setState(() {
+        _isLoading = false;
+      });
+      }
+
+      
     }
   }
   //
-  setData(uId) async {
+  setData(uId, token) async {
     final fcm = await FirebaseMessaging.instance.getToken();
-    await DrProfileService.updateFcmId(uId, fcm);
+    // await DrProfileService.updateFcmId(uId, fcm);
+    log ("token : "+token);
+    log ("fcm : "+fcm);
     SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("token", token);
     pref.setString("fcm", fcm);
+    pref.setString("uId", uId);
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:patient/config.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:patient/model/user_model.dart';
 
@@ -18,8 +17,7 @@ class UserService {
     return List<UserModel>.from(data.map((item) => UserModel.fromJson(item)));
   }
   
-  static Future<List<UserModel>> getData() async {
-    final userId = FirebaseAuth.instance.currentUser.uid;
+  static Future<List<UserModel>> getData(userId) async {
     
     final response = await http.get(Uri.parse("$_viewUrl/$userId"));
     log(response.body.toString());
