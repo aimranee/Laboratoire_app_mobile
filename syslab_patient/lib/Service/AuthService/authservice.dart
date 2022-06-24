@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 class AuthService {
 
   static const _login = "$apiUrl/login";
+  static const _signupUrl = "$apiUrl/signup";
 
   // //Handles Auth
   // handleAuth() {
@@ -29,16 +30,9 @@ class AuthService {
 
   static Future<bool> signOut() async {
     bool isConn = true;
-    
-    await FirebaseAuth.instance.signOut().then((v) async {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.clear();
-      pref.setString("fcm", "");
-      isConn = false;
-    }).catchError((e) {
-      log(e); //Invalid otp
-      isConn = true;
-    });
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.clear();
+    isConn = false;
     
     return isConn;
   }
@@ -75,5 +69,18 @@ class AuthService {
       return "error";
     }
   }
+
+    static signup(UserModel userModel) async {
+
+    final res = await http.post(Uri.parse(_signupUrl), body: userModel.toJsonAdd());
+     final data = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return data;
+    } else {
+      return "error";
+    }
+
+  }
+
 }
   

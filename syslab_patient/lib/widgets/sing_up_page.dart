@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
+import 'package:patient/Service/AuthService/authservice.dart';
 import 'package:patient/Service/dr_profile_service.dart';
 import 'package:patient/Service/user_service.dart';
 import 'package:patient/model/user_model.dart';
@@ -163,7 +164,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   padding: EdgeInsets.all(8.0),
                   child: LoadingIndicatorWidget(),
                 )
-              : _loginBtn(),
+              : _signupBtn(),
         ],
       ),
     )
@@ -268,97 +269,101 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-    Widget _loginBtn() {
+    Widget _signupBtn() {
     return LoginButtonsWidget(
       onPressed: _handleSignUp,
       title: "Sign up",
     );
   }
-  _handleSignUp() async {
+  // _handleSignUp() async {
+    
+  //   if (_formKey.currentState.validate()) {
+      
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     final res =_handleUpload();
+  //     // final res = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+  //     if (res['message'].toString()=='') {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //       ToastMsg.showToastMsg("Registed");
+  //       Get.offAllNamed('/HomePage');
+  //     } else {
+  //       ToastMsg.showToastMsg("Smoothing went wrong");
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     }
+
+  //   }
+  // }
+  //
+  setData(uId, token) async {
+    final fcm = await FirebaseMessaging.instance.getToken();
+    // await DrProfileService.updateFcmId(uId, fcm);
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("fcm", fcm);
+    pref.setString("uId", uId);
+    pref.setString("token", token);
+  }
+
+_handleSignUp() async {
     
     if (_formKey.currentState.validate()) {
-      
       setState(() {
         _isLoading = true;
       });
-      final res = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
-      if (res != null) {
-        final FirebaseAuth auth = FirebaseAuth.instance;
-        await setData(auth.currentUser.uid);
-        _handleUpload();
-        
-        // final FirebaseAuth auth = FirebaseAuth.instance;
-        
-        ToastMsg.showToastMsg("Registed");
-        Get.offAllNamed('/HomePage');
-      } else {
-        ToastMsg.showToastMsg("Smoothing went wrong");
-      }
+      String R = "0";
+      String C = "0";
+        if (_hasRamid == true){
+            R = "1"; 
+        }
+        if (_hasCnss == true){
+            C = "1";
+        }
+        isMale ? setState(() {
+          _selectedGender = 'Male';
+        }):setState(() {
+          _selectedGender = 'Female';
+        });
+      var fcmId = await FirebaseMessaging.instance.getToken();
+      final userModel = UserModel(
+          email: _emailController.text,
+          lastName: _lastNameController.text,
+          firstName: _firstNameController.text,
+          cin: _cinController.text,
+          age: _ageController.text,
+          city: _cityController.text,
+          gender: _selectedGender,
+          familySituation: _selectedfamilySituation,
+          bloodType: _selectedBloodType,
+          hasRamid: R,
+          hasCnss: C,
+          fcmId: fcmId,
+          pNo: _phoneNumberController.text,
+          password: _passwordController.text
 
+        );
+      final res = await AuthService.signup(userModel);
+      // log("insertStatus : "+insertStatus);
+      if (res['message'].toString() == "Register successfully") {
+        setData(res['uId'].toString(), res['token'].toString());
+        Get.offAllNamed('/HomePage');
+        ToastMsg.showToastMsg(res['message']);
+      } else if (res['message'].toString()=='Email deja existe'){
+        ToastMsg.showToastMsg(res['message']);
+      }else{
+        ToastMsg.showToastMsg("Something went wrong");
+      }
       setState(() {
         _isLoading = false;
       });
+      return res;
     }
   }
-  //
-  setData(uId) async {
-    final fcm = await FirebaseMessaging.instance.getToken();
-    await DrProfileService.updateFcmId(uId, fcm);
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("fcm", fcm);
-  }
-
-
-_handleUpload() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    String R = "0";
-    String C = "0";
-      if (_hasRamid == true){
-          R = "1"; 
-      }
-      if (_hasCnss == true){
-          C = "1";
-      }
-      isMale ? setState(() {
-        _selectedGender = 'Male';
-      }):setState(() {
-        _selectedGender = 'Female';
-      });
-    var uId = FirebaseAuth.instance.currentUser.uid;
-    var fcmId = await FirebaseMessaging.instance.getToken();
-    final userModel = UserModel(
-        email: _emailController.text,
-        lastName: _lastNameController.text,
-        firstName: _firstNameController.text,
-        cin: _cinController.text,
-        age: _ageController.text,
-        city: _cityController.text,
-        gender: _selectedGender,
-        familySituation: _selectedfamilySituation,
-        bloodType: _selectedBloodType,
-        hasRamid: R,
-        hasCnss: C,
-        uId: uId,
-        fcmId: fcmId,
-        pNo: _phoneNumberController.text,
-
-      );
-
-    final insertStatus = await UserService.register(userModel);
-    log("insertStatus : "+insertStatus);
-    if (insertStatus != "success") {
-      ToastMsg.showToastMsg("Registered Logged In");
-    } else {
-      ToastMsg.showToastMsg("Something went wrong");
-    }
-    setState(() {
-      _isLoading = false;
-    });
-  }
-    _familySituationDropDown() {
+  _familySituationDropDown() {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 0, right: 0),
       child: DropdownButton<String>(

@@ -47,15 +47,13 @@ class _HomeScreenState extends State<HomeScreen> {
       _isLoading = true;
     });
     SharedPreferences pref = await SharedPreferences.getInstance();
-    final token = pref.getString("token");
-
+    final token = pref.getString("token").toString();
     // print(res);
-    if (token != null) {
+    if (token != "" && token != "null") {
       String uId = pref.getString("uId");
-      log("message : uId : "+uId);
-
+      log("uId : "+uId);
       final user = await UserService.getData(uId);
-      log("message :  : "+uId);
+      
 
       pref.setString("fcm", user[0].fcmId);
       pref.setString("firstName", user[0].firstName);

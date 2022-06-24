@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class UserModel {
   String uId;
   String firstName;
@@ -69,7 +71,6 @@ class UserModel {
     data['hasCnss'] = this.hasCnss;
     data['familySituation'] = this.familySituation;
     data['bloodType'] = this.bloodType;
-    data['diseaseState'] = this.diseaseState;
     return data;
   }
 

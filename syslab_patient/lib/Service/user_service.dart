@@ -9,7 +9,7 @@ class UserService {
   static const _addUrl = "$apiUrl/add_user";
   static const _update = "$apiUrl/update_user_fcm";
   static const _updateUrl = "$apiUrl/update_user";
-  static const _registreUrl = "$apiUrl/add_user";
+  static const _registreUrl = "$apiUrl/signup";
   static List<UserModel> dataFromJson(String jsonString) {
     
     final data = json.decode(jsonString);
@@ -40,17 +40,18 @@ class UserService {
   }
 
   static updateFcmId(String uId, String fcmId) async {
-    final res = await http
-        .post(Uri.parse(_update), body: {"fcmId": fcmId, "uid": uId});
+
+    final res = await http.post(Uri.parse(_update), body: {"fcmId": fcmId, "uid": uId});
     if (res.statusCode == 200) {
       return res.body;
     } else {
       return "error";
     }
+
   }
 
   static updateData(UserModel userModel) async {
-    
+
     final res = await http.put(Uri.parse(_updateUrl), body: userModel.toUpdateJson());
     // log(">>>>>>>>>>>>>>>>>>>>>>${userModel.toUpdateJson()}");
     if (res.statusCode == 200) {
@@ -58,18 +59,8 @@ class UserService {
     } else {
       return "error";
     }
+
   }
 
-  static register(UserModel userModel) async {
-    
-    final res = await http.post(Uri.parse(_registreUrl), body: userModel.toJsonAdd());
-    log("message : "+res.body);
-    if (res.statusCode == 200) {
-      return res.body;
-    } else {
-      return "error";
-    }
-  }
-  
 }
 

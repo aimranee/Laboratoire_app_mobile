@@ -72,9 +72,9 @@ exports.signup = function (req, res) {
             } else {
               console.log(hashedPassword);
               connection.query(
-                `INSERT INTO patient (firstName, lastName, email, password, fcmId, pNo, city, createdTimeStamp, updatedTimeStamp, age, gender, cin, hasRamid, hasCnss, familySituation, bloodType, diseaseState)values(?,?,${db.escape(
+                `INSERT INTO patient (firstName, lastName, email, password, fcmId, pNo, city, createdTimeStamp, updatedTimeStamp, age, gender, cin, hasRamid, hasCnss, familySituation, bloodType)values(?,?,${db.escape(
                   params.email
-                )},'${hashedPassword}',?,?,?,'${new Date()}','${new Date()}',?,?,?,?,?,?,?,?);`,
+                )},'${hashedPassword}',?,?,?,'${new Date()}','${new Date()}',?,?,?,?,?,?,?);`,
                 [
                   params.firstName,
                   params.lastName,
@@ -88,12 +88,47 @@ exports.signup = function (req, res) {
                   params.hasCnss,
                   params.familySituation,
                   params.bloodType,
-                  params.diseaseState,
                 ],
                 (err, rows) => {
                   connection.release();
-                  if (!err) res.send(`success`);
-                  else console.log(err);
+                  if (!err) {
+                    db.query(
+                      `SELECT * FROM patient WHERE email = ?`,
+                      [params.email],
+                      (err, results) => {
+                        if (err) {
+                          console.log(err);
+                        }
+                        if (!results) {
+                          return res.json({
+                            success: 0,
+                            data: "Invalid email or password",
+                          });
+                        }
+                        if (result) {
+                          results[0].password = undefined;
+                          const jsontoken = jwt.sign(
+                            { result: results[0] },
+                            "patientP2M",
+                            {
+                              expiresIn: "1h",
+                            }
+                          );
+                          return res.json({
+                            success: 1,
+                            message: "Register successfully",
+                            token: jsontoken,
+                            uId: results[0].uId,
+                          });
+                        } else {
+                          return res.json({
+                            success: 0,
+                            data: "Invalid email or password",
+                          });
+                        }
+                      }
+                    );
+                  } else console.log(err);
 
                   console.log("The data from user table \n", rows);
                 }
