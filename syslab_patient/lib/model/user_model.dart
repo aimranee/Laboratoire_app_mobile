@@ -35,7 +35,7 @@ class UserModel {
       this.diseaseState});
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    uId = json['uId'];
+    uId = json['uId'].toString();
     firstName = json['firstName'];
     lastName = json['lastName'];
     email = json['email'];
@@ -43,11 +43,11 @@ class UserModel {
     pNo = json['pNo'];
     fcmId = json['fcmId'];
     city = json['city'];
-    age = json['age'];
+    age = json['age'].toString();
     gender = json['gender'];
     cin = json['cin'];
-    hasRamid = json['hasRamid'];
-    hasCnss = json['hasCnss'];
+    hasRamid = json['hasRamid'].toString();
+    hasCnss = json['hasCnss'].toString();
     familySituation = json['familySituation'];
     bloodType = json['bloodType'];
     diseaseState = json['diseaseState'];

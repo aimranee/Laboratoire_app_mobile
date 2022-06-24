@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //start loading indicator
     
     setState(() {
-      _isLoading = false;
+      _isLoading = true;
     });
     SharedPreferences pref = await SharedPreferences.getInstance();
     final token = pref.getString("token");
@@ -52,8 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
     // print(res);
     if (token != null) {
       String uId = pref.getString("uId");
-      
+      log("message : uId : "+uId);
+
       final user = await UserService.getData(uId);
+      log("message :  : "+uId);
 
       pref.setString("fcm", user[0].fcmId);
       pref.setString("firstName", user[0].firstName);

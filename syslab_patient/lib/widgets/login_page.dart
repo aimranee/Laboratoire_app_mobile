@@ -171,31 +171,29 @@ class _LoginPageState extends State<LoginPage> {
         _isLoading = true;
       });
       final res = await AuthService.login(_emailController.text, _passwordController.text);
-      log ("message: " + res['success'].toString());
+      // log ("message: " + res['success'].toString());
       if (res['message'].toString()=="login successfully") {
         // final FirebaseAuth auth = FirebaseAuth.instance;
-        await setData(res['uId'], res['token']);
+        // log("token : "+res["uId"].toString());
+        await setData(res['uId'].toString(), res['token']);
         setState(() {
-        _isLoading = false;
-      });
+          _isLoading = false;
+        });
         ToastMsg.showToastMsg(res['message']);
         Get.offAllNamed('/HomePage', arguments: true);
       } else {
         ToastMsg.showToastMsg(res['message']);
         setState(() {
-        _isLoading = false;
-      });
+          _isLoading = false;
+        });
       }
-
-      
     }
   }
   //
   setData(uId, token) async {
     final fcm = await FirebaseMessaging.instance.getToken();
     // await DrProfileService.updateFcmId(uId, fcm);
-    log ("token : "+token);
-    log ("fcm : "+fcm);
+    // log ("token : "+uId);
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString("token", token);
     pref.setString("fcm", fcm);
