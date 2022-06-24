@@ -4,8 +4,12 @@ const analysesController = require("../controllers/analysesController");
 const appointmentsController = require("../controllers/appointmentsController");
 const patientController = require("../controllers/patientController");
 const prescriptionController = require("../controllers/prescriptionController");
+// const patientMiddleware = require("../middleware/verify_patient");
 
 const routes = express.Router();
+
+routes.route("/signup").post(patientController.signup);
+routes.route("/login").post(patientController.login);
 
 routes.route("/get_availability").get(availabilityController.get_availability);
 
@@ -24,7 +28,6 @@ routes
   .route("/get_appointment_type")
   .get(appointmentsController.get_appointment_type);
 
-routes.route("/add_user").post(patientController.add_user);
 routes.route("/get_user/:uId").get(patientController.get_user);
 
 routes
