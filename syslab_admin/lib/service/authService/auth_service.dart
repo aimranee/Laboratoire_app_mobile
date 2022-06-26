@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/config.dart';
-import 'package:syslab_admin/screens/homePage.dart';
-import 'package:syslab_admin/screens/loginPage.dart';
+// import 'package:syslab_admin/screens/homePage.dart';
+// import 'package:syslab_admin/screens/loginPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -13,18 +13,18 @@ class AuthService {
     static const _login = "$apiUrl/login";
 
   //Handles Auth
-  handleAuth() {
-    return StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.hasData) {
-            return const HomePage();
-          } else {
-            return const LoginPage();
-          }
-        }
-    );
-  }
+  // handleAuth() {
+  //   return StreamBuilder(
+  //       stream: FirebaseAuth.instance.authStateChanges(),
+  //       builder: (BuildContext context, snapshot) {
+  //         if (snapshot.hasData) {
+  //           return const HomePage();
+  //         } else {
+  //           return const LoginPage();
+  //         }
+  //       }
+  //   );
+  // }
 
 
   //Sign out

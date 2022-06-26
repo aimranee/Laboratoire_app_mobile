@@ -3,13 +3,13 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:syslab_admin/screens/homePage.dart';
+import 'package:syslab_admin/screens/home_page.dart';
 import 'package:syslab_admin/widgets/buttonsWidget.dart';
 import 'package:syslab_admin/widgets/loadingIndicator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:syslab_admin/service/authService/authService.dart';
+import 'package:syslab_admin/service/authService/auth_service.dart';
 import 'package:syslab_admin/utilities/colors.dart';
 import 'package:syslab_admin/utilities/toastMsg.dart';
 

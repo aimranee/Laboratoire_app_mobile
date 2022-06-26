@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:syslab_admin/config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
-import 'package:syslab_admin/model/userModel.dart';
+import 'package:syslab_admin/model/user_model.dart';
 
 class UserService {
   static const _viewUrl = "$apiUrl/get_all_user";

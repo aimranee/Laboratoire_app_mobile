@@ -3,7 +3,7 @@ import 'dart:developer';
 // import 'package:syslab_admin/service/Notification/handleLocalNotification.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:syslab_admin/screens/loginPage.dart';
+import 'package:syslab_admin/screens/login_page.dart';
 import 'package:syslab_admin/service/userService.dart';
 import 'package:syslab_admin/utilities/colors.dart';
 import 'package:syslab_admin/widgets/buttonsWidget.dart';
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     },
     {
       "iconName": "assets/icons/group.svg",
-      "title": "Users",
+      "title": "Utilisateurs",
       "navigation": "/UsersListPage"
     },
     {
@@ -48,12 +48,12 @@ class _HomePageState extends State<HomePage> {
     },
     {
       "iconName": "assets/icons/timing.svg",
-      "title": "Timing",
+      "title": "Horaire",
       "navigation": "/EditOpeningClosingTime"
     },
     {
       "iconName": "assets/icons/sch.svg",
-      "title": "Availability",
+      "title": "Disponibilité",
       "navigation": "/EditAvailabilityPage"
     },
     {
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
     },
     {
       "iconName": "assets/icons/booking.svg",
-      "title": "Setting",
+      "title": "Paramètre",
       "navigation": "/EditBookingTiming"
     },
     {
@@ -102,8 +102,9 @@ class _HomePageState extends State<HomePage> {
     if (token != "" && token != "null") {
       
       String uId = pref.getString("uId");
+      log("uId : "+uId);
       final user = await UserService.getData(uId);
-      
+      log("message");
       pref.setString("fcm", user[0].fcmId);
       pref.setString("firstName", user[0].firstName);
       pref.setString("lastName", user[0].lastName);

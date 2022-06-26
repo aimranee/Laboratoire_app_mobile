@@ -209,3 +209,20 @@ exports.get_user = function (req, res) {
     );
   });
 };
+
+exports.get_all_users = function (req, res) {
+  db.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(
+      "SELECT * FROM admin WHERE uId = ?",
+      [req.params.uId],
+      (err, rows) => {
+        connection.release();
+        if (!err) res.send(rows);
+        else console.log(err);
+
+        console.log("The data from user table \n", rows);
+      }
+    );
+  });
+};

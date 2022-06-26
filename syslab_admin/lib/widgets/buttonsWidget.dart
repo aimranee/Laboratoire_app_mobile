@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:syslab_admin/screens/loginPage.dart';
-import 'package:syslab_admin/service/authService/authService.dart';
+import 'package:syslab_admin/screens/login_page.dart';
+import 'package:syslab_admin/service/authService/auth_service.dart';
 import 'package:syslab_admin/utilities/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class LoginButtonsWidget extends StatelessWidget {
             ),
             child: Center(
                 child: Text(title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ))),
             onPressed: onPressed));
@@ -48,7 +48,7 @@ class MoreButtonsWidget extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             title,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ),
@@ -70,7 +70,7 @@ class EditBtnWidget extends StatelessWidget {
       width: 70,
       decoration: BoxDecoration(
           color: Colors.grey[200],
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+          borderRadius: const BorderRadius.all(Radius.circular(20))),
       child: TextButton(
           onPressed: onPressed,
           child: Text(
@@ -95,7 +95,7 @@ class EditIconBtnWidget extends StatelessWidget {
               radius: 15.0,
               backgroundColor: btnColor,
               // foregroundColor: Colors.green,
-              child: Icon(
+              child: const Icon(
                 Icons.edit,
                 color: Colors.white,
                 size: 20,
@@ -130,7 +130,7 @@ class DeleteButtonWidget extends StatelessWidget {
           ),
           child: Text(
             title,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ),
@@ -155,7 +155,7 @@ class RoundedBtnWidget extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
       ),
     );
   }
@@ -177,7 +177,7 @@ class SignOutBtnWidget extends StatelessWidget {
               AuthService.signOut();
               Get.to( () => const LoginPage());
             }),
-        Text(
+        const Text(
           "LogOut",
           style: TextStyle(color: Colors.white),
         )
@@ -198,7 +198,7 @@ class SearchBtnWidget extends StatelessWidget {
       backgroundColor: primaryColor,
       radius: 20,
       child: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.search,
           color: Colors.white,
         ),
