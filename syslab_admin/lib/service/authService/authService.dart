@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/config.dart';
 import 'package:syslab_admin/screens/homePage.dart';
 import 'package:syslab_admin/screens/loginPage.dart';
@@ -24,40 +25,29 @@ class AuthService {
         }
     );
   }
-  // handleAuth() async {
-    
-  //   //start loading indicator
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   final token = pref.getString("token").toString();
-  //   // print(res);
-  //   if (token != "" && token != "null") {
-  //     String uId = pref.getString("uId");
-  //     log("uId : "+uId);
-  //     final user = await UserService.getData(uId);
-      
 
-  //     pref.setString("fcm", user[0].fcmId);
-  //     pref.setString("firstName", user[0].firstName);
-  //     pref.setString("lastName", user[0].lastName);
-  //     return const HomePage();
-  //   }else{
-  //     return const LoginPage();
-  //   }
-
-  // }
 
   //Sign out
+  // static Future<bool> signOut() async {
+  //   bool isSignOut = false;
+
+  //   await FirebaseAuth.instance.signOut().then((v) {
+  //     isSignOut = true;
+  //   }).catchError((e) {
+  //     print(e); //Invalid otp
+  //     isSignOut = false;
+  //   });
+
+  //   return isSignOut;
+  // }
+
   static Future<bool> signOut() async {
-    bool isSignOut = false;
-
-    await FirebaseAuth.instance.signOut().then((v) {
-      isSignOut = true;
-    }).catchError((e) {
-      print(e); //Invalid otp
-      isSignOut = false;
-    });
-
-    return isSignOut;
+    bool isConn = true;
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.clear();
+    isConn = false;
+    
+    return isConn;
   }
 
   //SignIn

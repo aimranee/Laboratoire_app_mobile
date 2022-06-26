@@ -234,7 +234,7 @@ class _LoginPageState extends State<LoginPage> {
        await setData(res["uId"].toString(), res["token"].toString());
        
         ToastMsg.showToastMsg("Logged in");
-        Get.to(const HomePage());
+        Get.to(() => const HomePage());
       } 
       else {
         

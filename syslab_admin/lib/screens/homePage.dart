@@ -1,6 +1,10 @@
 import 'dart:developer';
 
 // import 'package:syslab_admin/service/Notification/handleLocalNotification.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syslab_admin/screens/loginPage.dart';
+import 'package:syslab_admin/service/userService.dart';
 import 'package:syslab_admin/utilities/colors.dart';
 import 'package:syslab_admin/widgets/buttonsWidget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:syslab_admin/service/readData.dart';
 import 'package:syslab_admin/utilities/clipPath.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:syslab_admin/widgets/loadingIndicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -19,7 +24,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ScrollController _gridScrollController = ScrollController();
-
+  bool _isLoading = false;
   final List _widgetsList = [
     {
       "iconName": "assets/icons/appoin.svg",
@@ -75,6 +80,7 @@ class _HomePageState extends State<HomePage> {
     //     context); //initialize firebase messaging
     // HandleLocalNotification.initializeFlutterNotification(
     //     context); //initialize local notification
+    handleAuth();
     getMsg();
     super.initState();
   }
@@ -84,16 +90,50 @@ class _HomePageState extends State<HomePage> {
     // log(res);
   }
 
+    handleAuth() async {
+    
+    //start loading indicator
+    setState(() {
+      _isLoading = true;
+    });
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString("token").toString();
+    // print(res);
+    if (token != "" && token != "null") {
+      
+      String uId = pref.getString("uId");
+      final user = await UserService.getData(uId);
+      
+      pref.setString("fcm", user[0].fcmId);
+      pref.setString("firstName", user[0].firstName);
+      pref.setString("lastName", user[0].lastName);
+      
+      setState(() {
+        _isLoading = false;
+      });
+      
+
+    }else{
+      setState(() {
+        _isLoading = false;
+      });
+      Get.to(() => const LoginPage());
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: _isLoading 
+      ? LoadingIndicatorWidget()
+      : Stack(
         children: [
           Positioned(top: 0, left: 0, right: 0, child: _bottomCircularBox()),
           Positioned.fill(
             child: _adminImageAndText(),
           ),
-          Positioned(top: 20, right: 5, child: SignOutBtnWidget()),
+          const Positioned(top: 20, right: 5, child: SignOutBtnWidget()),
           Positioned(
               top: 300,
               left: 10,

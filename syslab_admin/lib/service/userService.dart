@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:syslab_admin/config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
@@ -6,6 +7,7 @@ import 'package:syslab_admin/model/userModel.dart';
 
 class UserService {
   static const _viewUrl = "$apiUrl/get_all_user";
+  static const _userUrl = "$apiUrl/get_user";
   static const _updateUrl = "$apiUrl/update_user";
   static const _searchByNameUrl = "$apiUrl/search_by_name";
   static const _searchByIdUrl = "$apiUrl/search_by_id";
@@ -16,8 +18,20 @@ class UserService {
   }
 
   static Future<List<UserModel>> getData(userId) async {
+    
+    final response = await http.get(Uri.parse("$_userUrl/$userId"));
+    log("test : "+response.body.toString());
+    if (response.statusCode == 200) {
+      List<UserModel> list = dataFromJson(response.body);
+      return list;
+    } else {
+      return []; //if any error occurs then it return a blank list
+    }
+  }
 
-    final response = await http.get(Uri.parse("$_viewUrl/$userId"));
+   static Future<List<UserModel>> getUsers() async {
+    
+    final response = await http.get(Uri.parse(_viewUrl));
     if (response.statusCode == 200) {
       List<UserModel> list = dataFromJson(response.body);
       return list;

@@ -1,66 +1,66 @@
+class UserModel {
+  String uId;
+  String firstName;
+  String lastName;
+  String aNo1;
+  String aNo2;
+  String email;
+  String password;
+  String profileImageUrl;
+  String subTitle;
+  String description;
+  String fcmId;
+  String whatsAppNo;
+  String updatedTimeStamp;
+  String isAnyNotification;
+  String address;
 
-class UserModel{
- String firstName;
- String lastName;
- String uId;
- String city;
- String email;
- String fcmId;
- String imageUrl;
- String pNo;
- String searchByName;
- String age;
- String createdTimeStamp;
- String updateTimeStamp;
- String gender;
+  UserModel(
+      {this.uId,
+      this.firstName,
+      this.lastName,
+      this.aNo1,
+      this.aNo2,
+      this.email,
+      this.password,
+      this.profileImageUrl,
+      this.subTitle,
+      this.description,
+      this.fcmId,
+      this.whatsAppNo,
+      this.updatedTimeStamp,
+      this.isAnyNotification,
+      this.address});
 
-  UserModel({
-     this.firstName,
-     this.lastName,
-     this.uId,
-     this.city,
-     this.email,
-     this.fcmId,
-     this.imageUrl,
-     this.pNo,
-     this.searchByName,
-     this.age,
-     this.createdTimeStamp,
-     this.updateTimeStamp,
-     this.gender
-
-  });
-
-  factory UserModel.fromJson(Map<String,dynamic> json){
-    return UserModel(
-      firstName:json['firstName'],
-      lastName:json['lastName'],
-      uId:json['uId'],
-      city:json['city'],
-      email:json['email'],
-      fcmId:json['fcmId'],
-      imageUrl:json['imageUrl'],
-      pNo:json['pNo'],
-      searchByName:json['searchByName'],
-      age:json['age'],
-      createdTimeStamp: json['createdTimeStamp'],
-      updateTimeStamp:json['updatedTimeStamp'],
-        gender:json['gender']
-
-    );
+  UserModel.fromJson(Map<String, dynamic> json) {
+    uId = json['uId'].toString();
+    firstName = json['firstName'];
+    lastName = json['lastName'];
+    aNo1 = json['aNo1'];
+    aNo2 = json['aNo2'];
+    email = json['email'];
+    password = json['password'];
+    profileImageUrl = json['profileImageUrl'].toString();
+    subTitle = json['subTitle'];
+    description = json['description'];
+    fcmId = json['fcmId'];
+    whatsAppNo = json['whatsAppNo'];
+    updatedTimeStamp = json['updatedTimeStamp'];
+    isAnyNotification = json[''].toString();
+    address = json['address'];
   }
 
   Map<String,dynamic> toUpdateJson(){
     return {
-      "firstName": this.firstName,
-      "lastName": this.lastName,
-      "city": this.city,
-      "age": this.age,
-      "email": this.email,
-      "imageUrl": this.imageUrl,
-      "searchByName":this.searchByName,
-      "uId": this.uId,
-      "gender":this.gender
+      "firstName": firstName,
+      "lastName": lastName,
+      "aNo1": aNo1,
+      "aNo2": aNo2,
+      "email": email,
+      "subTitle": subTitle,
+      "description":description,
+      "whatsAppNo":whatsAppNo,
+      "address":address
     };
 
   }

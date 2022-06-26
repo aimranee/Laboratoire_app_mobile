@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+import 'package:syslab_admin/screens/loginPage.dart';
 import 'package:syslab_admin/service/authService/authService.dart';
 import 'package:syslab_admin/utilities/colors.dart';
 import 'package:flutter/material.dart';
@@ -160,17 +162,20 @@ class RoundedBtnWidget extends StatelessWidget {
 }
 
 class SignOutBtnWidget extends StatelessWidget {
+  const SignOutBtnWidget({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.logout,
               color: Colors.white,
             ),
             onPressed: () {
               AuthService.signOut();
+              Get.to( () => const LoginPage());
             }),
         Text(
           "LogOut",

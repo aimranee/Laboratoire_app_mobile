@@ -13,10 +13,10 @@ class AppRoutes {
       page: () => const HomePage(),
     ),
 
-    GetPage(
-      name: authTest,
-      page: () => AuthService().handleAuth(),
-    ),
+    // GetPage(
+    //   name: authTest,
+    //   page: () => AuthService().handleAuth(),
+    // ),
     
   ];  
 }

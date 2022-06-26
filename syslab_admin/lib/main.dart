@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
 
       GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.authTest,
+      initialRoute: AppRoutes.homePage,
       getPages: AppRoutes.pages,
       
     );
