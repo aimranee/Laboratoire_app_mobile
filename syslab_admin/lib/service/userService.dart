@@ -15,10 +15,9 @@ class UserService {
     return List<UserModel>.from(data.map((item) => UserModel.fromJson(item)));
   }
 
-  static Future<List<UserModel>> getData() async {
-    final userId = FirebaseAuth.instance.currentUser?.uid;
+  static Future<List<UserModel>> getData(userId) async {
 
-    final response = await http.get(Uri.parse("$_viewUrl?uid=$userId"));
+    final response = await http.get(Uri.parse("$_viewUrl/$userId"));
     if (response.statusCode == 200) {
       List<UserModel> list = dataFromJson(response.body);
       return list;

@@ -1,9 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'package:patient/Screen/Login_SignUp.dart';
-import 'package:patient/Screen/home.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:patient/config.dart';
 import 'package:patient/model/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';

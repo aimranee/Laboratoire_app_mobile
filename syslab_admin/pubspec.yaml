@@ -27,6 +27,7 @@ dependencies:
   fluttertoast: ^8.0.7
   # multi_image_picker: ^4.8.0
   permission_handler: ^9.2.0
+  shared_preferences: ^2.0.7
   firebase_storage: ^10.2.18
   cached_network_image: ^3.2.0
   date_picker_timeline: ^1.2.3

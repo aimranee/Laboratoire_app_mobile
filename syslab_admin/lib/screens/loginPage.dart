@@ -1,9 +1,12 @@
 // import 'package:syslab_admin/service/drProfileService.dart';
 import 'dart:developer';
 
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syslab_admin/screens/homePage.dart';
 import 'package:syslab_admin/widgets/buttonsWidget.dart';
 import 'package:syslab_admin/widgets/loadingIndicator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:syslab_admin/service/authService/authService.dart';
@@ -62,51 +65,53 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.white),
                 ),
                 _cardContent(),
-                _isLoading?  Container() : passwordResetBtn()
+                // _isLoading
+                // ?  Container() 
+                // : passwordResetBtn()
               ],
             ),
           ))),
     );
   }
 
-  Widget passwordResetBtn() {
-    return TextButton(
-        onPressed: _isEmailVerificationSend
-            ? null
-            : () async {
-                if (_userIdController.text.contains("@")) {
-                  setState(() {
-                    _isEmailVerificationSend = true;
-                  });
-                  ToastMsg.showToastMsg("Sending");
-                  try {
-                    await FirebaseAuth.instance
-                        .sendPasswordResetEmail(email: _userIdController.text)
-                        .then((value) {
-                      log("link sent");
-                      setState(() {
-                        _isEmailVerificationSend = false;
-                        ToastMsg.showToastMsg(
-                            "verification link has been sent to ${_userIdController.text} ");
-                      });
-                    });
-                  } on FirebaseAuthException catch (e) {
-                    ToastMsg.showToastMsg(e.message);
-                    setState(() {
-                      _isEmailVerificationSend = false;
-                    });
-                  }
-                } 
-                // else
-                //   ToastMsg.showToastMsg("Enter a valid email");
-              },
-        child: const Text("Forget or Reset Password",
-            style: TextStyle(
-              fontSize: 14,
-              decoration: TextDecoration.underline,
-              color: Colors.white,
-            )));
-  }
+  // Widget passwordResetBtn() {
+  //   return TextButton(
+  //       onPressed: _isEmailVerificationSend
+  //           ? null
+  //           : () async {
+  //               if (_userIdController.text.contains("@")) {
+  //                 setState(() {
+  //                   _isEmailVerificationSend = true;
+  //                 });
+  //                 ToastMsg.showToastMsg("Sending");
+  //                 try {
+  //                   await FirebaseAuth.instance
+  //                       .sendPasswordResetEmail(email: _userIdController.text)
+  //                       .then((value) {
+  //                     log("link sent");
+  //                     setState(() {
+  //                       _isEmailVerificationSend = false;
+  //                       ToastMsg.showToastMsg(
+  //                           "verification link has been sent to ${_userIdController.text} ");
+  //                     });
+  //                   });
+  //                 } on FirebaseAuthException catch (e) {
+  //                   ToastMsg.showToastMsg(e.message);
+  //                   setState(() {
+  //                     _isEmailVerificationSend = false;
+  //                   });
+  //                 }
+  //               } 
+  //               // else
+  //               //   ToastMsg.showToastMsg("Enter a valid email");
+  //             },
+  //       child: const Text("Forget or Reset Password",
+  //           style: TextStyle(
+  //             fontSize: 14,
+  //             decoration: TextDecoration.underline,
+  //             color: Colors.white,
+  //           )));
+  // }
 
   Widget _userIdField() {
     
@@ -224,14 +229,16 @@ class _LoginPageState extends State<LoginPage> {
       });
       final res = await AuthService.signIn(
           _userIdController.text, _passwordController.text);
-      if (res) {
-        final FirebaseAuth auth = FirebaseAuth.instance;
-      //  await setData(auth.currentUser.uid);
+          log("message");
+      if (res['message']=="login successfully") {
+       await setData(res["uId"].toString(), res["token"].toString());
+       
         ToastMsg.showToastMsg("Logged in");
+        Get.to(const HomePage());
       } 
       else {
         
-        ToastMsg.showToastMsg("Smoothing went wrong");
+        ToastMsg.showToastMsg(res['message']);
       }
 
       setState(() {
@@ -240,8 +247,12 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
   //
-  // setData(uId) async {
-  //   final fcm = await FirebaseMessaging.instance.getToken();
-  //   await DrProfileService.updateFcmId(uId, fcm);
-  // }
+  setData(uId, token) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final fcm = await FirebaseMessaging.instance.getToken();
+    pref.setString("token", token);
+    pref.setString("uId", uId);
+    pref.setString("fcm", fcm);
+    // await DrProfileService.updateFcmId(fcm);
+  }
 }

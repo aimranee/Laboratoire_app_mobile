@@ -1,9 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:syslab_admin/config.dart';
 import 'package:syslab_admin/screens/homePage.dart';
 import 'package:syslab_admin/screens/loginPage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AuthService {
+    static const _login = "$apiUrl/login";
+
   //Handles Auth
   handleAuth() {
     return StreamBuilder(
@@ -14,8 +21,30 @@ class AuthService {
           } else {
             return const LoginPage();
           }
-        });
+        }
+    );
   }
+  // handleAuth() async {
+    
+  //   //start loading indicator
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   final token = pref.getString("token").toString();
+  //   // print(res);
+  //   if (token != "" && token != "null") {
+  //     String uId = pref.getString("uId");
+  //     log("uId : "+uId);
+  //     final user = await UserService.getData(uId);
+      
+
+  //     pref.setString("fcm", user[0].fcmId);
+  //     pref.setString("firstName", user[0].firstName);
+  //     pref.setString("lastName", user[0].lastName);
+  //     return const HomePage();
+  //   }else{
+  //     return const LoginPage();
+  //   }
+
+  // }
 
   //Sign out
   static Future<bool> signOut() async {
@@ -33,20 +62,22 @@ class AuthService {
 
   //SignIn
 
-  static Future<bool> signIn(String email, String password) async {
-    bool isLoggedIn = false;
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      isLoggedIn = true;
-    } on FirebaseAuthException catch (e) {
-      isLoggedIn = false;
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
+  static signIn(email, password) async {
+    final res =
+        await http.post(Uri.parse(_login), body: {
+          "email": email,
+          "password": password
+        });
+       final data = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return data;
+    } else {
+      log ("error");
+      return ("error");
     }
-    return isLoggedIn;
+    
+    // return isLoggedIn;
+
   }
+
 }
