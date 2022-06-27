@@ -50,7 +50,7 @@ class _EditAvailabilityPageState extends State<EditAvailabilityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: IAppBars.commonAppBar(context, "Edit Availability"),
+      appBar: IAppBars.commonAppBar(context, "Edit Availability"),
       bottomNavigationBar: BottomNavBarWidget(
         title: "Update",
         onPressed: _takeConfirmation,

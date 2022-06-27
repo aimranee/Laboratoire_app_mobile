@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:syslab_admin/config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
+import 'package:syslab_admin/model/patient_model.dart';
 import 'package:syslab_admin/model/user_model.dart';
 
 class UserService {
@@ -17,10 +18,15 @@ class UserService {
     return List<UserModel>.from(data.map((item) => UserModel.fromJson(item)));
   }
 
+  static List<PatientModel> dataFromJsonP(String jsonString) {
+    final data = json.decode(jsonString);
+    return List<PatientModel>.from(data.map((item) => PatientModel.fromJson(item)));
+  }
+
   static Future<List<UserModel>> getData(userId) async {
     
     final response = await http.get(Uri.parse("$_userUrl/$userId"));
-    log("test : "+response.body.toString());
+    // log("test : "+response.body.toString());
     if (response.statusCode == 200) {
       List<UserModel> list = dataFromJson(response.body);
       return list;
@@ -29,11 +35,11 @@ class UserService {
     }
   }
 
-   static Future<List<UserModel>> getUsers() async {
+   static Future<List<PatientModel>> getUsers() async {
     
     final response = await http.get(Uri.parse(_viewUrl));
     if (response.statusCode == 200) {
-      List<UserModel> list = dataFromJson(response.body);
+      List<PatientModel> list = dataFromJsonP(response.body);
       return list;
     } else {
       return []; //if any error occurs then it return a blank list

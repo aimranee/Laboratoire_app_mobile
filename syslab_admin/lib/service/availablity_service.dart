@@ -16,7 +16,7 @@ class AvailabilityService {
 
   static Future<List<AvailabilityModel>> getAvailability() async {
     final res = await http.get(Uri.parse(_viewUrl));
-    log(res.body);
+    // log(res.body);
     if (res.statusCode == 200) {
       List<AvailabilityModel> list = availabilityFromJson(res.body);
       return list;
@@ -29,7 +29,7 @@ class AvailabilityService {
     final res = await http.put(Uri.parse(_updateUrl),
         body: availabilityModel.toUpdateJson());
         
-    log(res.body.toString());
+    // log(res.body.toString());
     if (res.statusCode == 200) {
       return res.body;
     } else {

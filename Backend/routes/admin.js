@@ -10,6 +10,9 @@ routes.route("/update_user").put(adminController.update_user);
 routes.route("/update_user_fcm").put(adminController.update_user_fcm);
 
 routes.route("/get_availability").get(availabilityController.get_availability);
-routes.route("/update_availability").put(availabilityController.update_availability);
+routes
+  .route("/update_availability")
+  .put(availabilityController.update_availability);
 
+routes.route("/get_all_user").get(adminController.get_all_user);
 module.exports = routes;

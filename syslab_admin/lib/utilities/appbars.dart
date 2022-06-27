@@ -4,7 +4,7 @@ import 'package:syslab_admin/utilities/colors.dart';
 import 'package:syslab_admin/utilities/fontStyle.dart';
 
 class IAppBars {
-  static Widget commonAppBar(String title, String s) {
+  static Widget commonAppBar(context, String title) {
     return AppBar(
       iconTheme: IconThemeData(
         color: appBarIconColor, //change your color here
