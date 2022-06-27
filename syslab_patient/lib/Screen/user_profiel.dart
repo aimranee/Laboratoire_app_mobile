@@ -116,9 +116,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
     String C = "0";
       if (_hasRamid == true){
           R = "1";
+          C = "0";
       }
       if (_hasCnss == true){
           C = "1";
+          R = "0";
       }
 
     final userModel = UserModel(
@@ -217,6 +219,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         items: <String>[
           'Male',
           'Female',
+          'Other',
         ].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -271,8 +274,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       ),
     );
   }
-
-    _bloodTypeDropDown() {
+  _bloodTypeDropDown() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
       child: DropdownButton<String>(
@@ -317,6 +319,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         onChanged: (bool value) {
           setState(() {
             _hasRamid = value;
+            _hasCnss = !value;
           });
         },
         activeColor: Colors.green,
@@ -333,6 +336,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         onChanged: (bool value) {
           setState(() {
             _hasCnss = value;
+            _hasRamid = !value;
           });
         },
         activeColor: Colors.green,
@@ -366,6 +370,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
           );
   }
 
+
+  
   void _setData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
