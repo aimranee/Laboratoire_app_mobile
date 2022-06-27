@@ -1,5 +1,7 @@
 // import 'package:syslab_admin/screens/userScreen/editUserProfilePage.dart';
-import 'package:syslab_admin/service/userService.dart';
+import 'package:get/get.dart';
+import 'package:syslab_admin/screens/user_screen/edit_userprofile_page.dart';
+import 'package:syslab_admin/service/patient_service.dart';
 import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
 import 'package:syslab_admin/widgets/boxWidget.dart';
 import 'package:syslab_admin/widgets/errorWidget.dart';
@@ -17,6 +19,7 @@ class UsersListPage extends StatefulWidget {
 }
 
 class _UsersListPageState extends State<UsersListPage> {
+  @override
   Widget build(BuildContext context) {
     bool _isEnableBtn = true;
     return Scaffold(
@@ -29,7 +32,7 @@ class _UsersListPageState extends State<UsersListPage> {
         secondTitle: "Search By ID",
       ),
       body: FutureBuilder(
-          future: UserService.getUsers(),
+          future: PatientService.getUsers(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return snapshot.data.length == 0
@@ -45,11 +48,11 @@ class _UsersListPageState extends State<UsersListPage> {
   }
 
   _handleByNameBtn() {
-    Navigator.pushNamed(context, "/SearchUserByNamePage");
+    Get.toNamed("/SearchUserByNamePage");
   }
 
   _handleByIdBtn() {
-    Navigator.pushNamed(context, "/SearchUserByIdPage");
+    Get.toNamed("/SearchUserByIdPage");
   }
 
   Widget _buildUserList(userList) {
@@ -62,13 +65,9 @@ class _UsersListPageState extends State<UsersListPage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => EditUserProfilePage(
-                    //           userDetails: userList[index]
-                    //           )),
-                    // );
+                    Get.to(
+                      EditUserProfilePage(userDetails: userList[index])
+                    );
                   },
                   child: ListTile(
                     trailing: Icon(
