@@ -82,8 +82,6 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
     return Scaffold(
         appBar: _filteredAppBar(context, "Appointment"),
         bottomNavigationBar: BottomNavTwoBarWidget(
-          secondTitle: "Search By ID",
-          secondBtnOnPressed: _handleByIdBtn,
           isenableBtn: _isEnableBtn,
           firstTitle: "Search By Name",
           firstBtnOnPressed: _handleByNameBtn,
@@ -210,7 +208,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
                   child: const Text("OK"),
                   onPressed: () {
                     _handleStatus(newStatus);
-                    Navigator.of(context).pop();
+                    Get.back();
                   }),
               // usually buttons at the bottom of the dialog
             ],
@@ -265,7 +263,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
                   child: const Text("OK"),
                   onPressed: () {
                     _handleTypes(newStatus);
-                    Navigator.of(context).pop();
+                    Get.back();
                   }),
               // usually buttons at the bottom of the dialog
             ],
@@ -315,7 +313,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
           child: ListTile(
             isThreeLine: true,
             title: Text(
-              "${appointmentDetails.pFirstName + " " + appointmentDetails.pLastName}",
+              "${appointmentDetails.uName}",
               style: kCardTitleStyle,
             ),
             trailing: editBtn(appointmentDetails),
@@ -333,21 +331,6 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                      "${_subTitleWithSpace("Gender:")}${appointmentDetails.gender}"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                      "${_subTitleWithSpace("Age:")}${appointmentDetails.age}"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                      "${_subTitleWithSpace("Mobile Number:")}${appointmentDetails.pPhn}"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
                       "${_subTitleWithSpace("Appointment Date:")}${appointmentDetails.appointmentDate}"),
                 ),
                 Padding(
@@ -358,7 +341,19 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                      "${_subTitleWithSpace("Appointment Type:")}${appointmentDetails.serviceName}"),
+                      "${_subTitleWithSpace("Appointment Type:")}${appointmentDetails.appointmentType}"),
+                ),
+                if(appointmentDetails.location.toString() != "null")
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                      "${_subTitleWithSpace("Location:")}${appointmentDetails.location}"),
+                ),
+                
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                      "${_subTitleWithSpace("CIN:")}${appointmentDetails.cin}"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),

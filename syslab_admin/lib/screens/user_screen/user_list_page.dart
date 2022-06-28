@@ -28,8 +28,6 @@ class _UsersListPageState extends State<UsersListPage> {
         firstBtnOnPressed: _handleByNameBtn,
         firstTitle: "Search By Name",
         isenableBtn: _isEnableBtn,
-        secondBtnOnPressed: _handleByIdBtn,
-        secondTitle: "Search By ID",
       ),
       body: FutureBuilder(
           future: PatientService.getUsers(),

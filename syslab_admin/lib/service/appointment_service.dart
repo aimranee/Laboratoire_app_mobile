@@ -40,7 +40,7 @@ class AppointmentService {
     final res = convertArrayToString(selectedStatus);
     final typeRes = convertArrayToString(selectedType);
     final response = await http.get(Uri.parse(
-        "$_viewUrl?status=$res&type=$typeRes&firstDate=$firstDate&lastDate=$lastDate&limit=$limit"));
+        "$_viewUrl/$res/$typeRes/$firstDate/$lastDate/$limit"));
 
     if (response.statusCode == 200) {
       List<AppointmentModel> list = dataFromJson(response.body);
@@ -93,7 +93,7 @@ class AppointmentService {
 
     final res = await http.post(Uri.parse(_updateDataUrl),
         body: appointmentModel.toJsonUpdate());
-    print(res.body);
+    log(res.body);
     if (res.statusCode == 200) {
       return res.body;
     } else {

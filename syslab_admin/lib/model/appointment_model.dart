@@ -14,6 +14,7 @@ class AppointmentModel{
   String location;
   String createdTimeStamp;
   String updatedTimeStamp;
+  String cin;
 
   AppointmentModel({
     this.appointmentDate,
@@ -30,6 +31,7 @@ class AppointmentModel{
     this.location,
     this.createdTimeStamp,
     this.updatedTimeStamp,
+    this.cin,
   });
 
   factory AppointmentModel.fromJson(Map<String,dynamic> json){
@@ -48,7 +50,7 @@ class AppointmentModel{
       location:json['location'],
       createdTimeStamp:json['createdTimeStamp'],
       updatedTimeStamp:json['updatedTimeStamp'],
-
+      cin:json['cin'] ?? "",
     );
   }
    Map<String,dynamic> toJsonAdd(){

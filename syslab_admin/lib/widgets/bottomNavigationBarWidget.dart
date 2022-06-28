@@ -9,7 +9,7 @@ class BottomNavBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 4.0,
         child: Padding(
             padding: const EdgeInsets.only(
@@ -25,7 +25,7 @@ class BottomNavBarWidget extends StatelessWidget {
                   ),
                   child: Center(
                       child: Text(title,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                           ))),
                   onPressed: isEnableBtn ? onPressed : null),
@@ -37,18 +37,14 @@ class BottomNavTwoBarWidget extends StatelessWidget {
   final String firstTitle;
   final bool isenableBtn;
   final firstBtnOnPressed;
-  final String secondTitle;
-  final secondBtnOnPressed;
   BottomNavTwoBarWidget(
       { this.firstTitle,
       this.firstBtnOnPressed,
-       this.secondTitle,
-      this.secondBtnOnPressed,
        this.isenableBtn});
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 4.0,
         child: Padding(
             padding: const EdgeInsets.only(
@@ -67,27 +63,13 @@ class BottomNavTwoBarWidget extends StatelessWidget {
                         ),
                         child: Center(
                             child: Text(firstTitle,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                 ))),
                         onPressed: isenableBtn ? firstBtnOnPressed : null),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
-                  ),
-                  Expanded(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: btnColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                        child: Center(
-                            child: Text(secondTitle,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ))),
-                        onPressed: isenableBtn ? secondBtnOnPressed : null),
                   ),
                 ],
               ),

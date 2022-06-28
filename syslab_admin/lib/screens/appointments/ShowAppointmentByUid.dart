@@ -23,7 +23,7 @@ class _ShowAppointmentByUidPageState extends State<ShowAppointmentByUidPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: IAppBars.commonAppBar(context, "All Appointments"),
+        appBar: IAppBars.commonAppBar(context, "Tous les rendez-vous"),
         body: Container(child: cardListBuilder()));
   }
 
@@ -70,18 +70,30 @@ class _ShowAppointmentByUidPageState extends State<ShowAppointmentByUidPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                      "Appointment Date:        ${appointmentDetails.appointmentDate}"),
+                      "Date de rendez-vous:        ${appointmentDetails.appointmentDate}"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                      "Appointment Time:        ${appointmentDetails.appointmentTime}"),
+                      "Heure de rendez-vous:       ${appointmentDetails.appointmentTime}"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                      "Service Name:            ${appointmentDetails.appointmentType}"),
+                      "Type de rendez-vous:        ${appointmentDetails.appointmentType}"),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                      "CIN de patient:                    ${appointmentDetails.cin}"),
+                ),
+                if(appointmentDetails.location.toString() != "null")
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                      "Emplacement:     ${appointmentDetails.location}"),
+                ),
+                
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Row(

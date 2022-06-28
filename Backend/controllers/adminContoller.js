@@ -147,7 +147,7 @@ exports.update_user = function (req, res) {
     if (err) throw new Error("database Error");
     const params = req.body;
     connection.query(
-      "UPDATE admin SET firstName = ?, lastName = ?, city = ?, email = ?, age = ?, uId = ?, gender = ?, pNo = ?, familySituation = ?, hasCnss = ?, hasRamid = ?, cin = ?, bloodType = ? WHERE uId = ?",
+      "UPDATE patient SET firstName = ?, lastName = ?, city = ?, email = ?, age = ?, uId = ?, gender = ?, pNo = ?, familySituation = ?, hasCnss = ?, hasRamid = ?, cin = ?, bloodType = ? WHERE uId = ?",
       [
         params.firstName,
         params.lastName,
