@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:syslab_admin/screens/appointments/appointment_list_page.dart';
 import 'package:syslab_admin/screens/edit_availability_page.dart';
 import 'package:syslab_admin/screens/home_page.dart';
 import 'package:syslab_admin/screens/user_screen/user_list_page.dart';
@@ -8,7 +9,7 @@ class AppRoutes {
   static String  authTest = '/AuthTest';
   static String  editAvailabilityPage = '/EditAvailabilityPage';
   static String  usersListPage = '/UsersListPage';
-
+  static String  appointmentListPage = '/AppointmentListPage';
 
   static List<GetPage> pages = [
     GetPage(
@@ -23,7 +24,12 @@ class AppRoutes {
 
     GetPage(
       name: usersListPage,
-      page: () => UsersListPage(),
+      page: () => const UsersListPage(),
+    ),
+
+    GetPage(
+      name: appointmentListPage,
+      page: () => const AppointmentListPage(),
     ),
 
     // GetPage(

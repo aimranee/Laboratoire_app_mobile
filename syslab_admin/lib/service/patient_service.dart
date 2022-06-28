@@ -41,14 +41,14 @@ class PatientService {
     }
   }
 
-  static updateData(PatientModel PatientModel) async {
-    final res =
-        await http.post(Uri.parse(_updateUrl), body: PatientModel.toUpdateJson());
-    print(">>>>>>>>>>>>>>>>>>>>>>${res.body}");
+  static updateData(PatientModel patientModel) async {
+    final res = await http.put(Uri.parse(_updateUrl), body: patientModel.toUpdateJson());
+    log(">>>>>>>>>>>>>>>>>>>>>>${res.body}");
     if (res.statusCode == 200) {
       return res.body;
-    } else
+    } else {
       return "error";
+    }
   }
 
   static Future<List<PatientModel>> getUserByName(String searchByName) async {

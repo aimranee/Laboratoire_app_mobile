@@ -65,7 +65,7 @@ class _UsersListPageState extends State<UsersListPage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.to(
+                    Get.to(()=>
                       EditUserProfilePage(userDetails: userList[index])
                     );
                   },
@@ -81,8 +81,7 @@ class _UsersListPageState extends State<UsersListPage> {
                     //         DateFormat _dateFormat = DateFormat('y-MM-d');
                     // String formattedDate =  _dateFormat.format(dateTime);
                     subtitle:
-                        const Text("Created at userList[index].createdTimeStamp"),
-                    //  isThreeLine: true,
+                        Text("Created at ${userList[index].createdTimeStamp}"),
                   ),
                 ),
                 const Divider()
