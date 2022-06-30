@@ -24,6 +24,7 @@ class AppointmentService {
     final res =
         await http.post(Uri.parse(_addUrl), body: appointmentModel.toJsonAdd());
     if (res.statusCode == 200) {
+
       return res.body;
     } else {
       return "error";

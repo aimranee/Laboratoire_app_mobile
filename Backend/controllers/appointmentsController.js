@@ -4,6 +4,7 @@ exports.add_appointment = function (req, res) {
   db.getConnection((err, connection) => {
     if (err) throw err;
     const params = req.body;
+    console.log("test");
     connection.query("INSERT INTO appointments SET ?", params, (err, rows) => {
       connection.release();
       if (!err) res.send(`success`);

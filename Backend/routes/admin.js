@@ -2,6 +2,7 @@ const express = require("express");
 const adminController = require("../controllers/adminContoller");
 const availabilityController = require("../controllers/availabilityController");
 const appointmentsController = require("../controllers/appointmentsController");
+const analysesController = require("../controllers/analysesController");
 const routes = express.Router();
 
 routes.route("/signup").post(adminController.signup);
@@ -23,15 +24,24 @@ routes
 routes
   .route("/update_appointment_status")
   .put(appointmentsController.update_appointment_status);
-
 routes
   .route("/get_appointment_type")
   .get(appointmentsController.get_appointment_type);
-
 routes
-  .route(
-    "/get_all_appointment/:status/:type/:firstDate/:lastDate/:limit"
-  )
+  .route("/get_all_appointment/:status/:type/:firstDate/:lastDate/:limit")
   .get(appointmentsController.get_all_appointment);
+routes
+  .route("/get_appointment_type")
+  .get(appointmentsController.get_appointment_type);
+routes.route("/add_appointment").post(appointmentsController.add_appointment);
 
+routes.route("/get_analyses").get(analysesController.get_analyses);
+routes
+  .route("/get_analyses_byId/:id")
+  .get(analysesController.get_analyses_byId);
+routes.route("/get_categories").get(analysesController.get_categories);
+routes.route("/get_cat_analyse").get(analysesController.get_cat_analyse);
+routes
+  .route("/get_appointment_by_status/:uId/:status")
+  .get(appointmentsController.get_appointment_by_status);
 module.exports = routes;

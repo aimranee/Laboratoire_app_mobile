@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 class AvailabilityModel{
   String mon;
   String tue;

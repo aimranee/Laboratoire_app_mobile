@@ -33,6 +33,7 @@ class AppointmentService {
   static addData(AppointmentModel appointmentModel) async {
     final res =
         await http.post(Uri.parse(_addUrl), body: appointmentModel.toJsonAdd());
+    log ("test : "+res.body.toString());
     if (res.statusCode == 200) {
       return res.body;
     } else {

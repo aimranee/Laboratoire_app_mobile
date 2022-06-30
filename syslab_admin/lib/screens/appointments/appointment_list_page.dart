@@ -208,7 +208,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
                   child: const Text("OK"),
                   onPressed: () {
                     _handleStatus(newStatus);
-                    Get.back();
+                    Navigator.pop(context);
                   }),
               // usually buttons at the bottom of the dialog
             ],
@@ -263,7 +263,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
                   child: const Text("OK"),
                   onPressed: () {
                     _handleTypes(newStatus);
-                    Get.back();
+                    Navigator.pop(context);
                   }),
               // usually buttons at the bottom of the dialog
             ],
@@ -420,13 +420,20 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
             //onSelectionChanged: _onSelectionChanged,
             showActionButtons: true,
             controller: _datePickerController,
-            onSubmit: (val) {
-              log(val.toString());
-              Get.back();
+            onSubmit: (Object val) {
+              // log(val.toString());
+              if (val is PickerDateRange) {
+                // log("message"+val.startDate.toString());
+                setState(() {
+                  _firstDate = _setTodayDateFormat(val.startDate);
+                  _lastDate = _setTodayDateFormat(val.endDate);
+                });
+              }
+              Navigator.pop(context);
             },
             onCancel: () {
               _datePickerController.selectedRanges = null;
-              Get.back();
+              Navigator.pop(context);
             },
           ))
         );
@@ -475,7 +482,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
                     _firstDate = "All";
                     _lastDate = "All";
                   });
-                  Get.back();
+                  Navigator.pop(context);
                 }),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -488,7 +495,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
                 onPressed: () {
                   // onPressed();
                   
-                  Get.back();
+                  Navigator.pop(context);
                   _dateRangePicker();
                 })
             // usually buttons at the bottom of the dialog

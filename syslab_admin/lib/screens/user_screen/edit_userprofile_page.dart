@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:syslab_admin/model/patient_model.dart';
 import 'package:syslab_admin/screens/appointments/ShowAppointmentByUid.dart';
+import 'package:syslab_admin/screens/user_screen/choose_appointment_type.dart';
 import 'package:syslab_admin/service/patient_service.dart';
 import 'package:syslab_admin/utilities/dialogBox.dart';
 import 'package:syslab_admin/utilities/inputField.dart';
@@ -218,13 +219,9 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
       child: RoundedBtnWidget(
           title: title,
           onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) =>
-            //         ChooseTypePage(userDetails: widget.userDetails),
-            //   ),
-            // );
+            Get.to (() => 
+                ChooseTypePage(userDetails: widget.userDetails),
+            );
           }),
     );
   }

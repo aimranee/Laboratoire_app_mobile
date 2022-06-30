@@ -10,8 +10,6 @@ import 'package:patient/utilities/style.dart';
 import 'package:patient/widgets/appbars_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/widgets/bottom_navigation_bar_widget.dart';
-import 'package:patient/widgets/loading_indicator.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MyLocation extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables

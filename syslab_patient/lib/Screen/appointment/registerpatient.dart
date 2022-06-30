@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:patient/utilities/color.dart';
 import 'package:get/get.dart';
 import 'package:patient/Service/analyses_select_services.dart';
@@ -76,7 +74,6 @@ class _RegisterPatientState extends State<RegisterPatient> {
                 } else {
                   if (_chooseTimeScrArgs.appointmentType=="A domicile"){
                     Get.toNamed(
-                    
                       '/MyLocation',
                       arguments: PatientDetailsArg(
                         _firstNameController.text,
@@ -95,7 +92,6 @@ class _RegisterPatientState extends State<RegisterPatient> {
                     );
                   }else{
                     Get.toNamed(
-                    
                       '/ConfirmationPage',
                       arguments: PatientDetailsArg(
                         _firstNameController.text,
@@ -110,7 +106,8 @@ class _RegisterPatientState extends State<RegisterPatient> {
                         _chooseTimeScrArgs.serviceTimeMIn,
                         _chooseTimeScrArgs.selectedTime,
                         _chooseTimeScrArgs.selectedDate,
-                        location),
+                        location
+                      ),
                     );
                   }
                 }

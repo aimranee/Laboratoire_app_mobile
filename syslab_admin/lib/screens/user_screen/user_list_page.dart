@@ -49,10 +49,6 @@ class _UsersListPageState extends State<UsersListPage> {
     Get.toNamed("/SearchUserByNamePage");
   }
 
-  _handleByIdBtn() {
-    Get.toNamed("/SearchUserByIdPage");
-  }
-
   Widget _buildUserList(userList) {
     return ListView.builder(
         itemCount: userList.length,
@@ -68,7 +64,7 @@ class _UsersListPageState extends State<UsersListPage> {
                     );
                   },
                   child: ListTile(
-                    trailing: Icon(
+                    trailing: const Icon(
                       Icons.arrow_right,
                       color: primaryColor,
                     ),

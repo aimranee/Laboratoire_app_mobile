@@ -1,3 +1,4 @@
+
 class AppointmentTypeModel{
   String id;
   String title;
@@ -17,6 +18,7 @@ class AppointmentTypeModel{
 
   factory AppointmentTypeModel.fromJson(Map<String,dynamic> json){
     return AppointmentTypeModel(
+      id: json['id'].toString(),
       title: json['title'],
       imageUrl: json['imageUrl'],
       forTimeMin:  int.parse(json['forTimeMin']),
@@ -28,7 +30,7 @@ class AppointmentTypeModel{
   Map<String, dynamic> toAddJson() {
     return {
       "title":  title,
-      "forTimeMin": (forTimeMin).toString(),
+      "forTimeMin": forTimeMin.toString(),
       "imageUrl":  imageUrl,
       "openingTime": openingTime,
       "closingTime": closingTime,
@@ -37,7 +39,7 @@ class AppointmentTypeModel{
   Map<String, dynamic> toUpdateJson() {
     return {
       "title":  title,
-      "forTimeMin": (forTimeMin).toString(),
+      "forTimeMin": forTimeMin.toString(),
       "imageUrl":  imageUrl,
       "id": id,
       "openingTime": openingTime,

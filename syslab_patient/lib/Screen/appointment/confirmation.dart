@@ -58,7 +58,6 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         bottomNavigationBar: BottomNavigationStateWidget(
           title: "Confirmer le rendez-vous",
           onPressed: () {
-            //  Service.myfb(); //if you want to add something in all documents of one collection then you can invoke this method. this is for only the developing part.
             _updateBookedSlot(
               _patientDetailsArgs.pFirstName,
               _patientDetailsArgs.pLastName,
@@ -170,7 +169,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
             const SizedBox(height: 17),
             Text("Numéro de téléphone : ${args.pPhn}", style: kCardSubTitleStyle),
             const SizedBox(height: 17),
-            Text("Prix total : ${args.price} DHs", style: kCardSubTitleStyle),
+            Text("Prix total : ${args.price} Dhs", style: kCardSubTitleStyle),
             const SizedBox(height: 17),
             const Text("Analyses : ", style: kCardSubTitleStyle),
             const SizedBox(height: 7),
@@ -182,7 +181,6 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   }
 
   void _updateBookedSlot(pFirstName, pLastName, pPhn, pEmail, pCity, desc, analyses, price, appointmentType, serviceTimeMin, setTime, selectedDate, location) async {
-    log("message : $location");
     setState(() {
       _isLoading = true;
       _isBtnDisable = "";
