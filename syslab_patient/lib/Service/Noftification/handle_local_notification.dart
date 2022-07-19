@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -25,9 +26,10 @@ class HandleLocalNotification {
   }
 
   static Future<void> showNotification(String title, String body) async {
-    // //print("===================show notification==============");
+    // log("===================show notification==============");
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
+        
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
             'your channel id', 'your channel name',/* 'your channel description',*/

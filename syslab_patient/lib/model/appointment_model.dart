@@ -62,7 +62,9 @@ class AppointmentModel{
       "analyses":analyses,
       "description":description,
       "uName":uName,
-      "location":location
+      "location":location,
+      "createdTimeStamp":createdTimeStamp,
+      "updatedTimeStamp":updatedTimeStamp
     };
 
   }

@@ -51,7 +51,7 @@ class TimeCalculation {
       String closingTimeMin,
       int selctedServiceTime) {
     var timeSlots = tlots;
-    bookedTimeSlots.forEach((element) {
+    for (var element in bookedTimeSlots) {
       for (int i = 0; i < timeSlots.length - 1; i++) {
         String afterTime =
         TimeCalculation.addTime(timeSlots[i], selctedServiceTime);
@@ -179,7 +179,7 @@ class TimeCalculation {
           }
         }
       }
-    });
+    }
     return timeSlots;
   }
 

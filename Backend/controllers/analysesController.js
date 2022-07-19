@@ -10,7 +10,7 @@ exports.get_analyses = function (req, res) {
       } else {
         console.log(err);
       }
-      console.log("the data from analyses table are : \n", rows);
+      // console.log("the data from analyses table are : \n", rows);
     });
   });
 };
@@ -28,7 +28,7 @@ exports.get_analyses_byId = function (req, res) {
         } else {
           console.log(err);
         }
-        console.log("the data from analyses table are : \n", rows);
+        // console.log("the data from analyses table are : \n", rows);
       }
     );
   });
@@ -44,7 +44,7 @@ exports.get_cat_analyse = function (req, res) {
       } else {
         console.log(err);
       }
-      console.log("the data from analyses table are : \n", rows);
+      // console.log("the data from analyses table are : \n", rows);
     });
   });
 };
@@ -59,7 +59,7 @@ exports.get_categories = function (req, res) {
       } else {
         console.log(err);
       }
-      console.log("the data from categories table are : \n", rows);
+      // console.log("the data from categories table are : \n", rows);
     });
   });
 };

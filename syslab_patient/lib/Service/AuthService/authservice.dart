@@ -65,7 +65,7 @@ class AuthService {
     }
   }
 
-    static signup(UserModel userModel) async {
+  static signup(UserModel userModel) async {
 
     final res = await http.post(Uri.parse(_signupUrl), body: userModel.toJsonAdd());
      final data = json.decode(res.body);

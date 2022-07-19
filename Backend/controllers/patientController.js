@@ -42,7 +42,7 @@ exports.login = function (req, res) {
       }
     );
   } catch (e) {
-    console.log("here");
+    // console.log("here");
     // console.log(error);
     return res.send("error in server");
   }
@@ -70,17 +70,19 @@ exports.signup = function (req, res) {
                 500
               );
             } else {
-              console.log(hashedPassword);
+              // console.log(hashedPassword);
               connection.query(
                 `INSERT INTO patient (firstName, lastName, email, password, fcmId, pNo, city, createdTimeStamp, updatedTimeStamp, age, gender, cin, hasRamid, hasCnss, familySituation, bloodType)values(?,?,${db.escape(
                   params.email
-                )},'${hashedPassword}',?,?,?,'${new Date()}','${new Date()}',?,?,?,?,?,?,?);`,
+                )},'${hashedPassword}',?,?,?,?,?,?,?,?,?,?,?,?);`,
                 [
                   params.firstName,
                   params.lastName,
                   params.fcmId,
                   params.pNo,
                   params.city,
+                  params.createdTimeStamp,
+                  params.updatedTimeStamp,
                   params.age,
                   params.gender,
                   params.cin,
@@ -130,7 +132,7 @@ exports.signup = function (req, res) {
                     );
                   } else console.log(err);
 
-                  console.log("The data from user table \n", rows);
+                  // console.log("The data from user table \n", rows);
                 }
               );
             }
@@ -138,8 +140,6 @@ exports.signup = function (req, res) {
         }
       );
     } catch (error) {
-      console.log("here");
-      // console.log(error);
       return res.send("error in server");
     }
   });
@@ -150,7 +150,7 @@ exports.update_user = function (req, res) {
     if (err) throw new Error("database Error");
     const params = req.body;
     connection.query(
-      "UPDATE patient SET firstName = ?, lastName = ?, city = ?, email = ?, age = ?, uId = ?, gender = ?, pNo = ?, familySituation = ?, hasCnss = ?, hasRamid = ?, cin = ?, bloodType = ? WHERE uId = ?",
+      "UPDATE patient SET firstName = ?, lastName = ?, city = ?, email = ?, age = ?, uId = ?, gender = ?, pNo = ?, familySituation = ?, hasCnss = ?, hasRamid = ?, cin = ?, bloodType = ?, updatedTimeStamp = ? WHERE uId = ?",
       [
         params.firstName,
         params.lastName,
@@ -165,6 +165,7 @@ exports.update_user = function (req, res) {
         params.hasRamid,
         params.cin,
         params.bloodType,
+        params.updatedTimeStamp,
         params.uId,
       ],
       (err, rows) => {
@@ -172,7 +173,7 @@ exports.update_user = function (req, res) {
         if (!err) res.send(`success`);
         else console.log(err);
 
-        console.log("The data from user table \n", rows);
+        // console.log("The data from user table \n", rows);
       }
     );
   });
@@ -187,10 +188,10 @@ exports.update_user_fcm = function (req, res) {
       [params.fcmId, params.uId],
       (err, rows) => {
         connection.release();
-        if (!err) res.send(`Bien Enregistrer!! ID : ${params.uId} bien`);
+        if (!err) res.send(`success`);
         else console.log(err);
 
-        console.log("The data from user table \n", rows);
+        // console.log("The data from user table \n", rows);
       }
     );
   });
@@ -207,7 +208,24 @@ exports.get_user = function (req, res) {
         if (!err) res.send(rows);
         else console.log(err);
 
-        console.log("The data from user table \n", rows);
+        // console.log("The data from user table \n", rows);
+      }
+    );
+  });
+};
+
+exports.get_admin_profile = function (req, res) {
+  db.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(
+      "SELECT fcmId from admin",
+      [req.params.uId],
+      (err, rows) => {
+        connection.release();
+        if (!err) res.send(rows);
+        else console.log(err);
+
+        // console.log("The data from admin table \n", rows);
       }
     );
   });

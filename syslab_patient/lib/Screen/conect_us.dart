@@ -36,15 +36,6 @@ class _ContactUsState extends State<ContactUs> {
 
   @override
   Widget build(BuildContext context) {
-    _markers.add(
-      const Marker(
-        markerId: MarkerId('SomeId'),
-        position: LatLng(30.4031875, -9.5285625),
-        infoWindow: InfoWindow(
-        title: 'P2M location'
-        )
-      )
-    );
     return Scaffold(
       drawer : CustomDrawer(isConn: isConn),
         body: SingleChildScrollView(
@@ -155,37 +146,7 @@ class _ContactUsState extends State<ContactUs> {
         padding: EdgeInsets.only(top: 8, left: 40.0, right: 25),
         child: Text("Location", style: kPageTitleStyle),
       ),
-      Padding(
-        padding: const EdgeInsets.only(left: 40.0, right: 25, top: 8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-                height: MediaQuery.of(context).size.height * .39,
-                width: MediaQuery.of(context).size.width * .8,
-                child: GestureDetector(
-                  onTap: () {
-                  },
-                  child: 
-                  Card(
-                    // color: Colors.black,
-                    elevation: 10.0,
-                    child: 
-                    GoogleMap(
-                      initialCameraPosition: _kGooglePlex,
-                      markers: Set<Marker>.of(_markers),
-                      onMapCreated: (GoogleMapController controller){
-                        _controller.complete(controller);
-                      }
-                    )
-                )
-                ),
-                )
-            
-          ],
-        ),
-      )
+      _locationPatient(),
     ],
       ),
     ));
@@ -253,4 +214,47 @@ class _ContactUsState extends State<ContactUs> {
       ],
     );
   }
+  _locationPatient () {
+    _markers.add(
+      const Marker(
+        markerId: MarkerId('SomeId'),
+        position: LatLng(30.4031875, -9.5285625),
+        infoWindow: InfoWindow(
+        title: 'P2M location'
+        )
+      )
+    );
+    return Padding(
+        padding: const EdgeInsets.only(left: 40.0, right: 25, top: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+                height: MediaQuery.of(context).size.height * .39,
+                width: MediaQuery.of(context).size.width * .8,
+                child: GestureDetector(
+                  onTap: () {
+                  },
+                  child: 
+                  Card(
+                    // color: Colors.black,
+                    elevation: 10.0,
+                    child: 
+                    GoogleMap(
+                      initialCameraPosition: _kGooglePlex,
+                      markers: Set<Marker>.of(_markers),
+                      onMapCreated: (GoogleMapController controller){
+                        _controller.complete(controller);
+                      }
+                    )
+                )
+                ),
+                )
+            
+          ],
+        ),
+      );
+  }
+
 }

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/screens/user_screen/register_patient_page.dart';
-import 'package:syslab_admin/service/readData.dart';
 import 'package:syslab_admin/service/time_calculation.dart';
 import 'package:syslab_admin/utilities/appbars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
@@ -33,6 +33,7 @@ class NewAppointmentTimePage extends StatefulWidget {
 class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
   bool _isLoading = false;
   String _setTime = "";
+  String uId = "";
   // ignore: prefer_typing_uninitialized_variables
   var _selectedDate;
   List _bookedTimeSlots;
@@ -57,7 +58,7 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
     });
 
     _selectedDate = await _initializeDate(); //Initialize start time
-    await _getAndSetbookedTimeSlots();
+    // await _getAndSetbookedTimeSlots();
     await _getAndSetOpeningClosingTime();
     _getAndsetTimeSlots(
         _openingTimeHour, _openingTimeMin, _closingTimeHour, _closingTimeMin);
@@ -71,7 +72,7 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
     setState(() {
       _isLoading = true;
     });
-    await _getAndSetbookedTimeSlots();
+    // await _getAndSetbookedTimeSlots();
     _getAndsetTimeSlots(
       _openingTimeHour, _openingTimeMin, _closingTimeHour, _closingTimeMin);
       setState(() {
@@ -87,10 +88,10 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
     return formattedDate;
   }
 
-  Future<void> _getAndSetbookedTimeSlots() async {
-    _bookedTimeSlots = await ReadData.fetchBookedTime(_selectedDate);
-    // await ReadData().fetchBookedTime(GlobalVariables.selectedClinicId);
-  }
+  // Future<void> _getAndSetbookedTimeSlots() async {
+  //   _bookedTimeSlots = await ReadData.fetchBookedTime(_selectedDate);
+  //   // await ReadData().fetchBookedTime(GlobalVariables.selectedClinicId);
+  // }
 
   Future<void> _getAndSetOpeningClosingTime() async {
     //break the opening and closing time in to the hour and minute
@@ -354,4 +355,5 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
       ),
     );
   }
+
 }

@@ -15,6 +15,9 @@ class UserModel {
   String familySituation;
   String bloodType;
   String diseaseState;
+  String isAnyNotification;
+  String createdTimeStamp;
+  String updatedTimeStamp;
 
   UserModel(
       {this.uId,
@@ -32,7 +35,10 @@ class UserModel {
       this.hasCnss,
       this.familySituation,
       this.bloodType,
-      this.diseaseState});
+      this.diseaseState,
+      this.isAnyNotification,
+      this.createdTimeStamp,
+      this.updatedTimeStamp});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     uId = json['uId'].toString();
@@ -51,6 +57,7 @@ class UserModel {
     familySituation = json['familySituation'];
     bloodType = json['bloodType'];
     diseaseState = json['diseaseState'];
+    isAnyNotification = json['isAnyNotification'];
   }
 
   Map<String, dynamic> toJsonAdd() {
@@ -69,6 +76,9 @@ class UserModel {
     data['hasCnss'] = this.hasCnss;
     data['familySituation'] = this.familySituation;
     data['bloodType'] = this.bloodType;
+    data['isAnyNotification'] = this.isAnyNotification;
+    data['createdTimeStamp'] = this.createdTimeStamp;
+    data['updatedTimeStamp'] = this.updatedTimeStamp;
     return data;
   }
 
@@ -87,6 +97,8 @@ class UserModel {
       "hasRamid": hasRamid,
       "hasCnss": hasCnss,
       "bloodType": bloodType,
+      "isAnyNotification": isAnyNotification,
+      "updatedTimeStamp": updatedTimeStamp,
     };
   }
 }

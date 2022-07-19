@@ -1,8 +1,17 @@
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:syslab_admin/model/appointment_model.dart';
+import 'package:syslab_admin/screens/prescription/prescription_list_page.dart';
 import 'package:syslab_admin/service/appointment_service.dart';
+import 'package:syslab_admin/service/notification/firebase_notification.dart';
+import 'package:syslab_admin/service/admin_service.dart';
+import 'package:syslab_admin/service/patient_service.dart';
 import 'package:syslab_admin/utilities/colors.dart';
+import 'package:syslab_admin/utilities/fontStyle.dart';
 import 'package:syslab_admin/utilities/inputField.dart';
 import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
 import 'package:syslab_admin/widgets/loadingIndicator.dart';
@@ -20,23 +29,18 @@ class EditAppointmentDetailsPage extends StatefulWidget {
       _EditAppointmentDetailsPageState();
 }
 
-class _EditAppointmentDetailsPageState
-    extends State<EditAppointmentDetailsPage> {
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+class _EditAppointmentDetailsPageState extends State<EditAppointmentDetailsPage> {
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isEnableBtn = true;
   bool _isLoading = false;
   int _groupValue = -1;
-  String _selectedGender="";
+  double latitude = 0;
+  double longitude = 0;
+  String uId = "";
 
-
-  // final TextEditingController _firstNameController = TextEditingController();
-  // final TextEditingController _latsNameController = TextEditingController();
-  // final TextEditingController _ageController = TextEditingController();
-  // final TextEditingController _cityController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
-  // final TextEditingController _phnController = TextEditingController();
-  // final TextEditingController _emailController = TextEditingController();
   final TextEditingController _appointmentTypeController = TextEditingController();
   final TextEditingController _serviceTimeController = TextEditingController();
   final TextEditingController _appointmentIdController = TextEditingController();
@@ -44,9 +48,8 @@ class _EditAppointmentDetailsPageState
   final TextEditingController _analysesController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _descController = TextEditingController();
-  // final TextEditingController _createdDateTimeController = TextEditingController();
-  // final TextEditingController _lastUpdatedController = TextEditingController();
   final TextEditingController _uNameController = TextEditingController();
+  final TextEditingController _cinController = TextEditingController();
 
   @override
   void initState() {
@@ -61,13 +64,20 @@ class _EditAppointmentDetailsPageState
     _analysesController.text = widget.appointmentDetails.analyses;
     _priceController.text = widget.appointmentDetails.price;
     _descController.text = widget.appointmentDetails.description;
-
+    _cinController.text = widget.appointmentDetails.cin;
+    
     if (widget.appointmentDetails.appointmentStatus == "Rejected"||widget.appointmentDetails.appointmentStatus == "Canceled") {
       setState(() {
         _isEnableBtn = false;
       });
     }
-
+    if (widget.appointmentDetails.location != "") {
+        final locationPatient = widget.appointmentDetails.location.split(',');
+        setState(() {
+          latitude = double.parse(locationPatient[0]);
+          longitude = double.parse(locationPatient[1]);
+        });
+    }
     super.initState();
   }
 
@@ -84,28 +94,41 @@ class _EditAppointmentDetailsPageState
     _appointmentIdController.dispose();
     _uIdController.dispose();
     _descController.dispose();
+    _cinController.dispose();
     super.dispose();
   }
   _handlePrescriptionBtn(){
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //       builder: (context) => PrescriptionListByIDPage(
-    //         appointmentId: widget.appointmentDetails.id,
-    //         userId: widget.appointmentDetails.uId,
-    //         patientName: widget.appointmentDetails.pFirstName+" "+ widget.appointmentDetails.pLastName,
-    //         time: widget.appointmentDetails.appointmentTime,
-    //         date: widget.appointmentDetails.appointmentDate,
-    //         serviceName: widget.appointmentDetails.serviceName ,
-    //       )
-    //   ),
-    // );
+    Get.to(()=>PrescriptionListByIDPage(
+            appointmentId: widget.appointmentDetails.id,
+            userId: widget.appointmentDetails.uId,
+            patientName: widget.appointmentDetails.uName,
+            time: widget.appointmentDetails.appointmentTime,
+            date: widget.appointmentDetails.appointmentDate,
+            appointmentType: widget.appointmentDetails.appointmentType,
+            price: widget.appointmentDetails.price
+          ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: IAppBars.commonAppBar(context, "Edit Details"),
+        appBar: widget.appointmentDetails.appointmentStatus  ==
+          "Rejected" ||
+        widget.appointmentDetails.appointmentStatus ==
+          "Visited" ||
+        widget.appointmentDetails.appointmentStatus =="Canceled"
+        ? AppBar(
+        title: const Text("Edit Details", style: kAppBarTitleStyle,),
+        backgroundColor: appBarColor,
+        actions: [
+          IconButton(onPressed: (){
+            DialogBoxes.confirmationBox(
+                context, "Supprimer", "Voulez-vous vraiment supprimer le rendez-vous ?", (){
+                _handleDeleteAppointment();
+              });
+            }, icon:const Icon(Icons.delete))
+          ],
+        ):IAppBars.commonAppBar(context, "Tous les rendez-vous"),
         bottomNavigationBar: BottomNavBarWidget(
           title: widget.appointmentDetails.appointmentStatus ==
               "Visited"?"Prescription": "Update",
@@ -116,9 +139,9 @@ class _EditAppointmentDetailsPageState
         ),
         floatingActionButton:  widget.appointmentDetails.appointmentStatus  ==
             "Rejected" ||
-            widget.appointmentDetails.appointmentStatus ==
-                "Visited"||
-            widget.appointmentDetails.appointmentStatus =="Canceled"
+          widget.appointmentDetails.appointmentStatus ==
+            "Visited" ||
+          widget.appointmentDetails.appointmentStatus =="Canceled"
 
             ? null: FloatingActionButton(
             elevation: 0.0,
@@ -139,12 +162,12 @@ class _EditAppointmentDetailsPageState
                 InputFields.commonInputField(_uNameController, "Patient Name", (item) {
                   return item.length > 0 ? null : "Enter last name";
                 }, TextInputType.text, 1),
+                InputFields.readableInputField(_cinController, "CIN Patient", 1),
                 InputFields.readableInputField(_dateController, "Appointment Date", 1),
                 InputFields.readableInputField(_timeController,  "Appointment Time", 1),
                 InputFields.readableInputField(_appointmentTypeController,  "Appointment Type", 1),
                 InputFields.readableInputField(_analysesController,  "Analyses", 1),
                 InputFields.readableInputField(_priceController,  "Prix", 1),
-                // InputFields.readableInputField(_serviceTimeController,   "Service Time", 1),
                 InputFields.readableInputField(_appointmentIdController,  "Appointment id", 1),
                 InputFields.readableInputField(_uIdController, "User Id", 1),
                 InputFields.commonInputField(_descController, "Description, About problem", (item) {
@@ -172,10 +195,6 @@ class _EditAppointmentDetailsPageState
                         widget.appointmentDetails.appointmentStatus  ==
                             "Rejected")
                           _statusIndicator(Colors.red)
-                        else if (
-                          widget.appointmentDetails.appointmentStatus  ==
-                              "Rescheduled")
-                            _statusIndicator(Colors.orangeAccent)
                           else
                             Container(),
                       Padding(
@@ -197,7 +216,7 @@ class _EditAppointmentDetailsPageState
                     ? const Padding(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
                   child: Text(
-                      "Sorry! You can not edit this appointment"),
+                      "Pardon! Vous ne pouvez pas modifier ce rendez-vous"),
                 )
                     : Container(),
                 const Padding(
@@ -218,7 +237,7 @@ class _EditAppointmentDetailsPageState
                     Container()
                     : Row(
                         //if not rejected
-                        children: [
+                        children: const [
                           // Expanded(
                           //     flex: 1,
                           //     child: _roundedBtn("Confirmed", "Confirmed")),
@@ -235,42 +254,42 @@ class _EditAppointmentDetailsPageState
                     Container()
                     : Row(
                         //if not rejected
-                        children: [
+                        children: const [
                           // Expanded(
                           //     flex: 1,
                           //     child:
                           //         _roundedRejectBtn("Reject", "Rejected"))
                         ],
                       ),
+                if (latitude != 0)
+                  _locationPatient(),
+                const SizedBox(height:30),
               ]),
         ));
   }
 
   _takeConfirmation() {
     DialogBoxes.confirmationBox(
-        context, "Update", "Are you sure want to update", _handleUpdate);
+        context, "Mise à jour", "Voulez-vous vraiment mettre à jour", _handleUpdate);
   }
 
   _handleUpdate() async {
 
     if (_formKey.currentState.validate()) {
-      log("hihihih");
       setState(() {
         _isEnableBtn = false;
         _isLoading = true;
       });
-
-      // final pattern = RegExp('\\s+'); //remove all space
-      // final fullName = _firstNameController.text + _latsNameController.text;
-      // String searchByName = fullName.toLowerCase().replaceAll(pattern, "");
-
+      DateTime now = DateTime.now();
+      String createdTimeStamp = DateFormat('yyyy-MM-dd hh:mm').format(now);
       final appointmentModel= AppointmentModel(
-          id:  widget.appointmentDetails.id,
+          id: widget.appointmentDetails.id,
           description: _descController.text,
+          updatedTimeStamp: createdTimeStamp
       );
       final res=await AppointmentService.updateData(appointmentModel);
       if (res == "success") {
-        ToastMsg.showToastMsg("Successfully Updated");
+        ToastMsg.showToastMsg("Mise à jour réussie");
         Navigator.of(context).pushNamedAndRemoveUntil(
             '/AppointmentListPage', ModalRoute.withName('/HomePage'));
       } else if (res == "error") {
@@ -296,7 +315,7 @@ class _EditAppointmentDetailsPageState
     //       uId: widget.appointmentDetails.uId,
     //       uName: "${widget.appointmentDetails.uName
     //       }",
-    //       serviceName: widget.appointmentDetails.serviceName,
+    //       appointmentType: widget.appointmentDetails.appointmentType,
 
     //     ),
     //   ),
@@ -309,28 +328,23 @@ class _EditAppointmentDetailsPageState
       _isLoading = true;
     });
 
-    // final res = await DeleteData.deleteBookedAppointment(
-    //   widget.appointmentDetails.id,
-    //   widget.appointmentDetails.appointmentDate,
-    // );
-    // if (res == "success") {
+      DateTime now = DateTime.now();
+      String createdTimeStamp = DateFormat('yyyy-MM-dd hh:mm').format(now);
       final appointmentModel=AppointmentModel(
           id: widget.appointmentDetails.id,
-          appointmentStatus: "Rejected"
+          appointmentStatus: "Rejected",
+          updatedTimeStamp: createdTimeStamp
       );
       final isUpdated=await AppointmentService.updateStatus(appointmentModel);
       if(isUpdated=="success"){
-        // await  _sendNotification("Rejected");
-        ToastMsg.showToastMsg("Successfully Updated");
+         _sendNotification("Rejected");
+        ToastMsg.showToastMsg("Mise à jour réussie");
         Navigator.of(context).pushNamedAndRemoveUntil(
             '/AppointmentListPage', ModalRoute.withName('/HomePage'));
       } else {
-        ToastMsg.showToastMsg("Something went wrong");
+        ToastMsg.showToastMsg("Quelque chose s'est mal passé");
       }
 
-    // } else {
-    //   ToastMsg.showToastMsg("Something went wrong");
-    // }
     setState(() {
       _isEnableBtn = true;
       _isLoading = false;
@@ -343,19 +357,21 @@ class _EditAppointmentDetailsPageState
       _isEnableBtn = false;
       _isLoading = true;
     });
-
+    DateTime now = DateTime.now();
+    String createdTimeStamp = DateFormat('yyyy-MM-dd hh:mm').format(now);
     final appointmentModel=AppointmentModel(
         id: widget.appointmentDetails.id,
-        appointmentStatus: "Visited"
+        appointmentStatus: "Visited",
+        updatedTimeStamp: createdTimeStamp
     );
     final isUpdated=await AppointmentService.updateStatus(appointmentModel);
     if(isUpdated=="success"){
-      // _sendNotification("Visited");
-      ToastMsg.showToastMsg("Successfully Updated");
+      _sendNotification("Visited");
+      ToastMsg.showToastMsg("Mise à jour réussie");
       Navigator.of(context).pushNamedAndRemoveUntil(
-          '/AppointmentListPage', ModalRoute.withName('/'));
+          '/AppointmentListPage', ModalRoute.withName('/HomePage'));
     } else {
-      ToastMsg.showToastMsg("Something went wrong");
+      ToastMsg.showToastMsg("Quelque chose s'est mal passé");
     }
 
     setState(() {
@@ -365,24 +381,28 @@ class _EditAppointmentDetailsPageState
   }
 
   _handleAppointmentStatus(String appointmentId, String status) async {
-    //print(uId + appointmentId + status);
+
     setState(() {
       _isEnableBtn = false;
       _isLoading = true;
     });
+    DateTime now = DateTime.now();
+    String createdTimeStamp = DateFormat('yyyy-MM-dd hh:mm').format(now);
     final appointmentModel=AppointmentModel(
         id: appointmentId,
-        appointmentStatus: status
+        appointmentStatus: status,
+        updatedTimeStamp: createdTimeStamp
     );
-
     final res = await AppointmentService.updateStatus(appointmentModel);
+    // log(uId + appointmentId + status);
+    // log ("aimrane");
     if (res == "success") {
-      // await  _sendNotification(status);
-      ToastMsg.showToastMsg("Successfully Updated");
+      _sendNotification(status);
+      ToastMsg.showToastMsg("Mise à jour réussie");
       Navigator.of(context).pushNamedAndRemoveUntil(
-          '/AppointmentListPage', ModalRoute.withName('/'));
+          '/AppointmentListPage', ModalRoute.withName('/HomePage'));
     } else {
-      ToastMsg.showToastMsg("Something went wrong");
+      ToastMsg.showToastMsg("Quelque chose s'est mal passé");
     }
     setState(() {
       _isEnableBtn = true;
@@ -394,53 +414,43 @@ class _EditAppointmentDetailsPageState
     return CircleAvatar(radius: 7, backgroundColor: color);
   }
 
-  // _sendNotification(String title) async {
-  //   String body = "";
-  //   switch (title) {
-  //     case "Visited":
-  //       {
-  //         body = "Thank you for visiting. Please visit again";
-  //         break;
-  //       }
-  //     case "Confirmed":
-  //       {
-  //         body =
-  //         "Your appointment has been confirmed for date: ${widget.appointmentDetails.appointmentDate} time: ${widget.appointmentDetails.appointmentTime}";
-  //         break;
-  //       }
-  //     case "Pending":
-  //       {
-  //         body =
-  //         "Your appointment has been pending for date: ${widget.appointmentDetails.appointmentDate} time: ${widget.appointmentDetails.appointmentTime}";
-  //         break;
-  //       }
-  //     case "Rejected":
-  //       {
-  //         body =
-  //         "Sorry! your appointment has been rejected for date: ${widget.appointmentDetails.appointmentDate} time: ${widget.appointmentDetails.appointmentTime}";
-  //         break;
-  //       }
-  //     default:
-  //       {
-  //         body = "";
-  //       }
-  //   }
-  //   // final notificationModel = NotificationModel(
-  //   //     title: title,
-  //   //     body:body,
-  //   //     uId: widget.appointmentDetails.uId,
-  //   //     routeTo: "/Appointmentstatus",
-  //   //     sendBy: "admin",
-  //   //     sendFrom: "Admin",
-  //   //     sendTo: widget.appointmentDetails.uName);
-  //   // final msgAdded = await NotificationService.addData(notificationModel);
-  //   // if (msgAdded == "success") {
-  //   //   final res = await UserService.getUserById(widget.appointmentDetails.uId); //get fcm id of specific user
+  _sendNotification(String title) async {
+    String body = "";
+    switch (title) {
+      case "Visited":
+        {
+          body = "Merci pour votre visite. Veuillez visiter à nouveau";
+          break;
+        }
+      case "Confirmed":
+        {
+          body =
+          "Votre rendez-vous a été confirmé pour la date : ${widget.appointmentDetails.appointmentDate} temps: ${widget.appointmentDetails.appointmentTime}";
+          break;
+        }
+      case "Pending":
+        {
+          body =
+          "Votre rendez-vous est en attente depuis date: ${widget.appointmentDetails.appointmentDate} temps: ${widget.appointmentDetails.appointmentTime}";
+          break;
+        }
+      case "Rejected":
+        {
+          body =
+          "Pardon! votre rendez-vous a été refusé pour date: ${widget.appointmentDetails.appointmentDate} temps: ${widget.appointmentDetails.appointmentTime}";
+          break;
+        }
+      default:
+        {
+          body = "";
+        }
+    }
 
-  //   //   HandleFirebaseNotification.sendPushMessage(res[0].fcmId, title, body);
-  //   //   await UpdateData.updateIsAnyNotification("usersList", widget.appointmentDetails.uId, true);
-  //   // }
-  // }
+      final res = await AdminService.getUserFcm(widget.appointmentDetails.uId); //get fcm id of specific user
+      FirebaseNotification.sendPushMessage(res[0].fcmId, title, body);
+
+      await PatientService.updateIsAnyNotification("1", widget.appointmentDetails.uId);
+  }
   showDialogBox() {
 
     return showDialog(
@@ -453,7 +463,7 @@ class _EditAppointmentDetailsPageState
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
             ),
-            title: const Text("Choose a status"),
+            title: const Text("Choisissez un statut"),
             content: SizedBox(
               height: 300,
               child: SingleChildScrollView(
@@ -461,11 +471,9 @@ class _EditAppointmentDetailsPageState
                   children: [
 
                     _myRadioButton(
-                        title: "Confirmed",
-                        value: 0,
-                        onChanged: (newValue)=> setState(() {
-                          _groupValue = newValue;
-                        })
+                      title: "Confirmed",
+                      value: 0,
+                      onChanged: (newValue)=> setState(() => _groupValue = newValue),
                     ),
                     _myRadioButton(
                       title: "Visited",
@@ -542,6 +550,7 @@ class _EditAppointmentDetailsPageState
       },
     );
   }
+
   Widget _myRadioButton({String title, int value, Function onChanged}) {
     return RadioListTile(
       activeColor: btnColor,
@@ -550,6 +559,76 @@ class _EditAppointmentDetailsPageState
       onChanged: onChanged,
       title: Text(title),
     );
+  }
+
+  _handleDeleteAppointment()async{
+    setState(() {
+      _isLoading=true;
+      _isEnableBtn=false;
+    });
+    // log (" : "+widget.appointmentDetails.id);
+    final res=await AppointmentService.deleteData(widget.appointmentDetails.id);
+    if(res=="success"){
+      ToastMsg.showToastMsg("Supprimé avec succès");
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          '/AppointmentListPage', ModalRoute.withName('/HomePage'));
+    }
+    else{
+      ToastMsg.showToastMsg("Something went wrong");
+
+    }
+    setState(() {
+      _isLoading=false;
+      _isEnableBtn=true;
+    });
+  }
+  
+  _locationPatient () {
+    final Completer<GoogleMapController> _controller = Completer();
+
+    CameraPosition _kGooglePlex = CameraPosition(
+      target: LatLng(latitude, longitude),
+      zoom: 15.6
+    );
+    final List<Marker> _markers = [];
+      _markers.add(
+        Marker(
+          markerId: const MarkerId('SomeId'),
+          position: LatLng(latitude, longitude),
+          infoWindow: const InfoWindow(
+              title: 'Emplacement du patient'
+          )
+        )
+      );
+    return Padding(
+        padding: const EdgeInsets.only(left: 40.0, right: 25, top: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+                height: MediaQuery.of(context).size.height * .39,
+                width: MediaQuery.of(context).size.width * .8,
+                child: GestureDetector(
+                  onTap: () {
+                  },
+                  child: Card(
+                    // color: Colors.black,
+                    elevation: 10.0,
+                    child: 
+                    GoogleMap(
+                      initialCameraPosition: _kGooglePlex,
+                      markers: Set<Marker>.of(_markers),
+                      onMapCreated: (GoogleMapController controller){
+                        _controller.complete(controller);
+                      }
+                    )
+                  )
+                ),
+            )
+          ],
+        ),
+      );
   }
 
 }

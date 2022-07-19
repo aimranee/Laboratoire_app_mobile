@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:patient/Screen/appointment/my_location.dart';
 import 'package:patient/Screen/categories.dart';
-import 'package:patient/Screen/dr_profile_page.dart';
+import 'package:patient/Screen/admin_profile_page.dart';
 import 'package:patient/Screen/login_signup.dart';
 import 'package:patient/Screen/appointment/appointment.dart';
 import 'package:patient/Screen/appointment/appointment_status.dart';
@@ -37,7 +37,7 @@ class AppRoutes {
   static String  authScreen = '/AuthScreen';
   static String  profile = '/Profile';
   static String  team = '/Team';
-  static String  doctorProfile = '/DoctorProfile';
+  static String  adminProfile = '/DoctorProfile';
   static String  categoryList = '/CategoryList';
   static String  myLocation = '/MyLocation';
   
@@ -110,8 +110,8 @@ class AppRoutes {
     ),
 
     GetPage(
-      name: doctorProfile,
-      page: () => DoctorProfilePage(),
+      name: adminProfile,
+      page: () => AdminProfilePage(),
     ),
 
     GetPage(

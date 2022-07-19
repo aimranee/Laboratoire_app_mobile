@@ -81,10 +81,10 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _filteredAppBar(context, "Appointment"),
-        bottomNavigationBar: BottomNavTwoBarWidget(
-          isenableBtn: _isEnableBtn,
-          firstTitle: "Search By Name",
-          firstBtnOnPressed: _handleByNameBtn,
+        bottomNavigationBar: BottomNavBarWidget(
+          isEnableBtn: _isEnableBtn,
+          title: "Rechercher par CIN",
+          onPressed: _handleByNameBtn,
         ),
         floatingActionButton: FloatingActionButton(
             elevation: 0.0,
@@ -99,12 +99,8 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
             : Container(child: cardListBuilder()));
   }
 
-  _handleByIdBtn() {
-    Navigator.pushNamed(context, "/SearchAppointmentByIdPage");
-  }
-
   _handleByNameBtn() {
-    Navigator.pushNamed(context, "/SearchAppointmentByNamePage");
+    Get.toNamed("/SearchAppointmentByCINPage");
   }
 
   Widget _filteredAppBar(context, String title) {
@@ -286,7 +282,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
 
   _handleStatus(newStatus) {
     if (newStatus.length == 0) {
-      ToastMsg.showToastMsg("please Select at least one");
+      ToastMsg.showToastMsg("Veuillez sélectionner au moins un");
     } else if (newStatus.length > 0) {
       _selectedStatus.clear();
       setState(() {
@@ -326,28 +322,28 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                      "${_subTitleWithSpace("Appointment Id:")}${appointmentDetails.id}"),
+                      "${_subTitleWithSpace("Id de Rendez-vous:")}${appointmentDetails.id}"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                      "${_subTitleWithSpace("Appointment Date:")}${appointmentDetails.appointmentDate}"),
+                      "${_subTitleWithSpace("Date de Rendez-vous:")}${appointmentDetails.appointmentDate}"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                      "${_subTitleWithSpace("Appointment Time:")}${appointmentDetails.appointmentTime}"),
+                      "${_subTitleWithSpace("Temps de Rendez-vous:")}${appointmentDetails.appointmentTime}"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                      "${_subTitleWithSpace("Appointment Type:")}${appointmentDetails.appointmentType}"),
+                      "${_subTitleWithSpace("Type de Rendez-vous:")}${appointmentDetails.appointmentType}"),
                 ),
-                if(appointmentDetails.location.toString() != "null")
+                if(appointmentDetails.location != "")
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                      "${_subTitleWithSpace("Location:")}${appointmentDetails.location}"),
+                      "${_subTitleWithSpace("Emplacement:")}${appointmentDetails.location}"),
                 ),
                 
                 Padding(
@@ -359,7 +355,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Row(
                     children: [
-                      Text("${_subTitleWithSpace("Appointment Status:")} "),
+                      Text("${_subTitleWithSpace("Statut du rendez-vous:")} "),
                       if (appointmentDetails.appointmentStatus == "Confirmed")
                         _statusIndicator(Colors.green)
                       else if (appointmentDetails.appointmentStatus ==
@@ -441,16 +437,16 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
     );
   }
 
-  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+  // void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
 
-    log(" : "+args.value);
-    if (args != null) {
-      setState(() {
-        _firstDate = _setTodayDateFormat(args.value.startDate);
-        _lastDate = _setTodayDateFormat(args.value.endDate);
-      });
-    }
-  }
+  //   log(" : "+args.value);
+  //   if (args != null) {
+  //     setState(() {
+  //       _firstDate = _setTodayDateFormat(args.value.startDate);
+  //       _lastDate = _setTodayDateFormat(args.value.endDate);
+  //     });
+  //   }
+  // }
 
   String _setTodayDateFormat(date) {
     final DateFormat formatter = DateFormat('M-d-yyyy');

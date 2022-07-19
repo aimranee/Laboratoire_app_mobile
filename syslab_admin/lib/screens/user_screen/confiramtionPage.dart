@@ -1,12 +1,14 @@
 import 'dart:developer';
-
-import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syslab_admin/service/admin_service.dart';
 import 'package:syslab_admin/service/appointment_service.dart';
 // import 'package:syslab_admin/service/notificationService.dart';
 import 'package:syslab_admin/model/appointment_model.dart';
+import 'package:syslab_admin/service/notification/firebase_notification.dart';
+import 'package:syslab_admin/service/patient_service.dart';
 // import 'package:syslab_admin/model/notificationModel.dart';
 // import 'package:syslab_admin/service/Notification/handleFirebaseNotification.dart';
-import 'package:syslab_admin/service/updateData.dart';
 import 'package:syslab_admin/utilities/appbars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
 import 'package:syslab_admin/utilities/fontStyle.dart';
@@ -17,24 +19,22 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmationPage extends StatefulWidget {
-  final firstName;
-  final lastName;
-  final phoneNumber;
-  final email;
-  final location;
-  final analyses;
-  final price;
-  final selectedGender;
-  final city;
-  final cin;
-  final des;
-  final appointmentType;
-  final serviceTimeMin;
-  final setTime;
-  final selectedDate;
-  final uName;
-  final uId;
-  final userFcmId;
+  final String firstName;
+  final String lastName;
+  final String phoneNumber;
+  final String email;
+  final String location;
+  final String analyses;
+  final double price;
+  final String city;
+  final String cin;
+  final String des;
+  final String appointmentType;
+  final int serviceTimeMin;
+  final String setTime;
+  final String selectedDate;
+  final String uId;
+  final String userFcmId;
   const ConfirmationPage(
       {Key key,
       this.serviceTimeMin,
@@ -51,9 +51,7 @@ class ConfirmationPage extends StatefulWidget {
       this.analyses,
       this.price,
       this.des,
-      this.selectedGender,
       this.uId,
-      this.uName,
       this.userFcmId})
       : super(key: key);
 
@@ -62,7 +60,7 @@ class ConfirmationPage extends StatefulWidget {
 }
 
 class _ConfirmationPageState extends State<ConfirmationPage> {
-  String _adminFCMid;
+  String _adminFCMid = "";
   bool _isLoading = false;
   String _isBtnDisable = "false";
   String _uId = "";
@@ -72,13 +70,13 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     setState(() {
       _uId = widget.uId;
       _uName = widget.firstName + " " + widget.lastName;
       _userFCMid = widget.userFcmId;
     });
     _setAdminFcmId();
+    super.initState();
   }
 
   @override
@@ -202,7 +200,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     // String searchByName = patientName
     //     .toLowerCase()
     //     .replaceAll(pattern, ""); //lowercase all letter and remove all space
-
+    DateTime now = DateTime.now();
+    String createdTimeStamp = DateFormat('yyyy-MM-dd hh:mm').format(now);
     final appointmentModel = AppointmentModel(
         uName: _uName,
         cin: widget.cin,
@@ -216,55 +215,23 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         appointmentStatus: "Pending",
         // searchByName: searchByName,
         uId: _uId,
-        location: widget.location       
+        location: widget.location,
+        createdTimeStamp:createdTimeStamp,
+        updatedTimeStamp:createdTimeStamp,
     ); //initialize all values
     final insertStatus = await AppointmentService.addData(appointmentModel);
 
     if (insertStatus == "success") {
-      log(":::::::::::::::::::::;$insertStatus");
-      // final updatedTimeSlotsStatus = await UpdateData.updateTimeSlot(
-      //     widget.serviceTimeMin,
-      //     widget.setTime,
-      //     widget.selectedDate,
-      //     insertStatus);
-      //if appoint details added successfully added
-      // if (updatedTimeSlotsStatus == "") {
-        // final notificationModel = NotificationModel(
-        //     title: "Successfully Booked",
-        //     body:
-        //         "Appointment has been booked on ${widget.selectedDate}. Waiting for confirmation",
-        //     uId: _uId,
-        //     routeTo: "/Appointmentstatus",
-        //     sendBy: "user",
-        //     sendFrom: _uName,
-        //     sendTo: "Admin");
-        // final notificationModelForAdmin = NotificationModel(
-        //     title: "New Appointment",
-        //     body:
-        //         "${widget.firstName} ${widget.lastName} booked an appointment on ${widget.selectedDate} at ${widget.setTime}",
-        //     uId: _uId,
-        //     sendBy: _uName);
+      // log(":::::::::::::::::::::;$insertStatus");
+      
+          ToastMsg.showToastMsg("Réservé avec succès");
+          _handleSendNotification(widget.firstName, widget.lastName,
+              widget.appointmentType, widget.selectedDate, widget.setTime);
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              '/UsersListPage', ModalRoute.withName('/HomePage'));
 
-        // final msgAdded = await NotificationService.addData(notificationModel);
-
-        // if (msgAdded == "success") {
-        //   await NotificationService.addDataForAdmin(notificationModelForAdmin);
-          ToastMsg.showToastMsg("Successfully Booked");
-          Get.offAllNamed('/UsersListPage');
-          // _handleSendNotification(widget.firstName, widget.lastName,
-          //     widget.appointmentType, widget.selectedDate, widget.setTime);
-          // Navigator.of(context).pushNamedAndRemoveUntil(
-          //     '/UsersListPage', ModalRoute.withName('/'));
-        // } else if (msgAdded == "error") {
-        //   ToastMsg.showToastMsg("Something went wrong. try again");
-        //   Navigator.pop(context);
-        // }
-      // } else {
-      //   ToastMsg.showToastMsg("Something went wrong. try again");
-      //   Navigator.pop(context);
-      // }
     } else {
-      ToastMsg.showToastMsg("Something went wrong. try again");
+      ToastMsg.showToastMsg("Quelque chose s'est mal passé. try again");
       Navigator.pop(context);
     }
 
@@ -289,24 +256,25 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     });
   }
 
-  // void _handleSendNotification(String firstName, String lastName,
-  //     String appointmentType, String selectedDate, String setTime) async {
-  //   //send notification to user
-  //   await HandleFirebaseNotification.sendPushMessage(
-  //     _userFCMid, //admin fcm
-  //     "Successfully Booked", //title
-  //     "Appointment has been booked on $selectedDate. Waiting for confirmation", // body
-  //   );
-  //   await UpdateData.updateIsAnyNotification("usersList", _uId, true);
+  void _handleSendNotification(String firstName, String lastName,
+      String appointmentType, String selectedDate, String setTime) async {
+    //send notification to user
+    await FirebaseNotification.sendPushMessage(
+      _userFCMid, //admin fcm
+      "Réservé avec succès", //title
+      "Le rendez-vous a été pris le $selectedDate. En attente de confirmation", // body
+    );
+    await PatientService.updateIsAnyNotification("1", _uId);
 
-  //   //send notification to admin app for booking confirmation
-  //   print("++++++++++++admin$_adminFCMid");
-  //   await HandleFirebaseNotification.sendPushMessage(
-  //       _adminFCMid, //admin fcm
-  //       "New Appointment", //title
-  //       "$firstName $lastName booked an appointment on $selectedDate at $setTime" //body
-  //       );
+    //send notification to admin app for booking confirmation
+    // log("++++++++++++admin$_adminFCMid");
+    await FirebaseNotification.sendPushMessage(
+        _adminFCMid, //admin fcm
+        "Nouveau rendez-vous", //title
+        "$firstName $lastName pris rendez-vous le $selectedDate à $setTime" //body
+        );
 
-  //   await UpdateData.updateIsAnyNotification("profile", "profile", true);
-  // }
+    await AdminService.updateIsAnyNotification("1");
+  }
+
 }

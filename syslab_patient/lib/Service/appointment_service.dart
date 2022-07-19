@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:patient/config.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:patient/model/appointment_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppointmentService {
   static const _viewUrl = "$apiUrl/get_appointment_by_status";
@@ -17,7 +17,8 @@ class AppointmentService {
   }
 
   static Future<List<AppointmentModel>> getData(String forStatus) async {
-    final userId = FirebaseAuth.instance.currentUser.uid;
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String userId = pref.getString("uId");
     final status = forStatus;
     // //print(status);
 

@@ -1,13 +1,12 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:patient/Service/user_service.dart';
 import 'package:patient/utilities/color.dart';
 import 'package:patient/utilities/decoration.dart';
 import 'package:patient/utilities/style.dart';
 import 'package:patient/widgets/bottom_navigation_bar_widget.dart';
-import 'package:patient/widgets/error_widget.dart';
-import 'package:patient/widgets/loading_indicator.dart';
-import 'package:patient/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:patient/Service/notification_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:patient/widgets/no_data_widget.dart';
+// import 'package:patient/Service/notification_service.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({Key key}) : super(key: key);
@@ -17,22 +16,23 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  bool _isLoading = false;
-  int _limit = 20;
-  int _itemLength = 0;
-  String _userCreatedDat = "";
+  List<RemoteMessage> _messages = [];
   final ScrollController _scrollController = ScrollController();
   @override
   @override
   void initState() {
-     
-    _scrollListener();
-    _setRedDot();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message){
+      setState((){
+        _messages = [..._messages, message];
+      });
+    });
+    updateData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationWidget(
           route: "/AppoinmentPage", title: "Demander Rendez-vous"),
@@ -51,33 +51,67 @@ class _NotificationPageState extends State<NotificationPage> {
             backgroundColor: appBarColor,
           ),
           Positioned(
-            top: 80,
+            top: 90,
             left: 0,
             right: 0,
             bottom: 0,
             child: Container(
               height: MediaQuery.of(context).size.height,
               decoration: IBoxDecoration.upperBoxDecoration(),
-              child: _isLoading
-                  ? const LoadingIndicatorWidget()
-                  : FutureBuilder(
-                      future:
-                          NotificationService.getData(_limit, _userCreatedDat),
-                      //ReadData.fetchNotification(FirebaseAuth.instance.currentUser.uid),//fetch all times
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return snapshot.data.length == 0
-                              ? const NoDataWidget()
-                              : Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 0.0, left: 8, right: 8),
-                                  child: _buildCard(snapshot.data));
-                        } else if (snapshot.hasError) {
-                          return const IErrorWidget();
-                        } else {
-                          return const LoadingIndicatorWidget();
-                        }
-                      }),
+              child: 
+              _messages.isEmpty
+                  ? 
+                  const NoDataWidget()
+                  : ListView.builder(
+                    controller: _scrollController,
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) {
+                      RemoteMessage message =_messages[index];
+                    return GestureDetector(
+                      onTap: () {
+                        // if (notificationDetails[index].routeTo != "/NotificationPage" &&
+                        //     notificationDetails[index].routeTo != "") {
+                        //   Navigator.pushNamed(
+                        //       context, notificationDetails[index].routeTo);
+                        // }
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListTile(
+                              title: Text(
+                                message.notification?.title??'N/D',
+                                style: const TextStyle(
+                                  fontFamily: 'OpenSans-Bold',
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${message.notification.body}",
+                                    style: const TextStyle(
+                                      fontFamily: 'OpenSans-SemiBold',
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${message.sentTime?.toString() ?? DateTime.now().toString()}",
+                                    style: const TextStyle(
+                                      fontFamily: 'OpenSans-Regular',
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ),
+                    );
+                  })
             ),
           ),
         ],
@@ -85,88 +119,7 @@ class _NotificationPageState extends State<NotificationPage> {
     );
   }
 
-  Widget _buildCard(notificationDetails) {
-    _itemLength = notificationDetails.length;
-    return ListView.builder(
-        controller: _scrollController,
-        itemCount: notificationDetails.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              if (notificationDetails[index].routeTo != "/NotificationPage" &&
-                  notificationDetails[index].routeTo != "") {
-                Navigator.pushNamed(
-                    context, notificationDetails[index].routeTo);
-              }
-            },
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                    title: Text(
-                      notificationDetails[index].title,
-                      style: const TextStyle(
-                        fontFamily: 'OpenSans-Bold',
-                        fontSize: 14.0,
-                      ),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${notificationDetails[index].body}",
-                          style: const TextStyle(
-                            fontFamily: 'OpenSans-SemiBold',
-                            fontSize: 14,
-                          ),
-                        ),
-                        Text(
-                          "${notificationDetails[index].createdTimeStamp}",
-                          style: const TextStyle(
-                            fontFamily: 'OpenSans-Regular',
-                            fontSize: 10,
-                          ),
-                        ),
-                      ],
-                    )),
-              ),
-            ),
-          );
-        });
-  }
-
-  void _setRedDot() async {
-    setState(() {
-      _isLoading = true;
-    });
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _userCreatedDat = prefs.getString("createdDate");
-    });
-
-    // await UpdateData.updateIsAnyNotification(
-    //     "usersList", FirebaseAuth.instance.currentUser.uid, false);
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
-  void _scrollListener() {
-    _scrollController.addListener(() {
-      // //print("blength $_itemLength $_limit");
-      // //print("length $_itemLength $_limit");
-      if (_itemLength >= _limit) {
-        if (_scrollController.offset ==
-            _scrollController.position.maxScrollExtent) {
-          setState(() {
-            _limit += 20;
-          });
-        }
-      }
-      // //print(_scrollController.offset);
-    });
+  void updateData() async {
+    await UserService.updateIsAnyNotification("0");
   }
 }

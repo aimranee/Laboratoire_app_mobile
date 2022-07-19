@@ -1,15 +1,14 @@
-import 'dart:developer';
 
-// import 'package:syslab_admin/service/Notification/handleLocalNotification.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/screens/login_page.dart';
-import 'package:syslab_admin/service/userService.dart';
+import 'package:syslab_admin/service/notification/firebase_notification.dart';
+import 'package:syslab_admin/service/notification/local_notification.dart';
+import 'package:syslab_admin/service/admin_service.dart';
 import 'package:syslab_admin/utilities/colors.dart';
 import 'package:syslab_admin/widgets/buttonsWidget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-// import 'package:syslab_admin/service/Notification/handleFirebaseNotification.dart';
 import 'package:syslab_admin/utilities/clipPath.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syslab_admin/widgets/loadingIndicator.dart';
@@ -24,6 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final ScrollController _gridScrollController = ScrollController();
   bool _isLoading = false;
+  var uId = "";
   final List _widgetsList = [
     {
       "iconName": "assets/icons/appoin.svg",
@@ -48,18 +48,18 @@ class _HomePageState extends State<HomePage> {
     {
       "iconName": "assets/icons/timing.svg",
       "title": "Horaire",
-      "navigation": "/EditOpeningClosingTime"
+      "navigation": "/AppointmentTypesPage"
     },
     {
       "iconName": "assets/icons/sch.svg",
       "title": "Disponibilité",
       "navigation": "/EditAvailabilityPage"
     },
-    {
-      "iconName": "assets/icons/type.svg",
-      "title": "Types",
-      "navigation": "/AppointmentTypesPage"
-    },
+    // {
+    //   "iconName": "assets/icons/type.svg",
+    //   "title": "Types",
+    //   "navigation": "/AppointmentTypesPage"
+    // },
     {
       "iconName": "assets/icons/booking.svg",
       "title": "Paramètre",
@@ -75,10 +75,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     // TODO: implement initState
-    // HandleFirebaseNotification.handleNotifications(
-    //     context); //initialize firebase messaging
-    // HandleLocalNotification.initializeFlutterNotification(
-    //     context); //initialize local notification
+    FirebaseNotification.handleNotifications(
+        context); //initialize firebase messaging
+    LocalNotification.initializeFlutterNotification(
+        context); //initialize local notification
     handleAuth();
     getMsg();
     super.initState();
@@ -97,13 +97,12 @@ class _HomePageState extends State<HomePage> {
     });
     SharedPreferences pref = await SharedPreferences.getInstance();
     final token = pref.getString("token").toString();
-    // print(res);
     if (token != "" && token != "null") {
-      
-      String uId = pref.getString("uId");
-      // log("uId : "+uId);
-      final user = await UserService.getData(uId);
-      // log("message");
+      setState((){
+        uId = pref.getString("uId");
+      });
+      // log(uId.toString());
+      final user = await AdminService.getData(uId);
       pref.setString("fcm", user[0].fcmId);
       pref.setString("firstName", user[0].firstName);
       pref.setString("lastName", user[0].lastName);
@@ -154,7 +153,7 @@ class _HomePageState extends State<HomePage> {
       children: List.generate(_widgetsList.length, (index) {
         return GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, _widgetsList[index]["navigation"]);
+            Get.toNamed(_widgetsList[index]["navigation"]);
           },
           child: Card(
             shape: RoundedRectangleBorder(
@@ -165,8 +164,8 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // _widgetsList[index]["title"] == "Notification"
-                //      _buildNotificationIcon(_widgetsList[index]["iconName"]) :
+                _widgetsList[index]["title"] == "Notification"?
+                     _buildNotificationIcon(_widgetsList[index]["iconName"]) :
                     SizedBox(
                         height: 40,
                         width: 40,
@@ -197,7 +196,7 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: 300,
-          decoration: BoxDecoration(gradient: gradientColor),
+          decoration: const BoxDecoration(gradient: gradientColor),
         ),
       ),
     );
@@ -222,36 +221,38 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Widget _buildNotificationIcon(widgetName) {
-  //   return StreamBuilder(
-  //       stream: ReadData.fetchNotificationDotStatus(),
-  //       builder: (context, snapshot) {
-  //         return !snapshot.hasData
-  //              SizedBox(
-  //                 height: 40,
-  //                 width: 40,
-  //                 child:
-  //                     SvgPicture.asset(widgetName, semanticsLabel: 'Acme Logo'),
-  //               )
-  //             : Stack(
-  //                 children: [
-  //                   SizedBox(
-  //                     height: 40,
-  //                     width: 40,
-  //                     child: SvgPicture.asset(widgetName,
-  //                         semanticsLabel: 'Acme Logo'),
-  //                   ),
-  //                   snapshot.data["isAnyNotification"]
-  //                        Positioned(
-  //                           top: 0,
-  //                           right: 0,
-  //                           child: CircleAvatar(
-  //                             radius: 5,
-  //                             backgroundColor: Colors.red,
-  //                           ))
-  //                       : Positioned(top: 0, right: 0, child: Container())
-  //                 ],
-  //               );
-  //       });
-  // }
+  Widget _buildNotificationIcon(widgetName) {
+    
+    return FutureBuilder(
+        future: AdminService.fetchNotificationStatusAdmin(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data[0].isAnyNotification == "0" 
+              ? SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: SvgPicture.asset(widgetName, semanticsLabel: 'Acme Logo'),
+                )
+              : Stack(
+                  children: [
+                    SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: SvgPicture.asset(widgetName,
+                          semanticsLabel: 'Acme Logo'),
+                    ),
+                         const Positioned(
+                            top: 0,
+                            right: 0,
+                            child: CircleAvatar(
+                              radius: 5,
+                              backgroundColor: Colors.red,
+                            ))
+                  ],
+                );
+          }else {
+            return Positioned(top: 0, right: 0, child: Container());
+          }
+        });
+  }
 }

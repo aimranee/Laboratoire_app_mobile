@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/model/availability_model.dart';
 import 'package:syslab_admin/service/availablity_service.dart';
 import 'package:syslab_admin/utilities/appbars.dart';
@@ -128,7 +129,7 @@ class _EditAvailabilityPageState extends State<EditAvailabilityPage> {
           sun: _sunController.text);
       final res = await AvailabilityService.updateData(availabilityModel);
       if (res == "success") {
-        ToastMsg.showToastMsg("Successfully Updated");
+        ToastMsg.showToastMsg("Mise à jour réussie");
       } else if (res == "error") {
         ToastMsg.showToastMsg("Something wents wrong");
       }

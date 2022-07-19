@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:intl/intl.dart';
 import 'package:patient/Service/user_service.dart';
 import 'package:patient/model/user_model.dart';
 import 'package:patient/utilities/color.dart';
@@ -122,6 +125,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
           C = "1";
           R = "0";
       }
+      DateTime now = DateTime.now();
+      String createdTime = DateFormat('yyyy-MM-dd hh:mm').format(now);
 
     final userModel = UserModel(
         email: _emailController.text,
@@ -137,6 +142,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         hasCnss: C,
         uId: _uIdController.text,
         pNo: _phoneNumberController.text,
+        updatedTimeStamp: createdTime
 
       );
     // log(">>>>>>>>>>>>>>>>>>>>>>${userModel.toUpdateJson()}");
@@ -381,6 +387,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
     if (isConn == true) {
       String uId = prefs.getString("uId");
+      log(" : "+uId);
       final user = await UserService.getData(uId);
 
       _emailController.text = user[0].email;

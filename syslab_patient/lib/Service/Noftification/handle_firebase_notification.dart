@@ -15,7 +15,7 @@ class HandleFirebaseNotification {
 
   static handleNotifications(context) async {
     await FirebaseMessaging.instance.subscribeToTopic(
-        "all"); // subscribed user to all group, so user will be received notification when admin send to all group
+      "all"); // subscribed user to all group, so user will be received notification when admin send to all group
     // //print("========================user subscribed=============");
     await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
         badge: true,

@@ -76,7 +76,6 @@ class _CategoryListPageState extends State<CategoryListPage> {
               decoration:IBoxDecoration.upperBoxDecoration(),
               child:FutureBuilder(
                   future: CategoryService.getData(),
-                  //ReadData.fetchNotification(FirebaseAuth.instance.currentUser.uid),//fetch all times
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return snapshot.data.length == 0

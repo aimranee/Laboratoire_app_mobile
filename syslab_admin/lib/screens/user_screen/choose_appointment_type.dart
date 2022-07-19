@@ -1,5 +1,6 @@
 // import 'package:syslab_admin/screens/userScreen/newAppointmetTime.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/screens/user_screen/new_appointmet_time.dart';
 import 'package:syslab_admin/utilities/appbars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
@@ -25,6 +26,13 @@ class _ChooseTypePageState extends State<ChooseTypePage> {
   String _appointmentType = "";
   String _openingTime = "";
   String _closingTime = "";
+  String uId = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,6 @@
 // import 'package:syslab_admin/screens/userScreen/editUserProfilePage.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/screens/user_screen/edit_userprofile_page.dart';
 import 'package:syslab_admin/service/patient_service.dart';
 import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
@@ -24,24 +25,24 @@ class _UsersListPageState extends State<UsersListPage> {
     bool _isEnableBtn = true;
     return Scaffold(
       appBar: IAppBars.commonAppBar(context, "users"),
-      bottomNavigationBar: BottomNavTwoBarWidget(
-        firstBtnOnPressed: _handleByNameBtn,
-        firstTitle: "Search By Name",
-        isenableBtn: _isEnableBtn,
+      bottomNavigationBar: BottomNavBarWidget(
+        onPressed: _handleByNameBtn,
+        title: "Search By Name",
+        isEnableBtn: _isEnableBtn,
       ),
       body: FutureBuilder(
-          future: PatientService.getUsers(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return snapshot.data.length == 0
-                  ? NoDataWidget()
-                  : _buildUserList(snapshot.data);
-            } else if (snapshot.hasError) {
-              return IErrorWidget();
-            } else {
-              return LoadingIndicatorWidget();
-            }
-          }),
+        future: PatientService.getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data.length == 0
+                ? NoDataWidget()
+                : _buildUserList(snapshot.data);
+          } else if (snapshot.hasError) {
+            return IErrorWidget();
+          } else {
+            return LoadingIndicatorWidget();
+          }
+      }),
     );
   }
 
@@ -75,7 +76,7 @@ class _UsersListPageState extends State<UsersListPage> {
                     //         DateFormat _dateFormat = DateFormat('y-MM-d');
                     // String formattedDate =  _dateFormat.format(dateTime);
                     subtitle:
-                        Text("Created at ${userList[index].createdTimeStamp}"),
+                        Text("CIN : ${userList[index].cin}"),
                   ),
                 ),
                 const Divider()
@@ -85,3 +86,4 @@ class _UsersListPageState extends State<UsersListPage> {
         });
   }
 }
+

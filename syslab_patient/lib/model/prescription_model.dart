@@ -11,6 +11,9 @@ class PrescriptionModel {
   String price;
   String fileUrl;
   String isPaied;
+  String prescriptionStatus;
+  String patientId;
+  String updatedTimeStamp;
 
   PrescriptionModel({
     this.id,
@@ -23,7 +26,10 @@ class PrescriptionModel {
     this.prescription,
     this.fileUrl,
     this.drName,
-    this.isPaied
+    this.isPaied,
+    this.patientId,
+    this.prescriptionStatus,
+    this.updatedTimeStamp
   });
 
   factory PrescriptionModel.fromJson(Map<String,dynamic> json){
@@ -38,7 +44,9 @@ class PrescriptionModel {
       price: json['price'].toString(),
       drName: json['drName'],
       fileUrl: json['fileUrl'],
-      isPaied: json['isPaied'].toString()
+      isPaied: json['isPaied'].toString(),
+      prescriptionStatus: json['prescriptionStatus'],
+      updatedTimeStamp: json['updatedTimeStamp']
     );
   }
     Map<String,dynamic> toJsonUpdateStatus(){
@@ -46,7 +54,7 @@ class PrescriptionModel {
 
       "isPaied":isPaied,
       "id":id,
-
+      "updatedTimeStamp" : updatedTimeStamp
     };
 
   }

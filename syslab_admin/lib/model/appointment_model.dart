@@ -65,7 +65,9 @@ class AppointmentModel{
       "analyses":analyses,
       "description":description,
       "uName":uName,
-      "location":location
+      "location":location,
+      "createdTimeStamp":createdTimeStamp,
+      "updatedTimeStamp":updatedTimeStamp
     };
 
   }
@@ -74,6 +76,7 @@ class AppointmentModel{
     return {
       "id": id,
       "description": description,
+      "updatedTimeStamp":updatedTimeStamp
     };
 
   }
@@ -82,6 +85,7 @@ class AppointmentModel{
 
       "appointmentStatus": appointmentStatus,
       "id": id,
+      "updatedTimeStamp":updatedTimeStamp
 
     };
 
@@ -91,7 +95,8 @@ class AppointmentModel{
       "appointmentStatus": appointmentStatus,
       "id": id,
       "appointmentDate": appointmentDate,
-      "appointmentTime": appointmentTime
+      "appointmentTime": appointmentTime,
+      "updatedTimeStamp":updatedTimeStamp
 
     };
 

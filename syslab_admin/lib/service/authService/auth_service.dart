@@ -10,36 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthService {
-    static const _login = "$apiUrl/login";
-
-  //Handles Auth
-  // handleAuth() {
-  //   return StreamBuilder(
-  //       stream: FirebaseAuth.instance.authStateChanges(),
-  //       builder: (BuildContext context, snapshot) {
-  //         if (snapshot.hasData) {
-  //           return const HomePage();
-  //         } else {
-  //           return const LoginPage();
-  //         }
-  //       }
-  //   );
-  // }
-
-
-  //Sign out
-  // static Future<bool> signOut() async {
-  //   bool isSignOut = false;
-
-  //   await FirebaseAuth.instance.signOut().then((v) {
-  //     isSignOut = true;
-  //   }).catchError((e) {
-  //     print(e); //Invalid otp
-  //     isSignOut = false;
-  //   });
-
-  //   return isSignOut;
-  // }
+  static const _login = "$apiUrl/login";
 
   static Future<bool> signOut() async {
     bool isConn = true;

@@ -40,5 +40,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-class NotificationDotModel {}

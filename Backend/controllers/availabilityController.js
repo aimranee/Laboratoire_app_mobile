@@ -3,7 +3,7 @@ const db = require("../db/db");
 exports.get_availability = function (req, res) {
   db.getConnection((err, connection) => {
     if (err) throw err;
-    console.log("connection as id " + connection.threadId);
+    // console.log("connection as id " + connection.threadId);
     connection.query("SELECT * FROM availability", (err, rows) => {
       connection.release();
       if (!err) {
@@ -12,7 +12,7 @@ exports.get_availability = function (req, res) {
         console.log(err);
       }
 
-      console.log("the data from availability table are : \n", rows);
+      // console.log("the data from availability table are : \n", rows);
     });
   });
 };
@@ -21,7 +21,7 @@ exports.update_availability = function (req, res) {
   db.getConnection((err, connection) => {
     if (err) throw err;
     const params = req.body;
-    console.log("connection as id " + connection.threadId);
+    // console.log("connection as id " + connection.threadId);
     connection.query(
       "UPDATE availability SET mon = ?, tue = ?, wed = ?, thu = ?, fri = ?, sat = ?, sun = ?, updatedTimeStamp = '2022-06-12 21:26:18.000000' WHERE id = ?",
       [
@@ -42,7 +42,7 @@ exports.update_availability = function (req, res) {
           console.log(err);
         }
 
-        console.log("the data from availability table are : \n", rows);
+        // console.log("the data from availability table are : \n", rows);
       }
     );
   });

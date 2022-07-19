@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/model/patient_model.dart';
-import 'package:syslab_admin/screens/appointments/ShowAppointmentByUid.dart';
+import 'package:syslab_admin/screens/appointments/show_appointment_by_uid.dart';
 import 'package:syslab_admin/screens/user_screen/choose_appointment_type.dart';
 import 'package:syslab_admin/service/patient_service.dart';
 import 'package:syslab_admin/utilities/dialogBox.dart';
@@ -31,6 +33,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
   bool _isEnableBtn = true;
   bool _hasRamid = false;
   bool _hasCnss = false;
+  String uId = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
@@ -46,7 +49,6 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
   @override
   void initState() {
     // TODO: implement initState
-
     setState(() {
       _emailController.text = widget.userDetails.email;
       _lastNameController.text = widget.userDetails.lastName;
@@ -169,6 +171,8 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
     // final pattern = RegExp('\\s+'); //remove all space
     // final fullName = _firstNameController.text + _lastNameController.text;
     // String searchByName = fullName.toLowerCase().replaceAll(pattern, "");
+    DateTime now = DateTime.now();
+    String createdTimeStamp = DateFormat('yyyy-MM-dd hh:mm').format(now);
     final patientModel = PatientModel(
         email: _emailController.text,
         lastName: _lastNameController.text,
@@ -183,15 +187,16 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
         hasRamid: R,
         hasCnss: C,
         gender: _selectedGender,
-        pNo: _phoneNumberController.text);
+        pNo: _phoneNumberController.text,
+        updatedTimeStamp: createdTimeStamp);
     // log(">>>>>>>>>>>>>>>>>>>>>>${patientModel.toUpdateJson()}");
     final res = await PatientService.updateData(patientModel);
     if (res == "success") {
-      ToastMsg.showToastMsg("Successfully Updated");
+      ToastMsg.showToastMsg("Mise à jour réussie");
       Navigator.of(context)
           .pushNamedAndRemoveUntil('/UsersListPage', ModalRoute.withName('/HomePage'));
     } else if (res == "error") {
-      ToastMsg.showToastMsg("Something went wrong");
+      ToastMsg.showToastMsg("Quelque chose s'est mal passé");
     }
     setState(() {
       _isEnableBtn = true;
@@ -410,4 +415,5 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
       ),
     );
   }
+
 }

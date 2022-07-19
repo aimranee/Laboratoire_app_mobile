@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:patient/Screen/home.dart';
 import 'package:patient/Screen/prescription/prescription_list_by_id_page.dart';
+import 'package:patient/Service/Noftification/handle_firebase_notification.dart';
+import 'package:patient/Service/Noftification/handle_local_notification.dart';
+import 'package:patient/Service/admin_profile_service.dart';
 import 'package:patient/Service/appointment_service.dart';
+import 'package:patient/Service/user_service.dart';
 import 'package:patient/model/appointment_model.dart';
 import 'package:patient/utilities/color.dart';
 import 'package:patient/utilities/dialog_box.dart';
@@ -159,18 +162,14 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
       _isBtnDisable = "";
       _isLoading = true;
     });
-    // final res = await DeleteData.deleteBookedAppointment(
-    //   widget.appointmentDetails.id,
-    //   widget.appointmentDetails.appointmentDate,
-    // );
-    // if (res == "success") {
-      final appointmentModel=AppointmentModel(
-          id: widget.appointmentDetails.id,
-          appointmentStatus: "Canceled"
-      );
-      final isUpdated=await AppointmentService.updateStatus(appointmentModel);
-      log(isUpdated.toString());
-      if(isUpdated=="success"){
+
+    final appointmentModel=AppointmentModel(
+        id: widget.appointmentDetails.id,
+        appointmentStatus: "Canceled"
+    );
+    final isUpdated=await AppointmentService.updateStatus(appointmentModel);
+    log(isUpdated.toString());
+    if(isUpdated=="success"){
         // final notificationModel = NotificationModel(
         //     title: "Canceled",
         //     body:
@@ -188,17 +187,16 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
         //     sendBy: "${widget.appointmentDetails.pFirstName} ${widget.appointmentDetails.pLastName}"
         // );
         // await NotificationService.addData(notificationModel);
-        // _handleSendNotification();
+        _handleSendNotification();
         // await NotificationService.addDataForAdmin(notificationModelForAdmin);
         ToastMsg.showToastMsg("Annulé avec succès");
-        Get.off(()=>const HomeScreen());
+        Get.offAllNamed('/HomePage');
+        // Navigator.of(context).pushNamedAndRemoveUntil(
+        //       '/Appointmentstatus', ModalRoute.withName('/HomePage'));
       } else {
         ToastMsg.showToastMsg("Quelque chose a mal tourné");
       }
 
-    // } else {
-    //   ToastMsg.showToastMsg("Something went wrong");
-    // }
     setState(() {
       _isBtnDisable = "false";
       _isLoading = false;
@@ -206,26 +204,26 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
 
   }
 
-  // void _handleSendNotification() async {
-  //   final res = await DrProfileService.getData();
-  //   String  _adminFCMid = res[0].fdmId;
-  //   //send local notification
+  void _handleSendNotification() async {
+    final res = await AdminProfileService.getData();
+    String  _adminFCMid = res[0].fcmId;
+    //send local notification
 
-  //   // await HandleLocalNotification.showNotification(
-  //   //   "Canceled",
-  //   //   "Appointment has been canceled for date ${widget.appointmentDetails.appointmentDate}", // body
-  //   // );
-  //   // await UpdateData.updateIsAnyNotification("usersList", widget.appointmentDetails.uId, true);
+    await HandleLocalNotification.showNotification(
+      "Annulé",
+      "Le rendez-vous a été annulé pour la date ${widget.appointmentDetails.appointmentDate}", // body
+    );
+    await AdminProfileService.updateIsAnyNotification("1");
 
-  //   //send notification to admin app for booking confirmation
-  //   // await HandleFirebaseNotification.sendPushMessage(
-  //   //     _adminFCMid, //admin fcm
-  //   //     "Canceled Appointment", //title
-  //   //     "${widget.appointmentDetails.uName} has canceled appointment for date ${widget.appointmentDetails.appointmentDate}. appointment id: ${widget.appointmentDetails.id}"//body
-  //   // );
-  //   await UpdateData.updateIsAnyNotification("profile", "profile", true);
+    // send notification to admin app for booking confirmation
+    await HandleFirebaseNotification.sendPushMessage(
+        _adminFCMid, //admin fcm
+        "Rendez-vous annulé", //title
+        "${widget.appointmentDetails.uName} a annulé le rendez-vous pour la date ${widget.appointmentDetails.appointmentDate}. rendez-vous id: ${widget.appointmentDetails.id}"//body
+    );
+    
 
-  // }
+  }
   _takeConfirmation() {
     DialogBoxes.confirmationBox(
         context, "Annuler", "Êtes-vous sûr de vouloir annuler le rendez-vous", _handleCancelBtn);

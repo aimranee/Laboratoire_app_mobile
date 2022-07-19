@@ -1,10 +1,14 @@
 import 'dart:developer';
 import 'dart:ui';
-
 import 'package:flutter_braintree/flutter_braintree.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:patient/Screen/prescription/show_prescription_imae.dart';
+import 'package:patient/Service/Noftification/handle_firebase_notification.dart';
+import 'package:patient/Service/Noftification/handle_local_notification.dart';
+import 'package:patient/Service/admin_profile_service.dart';
 import 'package:patient/Service/prescription_service.dart';
+import 'package:patient/Service/user_service.dart';
 import 'package:patient/model/prescription_model.dart';
 import 'package:patient/utilities/decoration.dart';
 import 'package:patient/utilities/inputfields.dart';
@@ -96,9 +100,39 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
                   InputFields.readableInputField(_patientNameController, "Nom de patient", 1),
                   InputFields.readableInputField(_drNameController, "Nom d'infermier", 1),
                   InputFields.readableInputField(_dateController, "Date", 1),
-                  // InputFields.readableInputField(_timeController, "Time", 1),
                   InputFields.readableInputField(_priceController, "Price",1),
                   InputFields.readableInputField(_messageController, "Message",null),
+
+                  Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+              child: Row(
+                children: [
+                  const Text("État des Resultats:     "),
+                  if ( widget.prescriptionDetails.prescriptionStatus  ==
+                      "Terminé")
+                    _statusIndicator(Colors.green)
+                  else if ( widget.prescriptionDetails.prescriptionStatus  ==
+                      "Dans la réalisation")
+                    _statusIndicator(Colors.yellowAccent)
+                  else if (
+                    widget.prescriptionDetails.prescriptionStatus  ==
+                        "Suspendu")
+                      _statusIndicator(Colors.red)
+                    else
+                      Container(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                    child: Text(
+                        "${ widget.prescriptionDetails.prescriptionStatus }",
+                        style: const TextStyle(
+                          fontFamily: 'OpenSans-SemiBold',
+                          fontSize: 15,
+                        )),
+                  ),
+                ],
+              ),
+            ),
+
                   const Padding(
                     padding: EdgeInsets.only(top: 8, left: 25.0, right: 25),
                     child: Text("Les resultats : ", style: kPageTitleStyle),
@@ -145,9 +179,12 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
       ),
     );
   }
+  
+  Widget _statusIndicator(color) {
+    return CircleAvatar(radius: 7, backgroundColor: color);
+  }
 
   _buildImageList() {
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView.builder(
@@ -177,9 +214,6 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
                     );
                     BraintreeDropInResult res = await BraintreeDropIn.start(req);
                     if (res != null) {
-                      setState((){
-                        isPaied = true;
-                      });
                       _updateDetails();
                       log(res.paymentMethodNonce.description);
                       log(res.paymentMethodNonce.nonce);
@@ -205,27 +239,52 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
   _getUserData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-      if (pref.getString("fcm") != null) {
+      if (pref.getString("token") != "null" && pref.getString("token") != "" && pref.getString("token") != null) {
         setState(() {
           username = pref.getString("firstName") + " " + pref.getString("lastName");
         });
       }
   }
   _updateDetails() async {
-    String r = "0";
-      if (isPaied){
-          r = "1";
-      }
 
+    DateTime now = DateTime.now();
+    String createdTime = DateFormat('yyyy-MM-dd hh:mm').format(now);
     final prescriptionModel = PrescriptionModel(
         id: id,
-        isPaied: r,
+        isPaied: "1",
+        updatedTimeStamp: createdTime,
       );
     final res = await PrescriptionService.updateIsPaied(prescriptionModel);
     if (res == "success") {
+      setState((){
+        isPaied = true;
+      });
+      _handleSendNotification();
       ToastMsg.showToastMsg("paiement avec succès");
     } else if (res == "error") {
       ToastMsg.showToastMsg("Quelque chose a mal tourné");
     }
+  }
+
+    void _handleSendNotification() async {
+    final res = await AdminProfileService.getData();
+    String  _adminFCMid = res[0].fcmId;
+    log (" : "+_adminFCMid);
+    //send local notification
+
+    await HandleLocalNotification.showNotification(
+      "Paiement",
+      "le paiement est établi pour la date ${widget.prescriptionDetails.appointmentDate}", // body
+    );
+    await UserService.updateIsAnyNotification("1");
+
+    // send notification to admin app for booking confirmation
+    await HandleFirebaseNotification.sendPushMessage(
+        _adminFCMid, //admin fcm
+        "Paiement avec succès", //title
+        "${widget.prescriptionDetails.patientName} a payer le montant des résultats ${widget.prescriptionDetails.id} pour la date ${widget.prescriptionDetails.appointmentDate}."//body
+    );
+    await AdminProfileService.updateIsAnyNotification("1");
+
   }
 }

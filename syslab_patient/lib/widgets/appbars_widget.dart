@@ -2,6 +2,7 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:patient/Service/user_service.dart';
 import 'package:patient/utilities/color.dart';
 import 'package:patient/utilities/style.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +23,6 @@ class CAppBarWidget extends StatefulWidget {
 class _CAppBarWidgetState extends State<CAppBarWidget> {
   @override
   Widget build(BuildContext context) {
-    // log ("isCon : ${widget.isConn}");
     return AppBar(
       iconTheme: const IconThemeData(color: appBarIconColor //change your color here
           ),
@@ -35,20 +35,40 @@ class _CAppBarWidgetState extends State<CAppBarWidget> {
       actions: 
       <Widget>[ 
         if(widget.isConn)
-        IconButton(
-            icon: Stack(
-              children: [
-                const Icon(
-                  Icons.notifications,
-                  color: Colors.white,
-                ),
-                Positioned(top: 0, right: 0, child: Container())
-              ],
-            ),
-            onPressed: () {
+          FutureBuilder(
+            future: UserService.fetchNotificationStatusPatient(),
+            builder: (context, snapshot) {
+              return !snapshot.hasData
+                  ? Container()
+                  : IconButton(
+                      icon: Stack(
+                        children: [
+                          Icon(
+                            Icons.notifications,
+                            color: Colors.white,
+                          ),
+                          snapshot.data[0].isAnyNotification=="1"
+                              ? Positioned(
+                                  top: 0,
+                                  right: 0,
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    radius: 5,
+                                  ),
+                                )
+                              : Positioned(top: 0, right: 0, child: Container())
+                        ],
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          "/NotificationPage",
+                        );
+                      }
+                      //
 
-            }
-        )
+                      );
+            })
         else
         TextButton(
         onPressed: () {
@@ -62,39 +82,3 @@ class _CAppBarWidgetState extends State<CAppBarWidget> {
     );
   }
 }
-// StreamBuilder(
-//     // stream: ReadData.fetchNotificationDotStatus(uId),
-//     builder: (context, snapshot) {
-//       return !snapshot.hasData
-//           ? Container()
-//           : IconButton(
-//               icon: Stack(
-//                 children: [
-//                   const Icon(
-//                     Icons.notifications,
-//                     color: Colors.white,
-//                   ),
-//                   snapshot.data["isAnyNotification"]
-//                       ? const Positioned(
-//                           top: 0,
-//                           right: 0,
-//                           child: CircleAvatar(
-//                             backgroundColor: Colors.red,
-//                             radius: 5,
-//                           ),
-//                         )
-//                       : Positioned(
-//                           top: 0, right: 0, child: Container())
-//                 ],
-//               ),
-//               onPressed: () {
-//                 Navigator.pushNamed(
-//                   context,
-//                   "/NotificationPage",
-//                 );
-//               }
-//               //
-
-//               );
-//     })
-

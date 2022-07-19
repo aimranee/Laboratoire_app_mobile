@@ -2,6 +2,8 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:patient/Service/Noftification/handle_firebase_notification.dart';
+import 'package:patient/Service/Noftification/handle_local_notification.dart';
 import 'package:patient/Service/user_service.dart';
 import 'package:patient/utilities/color.dart';
 import 'package:patient/utilities/style.dart';
@@ -29,10 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     
     // initialize local and firebase notification
-    // HandleLocalNotification.initializeFlutterNotification(
-    //     context); //local notification
-    // HandleFirebaseNotification.handleNotifications(
-    //     context); //firebase notification
+    HandleLocalNotification.initializeFlutterNotification(
+        context); //local notification
+    HandleFirebaseNotification.handleNotifications(
+        context); //firebase notification
     _getAndSetUserData(); //get users details from database
 
     super.initState();
@@ -47,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     SharedPreferences pref = await SharedPreferences.getInstance();
     final token = pref.getString("token").toString();
-    // print(res);
+
     if (token != "" && token != "null") {
       String uId = pref.getString("uId");
       log("uId : "+uId);
@@ -132,7 +134,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _cardImg(String path, String title, String routeName, bool isConn) {
     return GestureDetector(
       onTap: () {
-        //  Check.addData();
         if (routeName != null) Get.toNamed(routeName, arguments : isConn);
       },
       child: SizedBox(
@@ -197,93 +198,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  // Widget _notificationCardImg(String path, String title, String routeName) {
-  //   return GestureDetector(
-  //     onTap: () {
-  //       //  Check.addData();
-  //       if (routeName != null) {
-  //         v
-  //       }
-  //     },
-  //     child: Container(
-  //       height: MediaQuery.of(context).size.height * .15,
-  //       //width: MediaQuery.of(context).size.width * .1,
-  //       child: Card(
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(10.0),
-  //         ),
-  //         elevation: 5.0,
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           crossAxisAlignment: CrossAxisAlignment.center,
-  //           children: <Widget>[
-  //             // Container(
-  //             //     height: 50,
-  //             //     width: 50,
-  //             //     color: Colors.grey,
-  //             //     child: //Center(child: Text("Your assets"))),
-  //             //         //delete the just above code [child container ] and uncomment the below code and set your assets
-  //             //      ),
-  //
-  //             _buildNotificationIcon(path),
-  //             Padding(
-  //               padding: const EdgeInsets.only(top: 8.0),
-  //               child: Text(
-  //                 title,
-  //                 style: kTitleStyle,
-  //               ),
-  //             )
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // Widget _buildNotificationIcon(path) {
-  //   return StreamBuilder(
-  //       stream: ReadData.fetchNotificationDotStatus(_uId),
-  //       builder: (context, snapshot) {
-  //         return !snapshot.hasData
-  //             ? SizedBox(
-  //                 height: 30,
-  //                 width: 30,
-  //                 child: SvgPicture.asset(path, semanticsLabel: 'Acme Logo'),
-  //               )
-  //             : Stack(
-  //                 children: [
-  //                   SizedBox(
-  //                     height: 30,
-  //                     width: 30,
-  //                     child:
-  //                         SvgPicture.asset(path, semanticsLabel: 'Acme Logo'),
-  //                   ),
-  //                   snapshot.data["isAnyNotification"]
-  //                       ? Positioned(
-  //                           top: 0,
-  //                           right: 5,
-  //                           child: CircleAvatar(
-  //                             radius: 5,
-  //                             backgroundColor: Colors.red,
-  //                           ))
-  //                       : Positioned(top: 0, right: 0, child: Container())
-  //                 ],
-  //               );
-  //       });
-  // }
-
-  // Widget _image(String imageUrl) {
-  //   return Card(
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(10.0),
-  //     ),
-  //     elevation: 5.0,
-  //     child: ClipRRect(
-  //         borderRadius: BorderRadius.circular(10.0),
-  //         child: ImageBoxFillWidget(imageUrl: imageUrl)),
-  //   );
-  // }
-
   
 }

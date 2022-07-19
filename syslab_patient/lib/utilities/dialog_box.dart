@@ -41,7 +41,7 @@ class DialogBoxes {
         // return object of type Dialog
         return WillPopScope(
           onWillPop: () {
-            Navigator.popUntil(context, ModalRoute.withName('/'));
+            Navigator.popUntil(context, ModalRoute.withName('/HomePage'));
             return null;
           },
           child: AlertDialog(

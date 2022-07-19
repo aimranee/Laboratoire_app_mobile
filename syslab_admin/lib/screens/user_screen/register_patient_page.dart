@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/model/analyses_category_model.dart';
 import 'package:syslab_admin/screens/user_screen/confiramtionPage.dart';
+import 'package:syslab_admin/screens/user_screen/my_location.dart';
 import 'package:syslab_admin/service/analyses_select_services.dart';
 import 'package:syslab_admin/utilities/appbars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
@@ -42,6 +44,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
   final TextEditingController _desController = TextEditingController();
   final TextEditingController _cinController = TextEditingController();
   String _selectedGender = 'Gender';
+  String uId = "";
 
   @override
   void initState() {
@@ -79,6 +82,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
   List subjectDataPrice = [];
   double summ = 0;
   String analyses;
+
   final String location = "";
   
   @override
@@ -96,26 +100,22 @@ class _RegisterPatientState extends State<RegisterPatient> {
             } else {
               if (widget.appointmentType=="A domicile"){
                 Get.to(
-                  //() => MyLocation(
-                  () => ConfirmationPage(
+                  () => MyLocation(
+                  // () => ConfirmationPage(
                     firstName: _firstNameController.text,
                     lastName: _lastNameController.text,
                     phoneNumber: _phoneNumberController.text,
                     email: _emailController.text,
-                    selectedGender: _selectedGender,
                     city: _cityController.text,
                     des: _desController.text,
-                    cin: _cinController.text,
                     appointmentType: widget.appointmentType,
                     serviceTimeMin: widget.serviceTimeMin,
                     setTime: widget.setTime,
                     selectedDate: widget.selectedDate,
-                    uId: widget.userDetails.uId,
-                    uName: widget.userDetails.firstName+" "+widget.userDetails.lastName,
                     analyses: analyses,
                     price: summ,
                     location: location,
-                    userFcmId: widget.userDetails.fcmId
+                    userDetails: widget.userDetails,
                   )
                 );
               }else{
@@ -125,7 +125,6 @@ class _RegisterPatientState extends State<RegisterPatient> {
                     lastName: _lastNameController.text,
                     phoneNumber: _phoneNumberController.text,
                     email: _emailController.text,
-                    selectedGender: _selectedGender,
                     city: _cityController.text,
                     des: _desController.text,
                     appointmentType: widget.appointmentType,
@@ -133,11 +132,10 @@ class _RegisterPatientState extends State<RegisterPatient> {
                     setTime: widget.setTime,
                     selectedDate: widget.selectedDate,
                     uId: widget.userDetails.uId,
-                    uName: widget.userDetails.firstName+" "+widget.userDetails.lastName,
                     analyses: analyses,
                     price: summ,
                     location: location,
-                    cin: _cinController.text,
+                    cin: widget.userDetails.cin,
                     userFcmId: widget.userDetails.fcmId
                   ),
                 );
@@ -295,4 +293,5 @@ class _RegisterPatientState extends State<RegisterPatient> {
       );
     });
   }
+
 }

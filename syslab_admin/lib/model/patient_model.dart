@@ -17,6 +17,7 @@ class PatientModel {
   String familySituation;
   String bloodType;
   String diseaseState;
+  String isAnyNotification;
 
   PatientModel(
       {this.uId,
@@ -36,7 +37,8 @@ class PatientModel {
       this.hasCnss,
       this.familySituation,
       this.bloodType,
-      this.diseaseState});
+      this.diseaseState,
+      this.isAnyNotification});
 
   PatientModel.fromJson(Map<String, dynamic> json) {
     uId = json['uId'].toString();
@@ -57,6 +59,7 @@ class PatientModel {
     familySituation = json['familySituation'];
     bloodType = json['bloodType'];
     diseaseState = json['diseaseState'];
+    isAnyNotification = json['isAnyNotification'];
   }
 
   Map<String, dynamic> toJson() {
@@ -79,6 +82,7 @@ class PatientModel {
     data['familySituation'] = familySituation;
     data['bloodType'] = bloodType;
     data['diseaseState'] = diseaseState;
+    data['isAnyNotification'] = isAnyNotification;
     return data;
   }
 
@@ -97,6 +101,8 @@ class PatientModel {
       "hasRamid": hasRamid,
       "hasCnss": hasCnss,
       "bloodType": bloodType,
+      "isAnyNotification":isAnyNotification,
+      "updatedTimeStamp": updatedTimeStamp
     };
   }
 }

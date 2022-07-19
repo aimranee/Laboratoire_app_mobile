@@ -1,13 +1,9 @@
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:patient/Service/AuthService/authservice.dart';
-import 'package:patient/Service/dr_profile_service.dart';
-import 'package:patient/Service/user_service.dart';
 import 'package:patient/model/user_model.dart';
 import 'package:patient/utilities/color.dart';
 import 'package:patient/utilities/toast_msg.dart';
@@ -329,6 +325,8 @@ _handleSignUp() async {
           _selectedGender = 'Female';
         });
       var fcmId = await FirebaseMessaging.instance.getToken();
+      DateTime now = DateTime.now();
+      String createdTime = DateFormat('yyyy-MM-dd hh:mm').format(now);
       final userModel = UserModel(
           email: _emailController.text,
           lastName: _lastNameController.text,
@@ -343,9 +341,10 @@ _handleSignUp() async {
           hasCnss: C,
           fcmId: fcmId,
           pNo: _phoneNumberController.text,
-          password: _passwordController.text
-
-        );
+          password: _passwordController.text,
+          createdTimeStamp: createdTime,
+          updatedTimeStamp: createdTime
+      );
       final res = await AuthService.signup(userModel);
       // log("insertStatus : "+insertStatus);
       if (res['message'].toString() == "Register successfully") {
@@ -355,7 +354,7 @@ _handleSignUp() async {
       } else if (res['message'].toString()=='Email deja existe'){
         ToastMsg.showToastMsg(res['message']);
       }else{
-        ToastMsg.showToastMsg("Something went wrong");
+        ToastMsg.showToastMsg("Quelque chose s'est mal passé");
       }
       setState(() {
         _isLoading = false;

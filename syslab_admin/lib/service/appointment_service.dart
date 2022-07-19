@@ -7,12 +7,13 @@ import 'package:syslab_admin/model/appointment_model.dart';
 class AppointmentService {
   static const _viewUrl = "$apiUrl/get_all_appointment";
   static const _getByUserUrl = "$apiUrl/get_appointment_by_Uid";
-  static const _searchByNameUrl = "$apiUrl/search_by_name";
+  static const _searchByCINUrl = "$apiUrl/search_by_CIN";
   static const _searchByIdUrl = "$apiUrl/search_by_id";
   static const _updateStatusUrl = "$apiUrl/update_appointment_status";
   static const _updateReschUrl = "$apiUrl/update_appointment_resch";
   static const _updateDataUrl = "$apiUrl/update_appointment";
   static const _addUrl = "$apiUrl/add_appointment";
+  static const _deleteUrl = "$apiUrl/delete_appointments";
 
   static List<AppointmentModel> dataFromJson(String jsonString) {
     final data = json.decode(jsonString);
@@ -61,10 +62,10 @@ class AppointmentService {
     }
   }
 
-  static Future<List<AppointmentModel>> getAppointmentByName(
-      String searchByName) async {
+  static Future<List<AppointmentModel>> getAppointmentByCIN(
+      String searchByCIN) async {
     final response = await http
-        .get(Uri.parse("$_searchByNameUrl?db=appointments&name=$searchByName"));
+        .get(Uri.parse("$_searchByCINUrl/$searchByCIN"));
 
     if (response.statusCode == 200) {
       List<AppointmentModel> list = dataFromJson(response.body);
@@ -78,7 +79,7 @@ class AppointmentService {
     print(id);
 
     final response = await http
-        .get(Uri.parse("$_searchByIdUrl?db=appointments&idName=id&id=$id"));
+        .get(Uri.parse("$_searchByIdUrl?db=appointments&idCIN=id&id=$id"));
     print(response.body);
 
     if (response.statusCode == 200) {
@@ -90,7 +91,7 @@ class AppointmentService {
   }
 
   static updateData(AppointmentModel appointmentModel) async {
-    print("${appointmentModel.toJsonUpdate()}");
+    log("${appointmentModel.toJsonUpdate()}");
 
     final res = await http.post(Uri.parse(_updateDataUrl),
         body: appointmentModel.toJsonUpdate());
@@ -133,5 +134,18 @@ class AppointmentService {
       }
     }
     return res;
+  }
+
+  static deleteData(String id)async{
+    final res=await http.delete(Uri.parse(_deleteUrl),body:{
+      "id":id
+    });
+    if(res.statusCode==200){
+      return res.body;
+    }
+    else {
+      return "error";
+    }
+
   }
 }

@@ -37,10 +37,14 @@ class BottomNavTwoBarWidget extends StatelessWidget {
   final String firstTitle;
   final bool isenableBtn;
   final firstBtnOnPressed;
-  BottomNavTwoBarWidget(
-      { this.firstTitle,
+  final String secondTitle;
+  final secondBtnOnPressed;
+  const BottomNavTwoBarWidget(
+      {Key key, this.firstTitle,
       this.firstBtnOnPressed,
-       this.isenableBtn});
+      this.secondTitle,
+      this.secondBtnOnPressed,
+      this.isenableBtn}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -70,6 +74,20 @@ class BottomNavTwoBarWidget extends StatelessWidget {
                   ),
                   const SizedBox(
                     width: 10,
+                  ),
+                  Expanded(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: btnColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
+                        child: Center(
+                            child: Text(secondTitle,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ))),
+                        onPressed: isenableBtn ? secondBtnOnPressed : null),
                   ),
                 ],
               ),

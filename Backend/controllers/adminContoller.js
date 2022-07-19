@@ -42,7 +42,7 @@ exports.login = function (req, res) {
       }
     );
   } catch (e) {
-    console.log("here");
+    // console.log("here");
     // console.log(error);
     return res.send("error in server");
   }
@@ -70,7 +70,7 @@ exports.signup = function (req, res) {
                 500
               );
             } else {
-              console.log(hashedPassword);
+              // console.log(hashedPassword);
               connection.query(
                 `INSERT INTO admin (firstName, lastName, aNo1, aNo2, email, password, subTitle, description, fcmId, whatsAppNo, address)values(?,?,?,?,${db.escape(
                   params.email
@@ -127,7 +127,7 @@ exports.signup = function (req, res) {
                     );
                   } else console.log(err);
 
-                  console.log("The data from user table \n", rows);
+                  // console.log("The data from user table \n", rows);
                 }
               );
             }
@@ -169,7 +169,7 @@ exports.update_user = function (req, res) {
         if (!err) res.send(`success`);
         else console.log(err);
 
-        console.log("The data from user table \n", rows);
+        // console.log("The data from user table \n", rows);
       }
     );
   });
@@ -184,10 +184,27 @@ exports.update_user_fcm = function (req, res) {
       [params.fcmId, params.uId],
       (err, rows) => {
         connection.release();
-        if (!err) res.send(`Bien Enregistrer!! ID : ${params.uId} bien`);
+        if (!err) res.send(`success`);
         else console.log(err);
 
-        console.log("The data from user table \n", rows);
+        // console.log("The data from user table \n", rows);
+      }
+    );
+  });
+};
+
+exports.get_user_fcm = function (req, res) {
+  db.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(
+      "SELECT fcmId FROM patient WHERE uId = ?",
+      [req.params.uId],
+      (err, rows) => {
+        connection.release();
+        if (!err) res.send(rows);
+        else console.log(err);
+
+        // console.log("The data from user table \n", rows);
       }
     );
   });
@@ -204,7 +221,7 @@ exports.get_user = function (req, res) {
         if (!err) res.send(rows);
         else console.log(err);
 
-        console.log("The data from user table \n", rows);
+        // console.log("The data from user table \n", rows);
       }
     );
   });
@@ -213,12 +230,15 @@ exports.get_user = function (req, res) {
 exports.get_all_user = function (req, res) {
   db.getConnection((err, connection) => {
     if (err) throw err;
-    connection.query("SELECT * FROM patient", (err, rows) => {
-      connection.release();
-      if (!err) res.send(rows);
-      else console.log(err);
+    connection.query(
+      "SELECT * FROM patient ORDER BY createdTimeStamp DESC",
+      (err, rows) => {
+        connection.release();
+        if (!err) res.send(rows);
+        else console.log(err);
 
-      console.log("The data from user table \n", rows);
-    });
+        // console.log("The data from user table \n", rows);
+      }
+    );
   });
 };

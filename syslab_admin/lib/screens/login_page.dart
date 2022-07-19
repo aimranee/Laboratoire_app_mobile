@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/screens/home_page.dart';
+import 'package:syslab_admin/service/admin_service.dart';
 import 'package:syslab_admin/widgets/buttonsWidget.dart';
 import 'package:syslab_admin/widgets/loadingIndicator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -234,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
        await setData(res["uId"].toString(), res["token"].toString());
        
         ToastMsg.showToastMsg("Logged in");
-        Get.to(() => const HomePage());
+        Get.offAll(() => const HomePage());
       } 
       else {
         
@@ -250,9 +251,10 @@ class _LoginPageState extends State<LoginPage> {
   setData(uId, token) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final fcm = await FirebaseMessaging.instance.getToken();
+
     pref.setString("token", token);
     pref.setString("uId", uId);
     pref.setString("fcm", fcm);
-    // await DrProfileService.updateFcmId(fcm);
+    await AdminService.updateFcmId(uId, fcm);
   }
 }

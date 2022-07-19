@@ -41,6 +41,12 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@drawable/app_icon"/>
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/colorPrimary" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -62,5 +68,11 @@
             android:value="2" />
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyCIUe8WwDxmcJNDkiYmD0E_AUdJ41sgR2A"/>
+        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+           <intent-filter>
+               <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+           </intent-filter>
+       </receiver>
+       <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"/>
     </application>
 </manifest>

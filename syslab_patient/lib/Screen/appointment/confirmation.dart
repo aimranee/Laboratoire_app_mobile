@@ -1,7 +1,12 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:patient/Service/Noftification/handle_firebase_notification.dart';
+import 'package:patient/Service/Noftification/handle_local_notification.dart';
+import 'package:patient/Service/admin_profile_service.dart';
 import 'package:patient/Service/appointment_service.dart';
+import 'package:patient/Service/user_service.dart';
 import 'package:patient/SetData/screen_arg.dart';
 import 'package:patient/model/appointment_model.dart';
 import 'package:patient/utilities/color.dart';
@@ -24,6 +29,7 @@ class ConfirmationPage extends StatefulWidget {
 
 class _ConfirmationPageState extends State<ConfirmationPage> {
   bool _isLoading = false;
+  String _adminFCMid;
   String _isBtnDisable = "false";
   String _uId = "";
   String _uName = "";
@@ -32,7 +38,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   void initState() {
      
     super.initState();
-    // _setAdminFcmId();
+    _setAdminFcmId();
     _getAndSetUserData();
   }
 
@@ -43,7 +49,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _uName = prefs.getString("firstName") + " " + prefs.getString("lastName");
-      _uId = prefs.getString("uid");
+      _uId = prefs.getString("uId");
     });
     setState(() {
       _isLoading = false;
@@ -186,6 +192,9 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
       _isBtnDisable = "";
     });
 
+    DateTime now = DateTime.now();
+    String createdTime = DateFormat('yyyy-MM-dd hh:mm').format(now);
+
     final appointmentModel = AppointmentModel(
         description: desc,
         appointmentType: appointmentType,
@@ -197,13 +206,13 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         price: price.toString(),
         analyses: analyses,
         uName: _uName,
-        location: location); //initialize all values
+        location: location,
+        createdTimeStamp: createdTime,
+        updatedTimeStamp: createdTime,); //initialize all values
     final insertStatus = await AppointmentService.addData(appointmentModel);
 
     if (insertStatus != "error") {
       // //print(":::::::::::::::::::::;$insertStatus");
-      // final updatedTimeSlotsStatus = await UpdateData.updateTimeSlot(
-      //     serviceTimeMin, setTime, selectedDate, insertStatus);
       //if appoint details added successfully added
 
       // if (updatedTimeSlotsStatus == "") {
@@ -227,19 +236,20 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
         // if (msgAdded == "success") {
         //   await NotificationService.addDataForAdmin(notificationModelForAdmin);
+          _handleSendNotification(
+              pFirstName, pLastName, appointmentType, selectedDate, setTime);
+              
           ToastMsg.showToastMsg("Réservé avec succès");
-        //   _handleSendNotification(
-        //       pFirstName, pLastName, appointmentType, selectedDate, setTime);
-          // Navigator.of(context).pushNamedAndRemoveUntil(
-          //     '/Appointmentstatus', ModalRoute.withName('/'));
           Get.offAllNamed('/HomePage');
+          // Navigator.of(context).pushNamedAndRemoveUntil(
+          //     '/Appointmentstatus', ModalRoute.withName('/HomePage'));
         // } else if (msgAdded == "error") {
-          // ToastMsg.showToastMsg("Something went wrong. try again");
+          // ToastMsg.showToastMsg("Quelque chose s'est mal passé. try again");
 
           // Navigator.pop(context);
         // }
       // } else {
-      //   ToastMsg.showToastMsg("Something went wrong. try again");
+      //   ToastMsg.showToastMsg("Quelque chose s'est mal passé. try again");
       //   Navigator.pop(context);
       // }
     } else {
@@ -253,40 +263,39 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     });
   }
 
-  // void _setAdminFcmId() async {
-  //   //loading if data till data fetched
-  //   setState(() {
-  //     _isLoading = true;
-  //   });
-  //   final res = await DrProfileService.getData(); //fetch admin fcm id for sending messages to admin
-  //   if (res != null) {
-  //     // setState(() {
-  //     //   _adminFCMid = res[0].fdmId;
-  //     // });
-  //   }
-  //   setState(() {
-  //     _isLoading = false;
-  //   });
-  // }
+  void _setAdminFcmId() async {
+    //loading if data till data fetched
+    setState(() {
+      _isLoading = true;
+    });
+    final res = await AdminProfileService.getData(); //fetch admin fcm id for sending messages to admin
+    if (res != null) {
+      setState(() {
+        _adminFCMid = res[0].fcmId;
+      });
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
-  // void _handleSendNotification(String firstName, String lastName,
-  //     String appointmentType, String selectedDate, String setTime) async {
-  //   //send local notification
+  void _handleSendNotification(String firstName, String lastName,
+      String appointmentType, String selectedDate, String setTime) async {
+    //send local notification
+    await HandleLocalNotification.showNotification(
+      "Réservé avec succès", //title
+      "Le rendez-vous a été pris le $selectedDate. En attente de confirmation", // body
+    );
+    await UserService.updateIsAnyNotification("1");
 
-  //   await HandleLocalNotification.showNotification(
-  //     "Successfully Booked", //title
-  //     "Appointment has been booked on $selectedDate. Waiting for confirmation", // body
-  //   );
-  //   await UpdateData.updateIsAnyNotification("usersList", _uId, true);
+    //send notification to admin app for booking confirmation
+    // log("++++++++++++admin$_adminFCMid");
+    await HandleFirebaseNotification.sendPushMessage(
+        _adminFCMid, //admin fcm
+        "Nouveau rendez-vous", //title
+        "$firstName $lastName pris rendez-vous le $selectedDate à $setTime" //body
+        );
 
-  //   //send notification to admin app for booking confirmation
-  //   //print("++++++++++++admin$_adminFCMid");
-  //   await HandleFirebaseNotification.sendPushMessage(
-  //       _adminFCMid, //admin fcm
-  //       "New Appointment", //title
-  //       "$firstName $lastName booked an appointment on $selectedDate at $setTime" //body
-  //       );
-
-  //   await UpdateData.updateIsAnyNotification("profile", "profile", true);
-  // }
+    await AdminProfileService.updateIsAnyNotification("1");
+  }
 }
