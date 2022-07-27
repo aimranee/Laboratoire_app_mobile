@@ -1,6 +1,6 @@
 class PrescriptionModel {
   String id;
-  String prescription;
+  String results;
   String patientName; //fcm id
   String appointmentId;
   String appointmentTime;
@@ -8,7 +8,6 @@ class PrescriptionModel {
   String appointmentName;
   String drName;
   String price;
-  String fileUrl;
   String isPaied;
   String patientId;
   String prescriptionStatus;
@@ -23,8 +22,7 @@ class PrescriptionModel {
     this.appointmentName,
     this.price,
     this.patientName,
-    this.prescription,
-    this.fileUrl,
+    this.results,
     this.drName,
     this.isPaied,
     this.patientId,
@@ -40,11 +38,10 @@ class PrescriptionModel {
       appointmentDate: json['appointmentDate'],
       appointmentId: json['appointmentId'],
       appointmentName: json['appointmentName'],
-      prescription: json['prescription'],
+      results: json['results'],
       patientName: json['patientName'],
       price: json['price'].toString(),
       drName: json['drName'],
-      fileUrl: json['fileUrl'],
       prescriptionStatus: json['prescriptionStatus'],
       isPaied: json['isPaied'].toString(),
       patientId: json['patientId'].toString(),
@@ -59,12 +56,11 @@ class PrescriptionModel {
       "patientId": patientId,
       "appointmentTime": appointmentTime,
       "appointmentDate": appointmentDate,
-      "fileUrl": fileUrl,
       "appointmentName": appointmentName,
       "drName": drName,
       "price": price,
       "patientName": patientName,
-      "prescription": prescription,
+      "results": results,
       "prescriptionStatus": prescriptionStatus,
       "createdTimeStamp": createdTimeStamp,
       "updatedTimeStamp": updatedTimeStamp
@@ -73,14 +69,11 @@ class PrescriptionModel {
 
   Map<String,dynamic> toJsonUpdate(){
     return {
-      "prescription": prescription,
-      "id": id,
+      "results": results,
       "drName": drName,
-      "patientName": patientName,
-      "fileUrl": fileUrl,
-      "isPaied":isPaied,
       "prescriptionStatus": prescriptionStatus,
-      "updatedTimeStamp": updatedTimeStamp
+      "updatedTimeStamp": updatedTimeStamp,
+      "id": id
     };
   }
 

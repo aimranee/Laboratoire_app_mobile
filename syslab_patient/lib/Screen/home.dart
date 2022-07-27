@@ -1,6 +1,6 @@
 
-import 'dart:developer';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:patient/Service/Noftification/handle_firebase_notification.dart';
 import 'package:patient/Service/Noftification/handle_local_notification.dart';
@@ -52,14 +52,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (token != "" && token != "null") {
       String uId = pref.getString("uId");
-      log("uId : "+uId);
+      // log("uId : "+uId);
       final user = await UserService.getData(uId);
-      
-
       pref.setString("fcm", user[0].fcmId);
       pref.setString("firstName", user[0].firstName);
       pref.setString("lastName", user[0].lastName);
-
+      setData(uId);
       setState(() {
         isConn = true;
         _isLoading = false;
@@ -197,6 +195,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  setData(uId) async {
+    final fcm = await FirebaseMessaging.instance.getToken();
+    await UserService.updateFcmId(uId, fcm);
   }
   
 }

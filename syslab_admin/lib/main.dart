@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
 
       GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.homePage,
+      initialRoute: AppRoutes.splashScreen,
       getPages: AppRoutes.pages,
       
     );

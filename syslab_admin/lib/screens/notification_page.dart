@@ -1,8 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:syslab_admin/service/admin_service.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
-import 'package:syslab_admin/widgets/noDataWidget.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
+import 'package:syslab_admin/widgets/no_data_widget.dart';
 
 class NotificationListPage extends StatefulWidget {
   const NotificationListPage({Key key}) : super(key: key);

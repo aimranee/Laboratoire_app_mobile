@@ -118,7 +118,7 @@ class _MyLocationState extends State<MyLocation> {
                               markers.clear();
                               markers.add(newMarker);
 
-                              log("message : "+first.addressLine.toString());
+                              // log("message : "+first.addressLine.toString());
                               setState(() {
                                 longitude = latLng.longitude;
                                 latitude = latLng.latitude;

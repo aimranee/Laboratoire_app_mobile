@@ -72,19 +72,20 @@ exports.signup = function (req, res) {
             } else {
               // console.log(hashedPassword);
               connection.query(
-                `INSERT INTO admin (firstName, lastName, aNo1, aNo2, email, password, subTitle, description, fcmId, whatsAppNo, address)values(?,?,?,?,${db.escape(
+                `INSERT INTO admin (firstName, lastName, aNo1, aNo2, email, password, aboutUs, fcmId, whatsAppNo, address)values(?,?,?,?,${db.escape(
                   params.email
-                )},'${hashedPassword}',?,?,?,?,?);`,
+                )},'${hashedPassword}',?,?,?,?,?,?,?);`,
                 [
                   params.firstName,
                   params.lastName,
-                  params.aNo1,
-                  params.aNo2,
-                  params.subTitle,
-                  params.description,
+                  params.pNo1,
+                  params.pNo2,
+                  params.aboutUs,
                   params.fcmId,
                   params.whatsAppNo,
                   params.address,
+                  createdTimeStamp,
+                  updatedTimeStamp,
                 ],
                 (err, rows) => {
                   connection.release();
@@ -142,26 +143,35 @@ exports.signup = function (req, res) {
   });
 };
 
-exports.update_user = function (req, res) {
+exports.get_admin = function (req, res) {
+  db.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query("SELECT * FROM admin", (err, rows) => {
+      connection.release();
+      if (!err) res.send(rows);
+      else console.log(err);
+      // console.log("The data from user table \n", rows);
+    });
+  });
+};
+
+exports.update_admin = function (req, res) {
   db.getConnection((err, connection) => {
     if (err) throw new Error("database Error");
     const params = req.body;
     connection.query(
-      "UPDATE patient SET firstName = ?, lastName = ?, city = ?, email = ?, age = ?, uId = ?, gender = ?, pNo = ?, familySituation = ?, hasCnss = ?, hasRamid = ?, cin = ?, bloodType = ? WHERE uId = ?",
+      "UPDATE admin SET firstName = ?, lastName = ?, laboratoireName = ?, pNo1 = ?, pNo2 = ?, email = ?, aboutUs = ?, whatsAppNo = ?, address = ?, updatedTimeStamp = ? WHERE uId = ? ",
       [
         params.firstName,
         params.lastName,
-        params.city,
+        params.laboratoireName,
+        params.pNo1,
+        params.pNo2,
         params.email,
-        params.age,
-        params.uId,
-        params.gender,
-        params.pNo,
-        params.familySituation,
-        params.hasCnss,
-        params.hasRamid,
-        params.cin,
-        params.bloodType,
+        params.aboutUs,
+        params.whatsAppNo,
+        params.address,
+        params.updatedTimeStamp,
         params.uId,
       ],
       (err, rows) => {
@@ -175,7 +185,7 @@ exports.update_user = function (req, res) {
   });
 };
 
-exports.update_user_fcm = function (req, res) {
+exports.update_admin_fcm = function (req, res) {
   db.getConnection((err, connection) => {
     if (err) throw err;
     const params = req.body;
@@ -210,12 +220,11 @@ exports.get_user_fcm = function (req, res) {
   });
 };
 
-exports.get_user = function (req, res) {
+exports.get_all_user = function (req, res) {
   db.getConnection((err, connection) => {
     if (err) throw err;
     connection.query(
-      "SELECT * FROM admin WHERE uId = ?",
-      [req.params.uId],
+      "SELECT * FROM patient ORDER BY createdTimeStamp DESC",
       (err, rows) => {
         connection.release();
         if (!err) res.send(rows);
@@ -227,14 +236,31 @@ exports.get_user = function (req, res) {
   });
 };
 
-exports.get_all_user = function (req, res) {
+exports.update_user = function (req, res) {
   db.getConnection((err, connection) => {
-    if (err) throw err;
+    if (err) throw new Error("database Error");
+    const params = req.body;
     connection.query(
-      "SELECT * FROM patient ORDER BY createdTimeStamp DESC",
+      "UPDATE patient SET firstName = ?, lastName = ?, city = ?, email = ?, age = ?, uId = ?, gender = ?, pNo = ?, familySituation = ?, hasCnss = ?, hasRamid = ?, cin = ?, bloodType = ? WHERE uId = ?",
+      [
+        params.firstName,
+        params.lastName,
+        params.city,
+        params.email,
+        params.age,
+        params.uId,
+        params.gender,
+        params.pNo,
+        params.familySituation,
+        params.hasCnss,
+        params.hasRamid,
+        params.cin,
+        params.bloodType,
+        params.uId,
+      ],
       (err, rows) => {
         connection.release();
-        if (!err) res.send(rows);
+        if (!err) res.send(`success`);
         else console.log(err);
 
         // console.log("The data from user table \n", rows);

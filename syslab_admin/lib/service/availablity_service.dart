@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:syslab_admin/config.dart';
 import 'package:syslab_admin/model/availability_model.dart';
 import 'package:http/http.dart' as http;

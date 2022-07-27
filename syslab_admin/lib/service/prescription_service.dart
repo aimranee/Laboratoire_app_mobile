@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:syslab_admin/model/prescription_model.dart';
+
 class PrescriptionService {
   static const _viewUrl = "$apiUrl/get_prescription";
   static const _viewUrlById = "$apiUrl/get_prescription_byid";
@@ -11,7 +11,6 @@ class PrescriptionService {
   static const _addUrl = "$apiUrl/add_prescription";
   static const _deleteUrl="$apiUrl/delete_prescription";
   static const _updateStatusUrl = "$apiUrl/update_prescription_status";
-
 
   static List<PrescriptionModel> dataFromJson(String jsonString) {
     final data = json.decode(jsonString);
@@ -31,8 +30,8 @@ class PrescriptionService {
     }
   }
   static Future<List<PrescriptionModel>> getDataByApId({String appointmentId,String uId}) async {
-    log(appointmentId);
-    log(uId);
+    // log(appointmentId);
+    // log(uId);
 
     final response = await http.get(Uri.parse("$_viewUrlById/$uId/$appointmentId"));
     if (response.statusCode == 200) {
@@ -44,7 +43,8 @@ class PrescriptionService {
   }
   static Future updateData(PrescriptionModel prescriptionModel) async {
 
-    final response = await http.post(Uri.parse(_updateData),body:prescriptionModel.toJsonUpdate());
+    final response = await http.put(Uri.parse(_updateData),
+      body:prescriptionModel.toJsonUpdate());
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -76,7 +76,7 @@ class PrescriptionService {
 
   }
 
-    static updateStatus(PrescriptionModel prescriptionModel) async {
+  static updateStatus(PrescriptionModel prescriptionModel) async {
     final res = await http.put(Uri.parse(_updateStatusUrl),
         body: prescriptionModel.toJsonUpdateStatus());
     if (res.statusCode == 200) {

@@ -3,13 +3,13 @@ import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/Service/appointment_type_service.dart';
 import 'package:syslab_admin/screens/appointment_type/edit_appointment_type.dart';
-import 'package:syslab_admin/widgets/buttonsWidget.dart';
-import 'package:syslab_admin/widgets/errorWidget.dart';
-import 'package:syslab_admin/widgets/imageWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
-import 'package:syslab_admin/widgets/noDataWidget.dart';
+import 'package:syslab_admin/widgets/buttons_widget.dart';
+import 'package:syslab_admin/widgets/error_widget.dart';
+import 'package:syslab_admin/widgets/image_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
+import 'package:syslab_admin/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
 
 class AppointmentTypesPage extends StatefulWidget {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -298,7 +300,6 @@ class _SignUpPageState extends State<SignUpPage> {
   //
   setData(uId, token) async {
     final fcm = await FirebaseMessaging.instance.getToken();
-    // await DrProfileService.updateFcmId(uId, fcm);
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString("fcm", fcm);
     pref.setString("uId", uId);
@@ -340,15 +341,17 @@ _handleSignUp() async {
           hasRamid: R,
           hasCnss: C,
           fcmId: fcmId,
+          isAnyNotification: "0",
           pNo: _phoneNumberController.text,
           password: _passwordController.text,
           createdTimeStamp: createdTime,
           updatedTimeStamp: createdTime
       );
+      log("u : ${userModel.toJsonAdd()}");
       final res = await AuthService.signup(userModel);
-      // log("insertStatus : "+insertStatus);
       if (res['message'].toString() == "Register successfully") {
         setData(res['uId'].toString(), res['token'].toString());
+        
         Get.offAllNamed('/HomePage');
         ToastMsg.showToastMsg(res['message']);
       } else if (res['message'].toString()=='Email deja existe'){

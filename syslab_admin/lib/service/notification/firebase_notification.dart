@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:syslab_admin/config.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,36 +10,33 @@ class FirebaseNotification {
   static Future<void> _firebaseMessagingBackgroundHandler(
       RemoteMessage message) async {
     if (Firebase.apps.isEmpty) await Firebase.initializeApp();
-    log('Handling a background message ${message.messageId}');
+    // log('Handling a background message ${message.messageId}');
   }
 
   static handleNotifications(context) async {
-    // await FirebaseMessaging.instance.unsubscribeFromTopic(
-    //     "all"); //scribe user to this all group so we can send message to multiple device
-    // log("===========admin un subscribe=========");
     await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
         badge: true,
         alert: true,
         sound: true); //presentation options for Apple notifications when received in the foreground.
 
     FirebaseMessaging.onMessage.listen((message) async {
-      log('Got a message whilst in the FOREGROUND!');
+      // log('Got a message whilst in the FOREGROUND!');
 
       return;
     }).onData((data) {
       LocalNotification.showNotification(
           data.data["title"], data.data["body"]);
-      log('Got a DATA message whilst in the FOREGROUND!');
+      // log('Got a DATA message whilst in the FOREGROUND!');
 
-      log('data from  onMessage stream: ${data.data}');
+      // log('data from  onMessage stream: ${data.data}');
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) async {
-      log('NOTIFICATION MESSAGE TAPPED');
+      // log('NOTIFICATION MESSAGE TAPPED');
       return;
     }).onData((data) {
-      log('NOTIFICATION MESSAGE TAPPED');
-      log('data from onMessageOpenedApp stream: ${data.data}');
+      // log('NOTIFICATION MESSAGE TAPPED');
+      // log('data from onMessageOpenedApp stream: ${data.data}');
       Navigator.pushNamed(context, "/NotificationListPage");
     });
 
@@ -69,9 +65,9 @@ class FirebaseNotification {
         },
         body: constructFCMPayload(_token, title, body),
       );
-      log('FCM request for device sent!');
+      // log('FCM request for device sent!');
     } catch (e) {
-      log(e);
+      // log(e);
     }
   }
 

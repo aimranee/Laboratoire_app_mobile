@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/screens/appointments/edit_appointment_details_page.dart';
 import 'package:syslab_admin/service/appointment_service.dart';
-import 'package:syslab_admin/widgets/buttonsWidget.dart';
-import 'package:syslab_admin/widgets/errorWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
-import 'package:syslab_admin/widgets/noDataWidget.dart';
+import 'package:syslab_admin/widgets/buttons_widget.dart';
+import 'package:syslab_admin/widgets/error_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
+import 'package:syslab_admin/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
-import 'package:syslab_admin/utilities/fontStyle.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
+import 'package:syslab_admin/utilities/font_style.dart';
 
 class ShowAppointmentByUidPage extends StatefulWidget {
   final userId;

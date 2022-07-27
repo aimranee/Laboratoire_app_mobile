@@ -61,24 +61,24 @@ class UserModel {
   }
 
   Map<String, dynamic> toJsonAdd() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['email'] = this.email;
-    data['password'] = this.password;
-    data['pNo'] = this.pNo;
-    data['fcmId'] = this.fcmId;
-    data['city'] = this.city;
-    data['age'] = this.age;
-    data['gender'] = this.gender;
-    data['cin'] = this.cin;
-    data['hasRamid'] = this.hasRamid;
-    data['hasCnss'] = this.hasCnss;
-    data['familySituation'] = this.familySituation;
-    data['bloodType'] = this.bloodType;
-    data['isAnyNotification'] = this.isAnyNotification;
-    data['createdTimeStamp'] = this.createdTimeStamp;
-    data['updatedTimeStamp'] = this.updatedTimeStamp;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['email'] = email;
+    data['password'] = password;
+    data['pNo'] = pNo;
+    data['fcmId'] = fcmId;
+    data['city'] = city;
+    data['age'] = age;
+    data['gender'] = gender;
+    data['cin'] = cin;
+    data['hasRamid'] = hasRamid;
+    data['hasCnss'] = hasCnss;
+    data['familySituation'] = familySituation;
+    data['bloodType'] = bloodType;
+    data['isAnyNotification'] = isAnyNotification;
+    data['createdTimeStamp'] = createdTimeStamp;
+    data['updatedTimeStamp'] = updatedTimeStamp;
     return data;
   }
 

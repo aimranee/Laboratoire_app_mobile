@@ -15,8 +15,8 @@ class AnalysesModel {
   String dispo;
   String lotsActif;
   String index;
-  String createdAt;
-  String updatedAt;
+  String createdTimeStamp;
+  String updatedTimeStamp;
 
   AnalysesModel(
       {this.id,
@@ -35,50 +35,66 @@ class AnalysesModel {
       this.dispo,
       this.lotsActif,
       this.index,
-      this.createdAt,
-      this.updatedAt});
+      this.createdTimeStamp,
+      this.updatedTimeStamp});
 
   AnalysesModel.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     name = json['name'];
-    libBilan = json['lib_bilan'];
-    libAutomat = json['lib_automat'];
-    valeurReference = json['valeur_reference'];
+    libBilan = json['libBilan'];
+    libAutomat = json['libAutomat'];
+    valeurReference = json['valeurReference'];
     unite = json['unite'];
     price = json['price'];
     description = json['description'];
     min = json['min'];
     max = json['max'];
-    categoryId = json['category_id'].toString();
-    categoryName = json['category_name'];
+    categoryId = json['categoryId'].toString();
+    categoryName = json['categoryName'];
     titre = json['titre'];
     dispo = json['dispo'];
-    lotsActif = json['lots_actif'];
+    lotsActif = json['lotsActif'];
     index = json['index'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    createdTimeStamp = json['createdTimeStamp'];
+    updatedTimeStamp = json['updatedTimeStamp'];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toAddJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
     data['name'] = name;
-    data['lib_bilan'] = libBilan;
-    data['lib_automat'] = libAutomat;
-    data['valeur_reference'] = valeurReference;
+    data['libBilan'] = libBilan;
+    data['libAutomat'] = libAutomat;
+    data['valeurReference'] = valeurReference;
     data['unite'] = unite;
     data['price'] = price;
     data['description'] = description;
     data['min'] = min;
     data['max'] = max;
-    data['category_id'] = categoryId;
-    data['category_name'] = categoryName;
+    data['categoryId'] = categoryId;
+    data['categoryName'] = categoryName;
     data['titre'] = titre;
-    data['dispo'] = dispo;
-    data['lots_actif'] = lotsActif;
-    data['index'] = index;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
+    data['createdTimeStamp'] = createdTimeStamp;
+    data['updatedTimeStamp'] = updatedTimeStamp;
     return data;
   }
+
+  Map<String,dynamic> toUpdateJson(){
+    return {
+      'id' : id,
+      'name' : name,
+      'libBilan' : libBilan,
+      'libAutomat' : libAutomat,
+      'valeurReference' : valeurReference,
+      'unite' : unite,
+      'price' : price,
+      'description' : description,
+      'min' : min,
+      'max' : max,
+      'categoryId' : categoryId,
+      'categoryName' : categoryName,
+      'titre' : titre,
+      'updatedTimeStamp' : updatedTimeStamp
+    };
+  }
+
 }

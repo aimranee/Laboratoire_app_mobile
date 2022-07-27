@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:patient/Screen/splash_screen.dart';
 import 'package:patient/Screen/appointment/my_location.dart';
 import 'package:patient/Screen/categories.dart';
 import 'package:patient/Screen/admin_profile_page.dart';
@@ -19,6 +20,7 @@ import 'package:patient/Screen/user_profiel.dart';
 
 class AppRoutes {
   static String  homeScreen = '/HomePage';
+  static String  splashScreen = '/SplashScreen';
   static String  appointmentPage = '/AppoinmentPage';
   static String  aboutUs = '/AboutusPage';
   static String  chooseTimeSlotPage = "/ChooseTimeSlotPage";
@@ -43,6 +45,10 @@ class AppRoutes {
   
   static List<GetPage> pages = [
     GetPage(
+      name: splashScreen,
+      page: () => SplashScreen(),
+    ),
+    GetPage(
       name: homeScreen,
       page: () => const HomeScreen(),
     ),
@@ -60,7 +66,7 @@ class AppRoutes {
     ),
     GetPage(
       name: contactUs,
-      page: () => const ContactUs(),
+      page: () => ContactUs(),
     ),
     GetPage(
       name: appointmentStatus,

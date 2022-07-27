@@ -1,6 +1,6 @@
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/utilities/fontStyle.dart';
-import 'package:syslab_admin/widgets/imageWidget.dart';
+import 'package:syslab_admin/utilities/font_style.dart';
+import 'package:syslab_admin/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:swipedetector/swipedetector.dart';
 
@@ -46,21 +46,6 @@ class _ShowPrescriptionImagePageState extends State<ShowPrescriptionImagePage> {
           //color: Colors.red,
           child: Stack(
             children: [
-              SwipeDetector(
-                onSwipeLeft: () {
-                  _forwardImg();
-                  // print("Swipe Left");
-                },
-                onSwipeRight: () {
-                  _backwardImg();
-                  // print("Swipe Right");
-
-                },
-                child: Center(
-                    child: ImageBoxContainWidget(imageUrl:_selectedImageUrl )
-                  //get image from url
-                ),
-              ),
               widget.imageUrls.indexOf(_selectedImageUrl)!= totalImg-1? Positioned.fill(
                   child: Align(
                     alignment: Alignment.centerRight,

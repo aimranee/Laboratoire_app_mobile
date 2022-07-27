@@ -1,15 +1,14 @@
 // import 'package:syslab_admin/screens/userScreen/editUserProfilePage.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/screens/user_screen/edit_userprofile_page.dart';
 import 'package:syslab_admin/service/patient_service.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
-import 'package:syslab_admin/widgets/boxWidget.dart';
-import 'package:syslab_admin/widgets/errorWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
-import 'package:syslab_admin/widgets/noDataWidget.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
+import 'package:syslab_admin/widgets/box_widget.dart';
+import 'package:syslab_admin/widgets/error_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
+import 'package:syslab_admin/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
 
 class UsersListPage extends StatefulWidget {
@@ -24,10 +23,10 @@ class _UsersListPageState extends State<UsersListPage> {
   Widget build(BuildContext context) {
     bool _isEnableBtn = true;
     return Scaffold(
-      appBar: IAppBars.commonAppBar(context, "users"),
+      appBar: IAppBars.commonAppBar(context, "Liste patients"),
       bottomNavigationBar: BottomNavBarWidget(
-        onPressed: _handleByNameBtn,
-        title: "Search By Name",
+        onPressed: _handleByCINBtn,
+        title: "Rechercher par CIN",
         isEnableBtn: _isEnableBtn,
       ),
       body: FutureBuilder(
@@ -35,19 +34,19 @@ class _UsersListPageState extends State<UsersListPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return snapshot.data.length == 0
-                ? NoDataWidget()
+                ? const NoDataWidget()
                 : _buildUserList(snapshot.data);
           } else if (snapshot.hasError) {
-            return IErrorWidget();
+            return const IErrorWidget();
           } else {
-            return LoadingIndicatorWidget();
+            return const LoadingIndicatorWidget();
           }
       }),
     );
   }
 
-  _handleByNameBtn() {
-    Get.toNamed("/SearchUserByNamePage");
+  _handleByCINBtn() {
+    Get.toNamed("/SearchPatientByCINPage");
   }
 
   Widget _buildUserList(userList) {
@@ -73,8 +72,6 @@ class _UsersListPageState extends State<UsersListPage> {
                     leading: CircularUserImageWidget(userList: userList[index]),
                     title: Text(
                         "${userList[index].firstName} ${userList[index].lastName}"),
-                    //         DateFormat _dateFormat = DateFormat('y-MM-d');
-                    // String formattedDate =  _dateFormat.format(dateTime);
                     subtitle:
                         Text("CIN : ${userList[index].cin}"),
                   ),

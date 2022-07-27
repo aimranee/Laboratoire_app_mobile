@@ -7,8 +7,7 @@ import 'package:syslab_admin/model/appointment_model.dart';
 class AppointmentService {
   static const _viewUrl = "$apiUrl/get_all_appointment";
   static const _getByUserUrl = "$apiUrl/get_appointment_by_Uid";
-  static const _searchByCINUrl = "$apiUrl/search_by_CIN";
-  static const _searchByIdUrl = "$apiUrl/search_by_id";
+  static const _searchAppointmentByCINUrl = "$apiUrl/search_appointment_by_CIN";
   static const _updateStatusUrl = "$apiUrl/update_appointment_status";
   static const _updateReschUrl = "$apiUrl/update_appointment_resch";
   static const _updateDataUrl = "$apiUrl/update_appointment";
@@ -65,22 +64,7 @@ class AppointmentService {
   static Future<List<AppointmentModel>> getAppointmentByCIN(
       String searchByCIN) async {
     final response = await http
-        .get(Uri.parse("$_searchByCINUrl/$searchByCIN"));
-
-    if (response.statusCode == 200) {
-      List<AppointmentModel> list = dataFromJson(response.body);
-      return list;
-    } else {
-      return []; //if any error occurs then it return a blank list
-    }
-  }
-
-  static Future<List<AppointmentModel>> getAppointmentById(String id) async {
-    print(id);
-
-    final response = await http
-        .get(Uri.parse("$_searchByIdUrl?db=appointments&idCIN=id&id=$id"));
-    print(response.body);
+        .get(Uri.parse("$_searchAppointmentByCINUrl/$searchByCIN"));
 
     if (response.statusCode == 200) {
       List<AppointmentModel> list = dataFromJson(response.body);
@@ -106,16 +90,6 @@ class AppointmentService {
   static updateStatus(AppointmentModel appointmentModel) async {
     final res = await http.put(Uri.parse(_updateStatusUrl),
         body: appointmentModel.toJsonUpdateStatus());
-    if (res.statusCode == 200) {
-      return res.body;
-    } else {
-      return "error";
-    }
-  }
-
-  static updateDataResch(AppointmentModel appointmentModel) async {
-    final res = await http.post(Uri.parse(_updateReschUrl),
-        body: appointmentModel.toJsonUpdateResch());
     if (res.statusCode == 200) {
       return res.body;
     } else {

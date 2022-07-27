@@ -6,12 +6,11 @@ import 'package:syslab_admin/service/notification/firebase_notification.dart';
 import 'package:syslab_admin/service/notification/local_notification.dart';
 import 'package:syslab_admin/service/admin_service.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/widgets/buttonsWidget.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:syslab_admin/widgets/buttons_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:syslab_admin/utilities/clipPath.dart';
+import 'package:syslab_admin/utilities/clip_path.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -33,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     {
       "iconName": "assets/icons/teeth.svg",
       "title": "Analyses",
-      "navigation": "/ServicesPage"
+      "navigation": "/CategoriesPage"
     },
     {
       "iconName": "assets/icons/group.svg",
@@ -56,19 +55,14 @@ class _HomePageState extends State<HomePage> {
       "navigation": "/EditAvailabilityPage"
     },
     // {
-    //   "iconName": "assets/icons/type.svg",
-    //   "title": "Types",
-    //   "navigation": "/AppointmentTypesPage"
+    //   "iconName": "assets/icons/booking.svg",
+    //   "title": "Paramètre",
+    //   "navigation": "/EditBookingTiming"
     // },
     {
-      "iconName": "assets/icons/booking.svg",
-      "title": "Paramètre",
-      "navigation": "/EditBookingTiming"
-    },
-    {
       "iconName": "assets/icons/doct.svg",
-      "title": "Profile",
-      "navigation": "/EditProfilePage"
+      "title": "Contats",
+      "navigation": "/EditContactPage"
     }
   ];
 
@@ -80,17 +74,10 @@ class _HomePageState extends State<HomePage> {
     LocalNotification.initializeFlutterNotification(
         context); //initialize local notification
     handleAuth();
-    getMsg();
     super.initState();
   }
 
-  getMsg() async {
-    final res = await FirebaseMessaging.instance.getToken();
-    // log(res);
-  }
-
-    handleAuth() async {
-    
+  handleAuth() async {
     //start loading indicator
     setState(() {
       _isLoading = true;
@@ -102,8 +89,7 @@ class _HomePageState extends State<HomePage> {
         uId = pref.getString("uId");
       });
       // log(uId.toString());
-      final user = await AdminService.getData(uId);
-      pref.setString("fcm", user[0].fcmId);
+      final user = await AdminService.getData();
       pref.setString("firstName", user[0].firstName);
       pref.setString("lastName", user[0].lastName);
       
@@ -125,7 +111,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _isLoading 
-      ? LoadingIndicatorWidget()
+      ? const LoadingIndicatorWidget()
       : Stack(
         children: [
           Positioned(top: 0, left: 0, right: 0, child: _bottomCircularBox()),
@@ -211,12 +197,6 @@ class _HomePageState extends State<HomePage> {
           height: 180,
           fit: BoxFit.fill,
         ),
-        // const SizedBox(height: 15),
-        // const Text(
-        //   "Admin App",
-        //   style: TextStyle(
-        //       fontFamily: 'OpenSans-Bold', fontSize: 25.0, color: Colors.white),
-        // )
       ],
     );
   }

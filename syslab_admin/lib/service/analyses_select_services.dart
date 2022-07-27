@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:syslab_admin/config.dart';
@@ -47,9 +46,9 @@ class AppDataController extends GetxController {
       update();
 
     } else if (apiResponse.statusCode == 400) {
-      log("Show Error model why error occurred..");
+      // log("Show Error model why error occurred..");
     } else {
-      log("show some error model like something went worng..");
+      // log("show some error model like something went worng..");
     }
   }
 }

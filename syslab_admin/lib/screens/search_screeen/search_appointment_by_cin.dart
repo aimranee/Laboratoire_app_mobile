@@ -2,12 +2,12 @@ import 'package:get/get.dart';
 import 'package:syslab_admin/screens/appointments/edit_appointment_details_page.dart';
 import 'package:syslab_admin/service/appointment_service.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/widgets/boxWidget.dart';
-import 'package:syslab_admin/widgets/buttonsWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
-import 'package:syslab_admin/widgets/noDataWidget.dart';
+import 'package:syslab_admin/widgets/box_widget.dart';
+import 'package:syslab_admin/widgets/buttons_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
+import 'package:syslab_admin/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:syslab_admin/utilities/fontStyle.dart';
+import 'package:syslab_admin/utilities/font_style.dart';
 
 class SearchAppointmentByCINPage extends StatefulWidget {
   const SearchAppointmentByCINPage({Key key}) : super(key: key);
@@ -42,7 +42,7 @@ class _SearchAppointmentByCINPageState
           backgroundColor: appBarColor,
           title: SearchBoxWidget(
             controller: _searchByCINController,
-            hintText: "Rechercher un patient CIN",
+            hintText: "Rechercher patient CIN",
             validatorText: "Saisissez le CIN",
           ),
           actions: [
@@ -52,7 +52,6 @@ class _SearchAppointmentByCINPageState
             )
           ],
         ),
-        //Appbars.commonAppBar(context, "Appointments"),
         body: Container(child: cardListBuilder()));
   }
 
@@ -77,12 +76,11 @@ class _SearchAppointmentByCINPageState
   Widget cardListBuilder() {
     return ListView(
       children: [
-        // _buildSearchBoxContainer(),
         !_isSearchedBefore
             ? Container()
             : _isLoading
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
+                ? const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: LoadingIndicatorWidget(),
                   )
                 : appointmentDetails.isNotEmpty
@@ -95,7 +93,7 @@ class _SearchAppointmentByCINPageState
                               appointmentDetails[index]);
                         },
                       )
-                    : NoDataWidget(),
+                    : const NoDataWidget(),
       ],
     );
   }

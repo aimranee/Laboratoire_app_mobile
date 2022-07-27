@@ -1,14 +1,14 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/Service/appointment_type_service.dart';
 import 'package:syslab_admin/model/appointment_type_model.dart';
-import 'package:syslab_admin/utilities/inputField.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
+import 'package:syslab_admin/utilities/input_field.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/utilities/dialogBox.dart';
-import 'package:syslab_admin/utilities/toastMsg.dart';
+import 'package:syslab_admin/utilities/dialog_box.dart';
+import 'package:syslab_admin/utilities/toast_msg.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 
 class EditAppointmentTypes extends StatefulWidget {

@@ -1,6 +1,5 @@
 
 import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:patient/utilities/color.dart';
 import 'package:patient/utilities/curverdpath.dart';
@@ -56,7 +55,7 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
     return Scaffold(
       drawer : CustomDrawer(isConn: isConn),
         body: _isLoading ? const LoadingIndicatorWidget() : FutureBuilder(
-            future: AdminProfileService.getDataById(widget.id), //fetch doctors profile details like name, profileImage, description etc
+            future: AdminProfileService.getData(), //fetch doctors profile details like name, profileImage, description etc
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return snapshot.data.length==0

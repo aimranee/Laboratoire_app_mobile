@@ -1,20 +1,15 @@
-import 'dart:developer';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/service/admin_service.dart';
 import 'package:syslab_admin/service/appointment_service.dart';
-// import 'package:syslab_admin/service/notificationService.dart';
 import 'package:syslab_admin/model/appointment_model.dart';
 import 'package:syslab_admin/service/notification/firebase_notification.dart';
 import 'package:syslab_admin/service/patient_service.dart';
-// import 'package:syslab_admin/model/notificationModel.dart';
-// import 'package:syslab_admin/service/Notification/handleFirebaseNotification.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/utilities/fontStyle.dart';
-import 'package:syslab_admin/utilities/toastMsg.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
+import 'package:syslab_admin/utilities/font_style.dart';
+import 'package:syslab_admin/utilities/toast_msg.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
@@ -99,7 +94,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 padding:
                     const EdgeInsets.only(top: 20.0, left: 10, right: 10),
                 child: _isLoading
-                    ? Center(child: LoadingIndicatorWidget())
+                    ? const Center(child: LoadingIndicatorWidget())
                     : Center(
                         child: SizedBox(
                             height: 450,
@@ -110,18 +105,6 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         ),
       ),
     );
-
-    //    Container(
-    //       color: bgColor,
-    //       child: _isLoading
-    //           ? Center(child: CircularProgressIndicator())
-    //           : Center(
-    //               child: Container(
-    //                   height: 250,
-    //                   width: double.infinity,
-    //                   child: _cardView(patientDetailsArgs)),
-    //             )),
-    // );
   }
 
   Widget _cardView() {
@@ -195,11 +178,6 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
       _isLoading = true;
       _isBtnDisable = "";
     });
-    // final pattern = RegExp('\\s+'); //remove all space
-    // final patientName = widget.firstName + widget.lastName;
-    // String searchByName = patientName
-    //     .toLowerCase()
-    //     .replaceAll(pattern, ""); //lowercase all letter and remove all space
     DateTime now = DateTime.now();
     String createdTimeStamp = DateFormat('yyyy-MM-dd hh:mm').format(now);
     final appointmentModel = AppointmentModel(
@@ -213,7 +191,6 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         appointmentTime: widget.setTime,
         appointmentDate: widget.selectedDate,
         appointmentStatus: "Pending",
-        // searchByName: searchByName,
         uId: _uId,
         location: widget.location,
         createdTimeStamp:createdTimeStamp,

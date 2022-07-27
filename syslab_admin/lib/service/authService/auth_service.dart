@@ -1,11 +1,6 @@
 import 'dart:developer';
-
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/config.dart';
-// import 'package:syslab_admin/screens/homePage.dart';
-// import 'package:syslab_admin/screens/loginPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -37,8 +32,6 @@ class AuthService {
       return ("error");
     }
     
-    // return isLoggedIn;
-
   }
 
 }

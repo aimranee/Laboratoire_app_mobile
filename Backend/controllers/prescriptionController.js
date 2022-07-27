@@ -6,7 +6,7 @@ exports.get_prescription_byid = function (req, res) {
     const params = req.params;
     connection.query(
       "SELECT * FROM prescription where patientId = ? AND appointmentId = ? ORDER BY updatedTimeStamp DESC",
-      [params.uId, params.appointmentId],
+      [params.patientId, params.appointmentId],
       (err, rows) => {
         connection.release();
         if (!err) {
@@ -60,6 +60,32 @@ exports.update_prescription_isPaied = function (req, res) {
   });
 };
 
+exports.update_prescription = function (req, res) {
+  db.getConnection((err, connection) => {
+    if (err) throw err;
+    const params = req.body;
+    connection.query(
+      "UPDATE prescription SET results = ?, drName = ?, prescriptionStatus = ?, isPaied = ?, updatedTimeStamp = ? WHERE id = ?",
+      [
+        params.results,
+        params.drName,
+        params.prescriptionStatus,
+        params.isPaied,
+        params.updatedTimeStamp,
+        params.id,
+      ],
+      (err, rows) => {
+        connection.release();
+        if (!err) {
+          res.send(`success`);
+        } else {
+          console.log(err);
+        }
+      }
+    );
+  });
+};
+
 exports.update_prescription_status = function (req, res) {
   db.getConnection((err, connection) => {
     if (err) throw err;
@@ -78,6 +104,25 @@ exports.update_prescription_status = function (req, res) {
     );
   });
 };
+
+// exports.update_prescription_file = function (req, res) {
+//   db.getConnection((err, connection) => {
+//     if (err) throw err;
+//     const params = req.body;
+//     connection.query(
+//       "UPDATE prescription SET imageUrl = ? WHERE id = ?",
+//       [params.imageUrl, params.id],
+//       (err, rows) => {
+//         connection.release();
+//         if (!err) {
+//           res.send(`success`);
+//         } else {
+//           console.log(err);
+//         }
+//       }
+//     );
+//   });
+// };
 
 exports.add_prescription = function (req, res) {
   db.getConnection((err, connection) => {

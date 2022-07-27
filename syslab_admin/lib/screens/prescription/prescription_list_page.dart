@@ -2,11 +2,11 @@ import 'package:get/get.dart';
 import 'package:syslab_admin/screens/prescription/add_prescription_page.dart';
 import 'package:syslab_admin/screens/prescription/editprescriptionDetails.dart';
 import 'package:syslab_admin/service/prescription_service.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/widgets/errorWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
-import 'package:syslab_admin/widgets/noDataWidget.dart';
+import 'package:syslab_admin/widgets/error_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
+import 'package:syslab_admin/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 
 class PrescriptionListByIDPage extends StatefulWidget {
@@ -60,16 +60,16 @@ class _PrescriptionListByIDPageState extends State<PrescriptionListByIDPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return snapshot.data.length == 0
-                ? NoDataWidget()
+                ? const NoDataWidget()
                 : Padding(
                   padding: const EdgeInsets.only(
                       top: 0.0, left: 8, right: 8),
                   child: _buildCard(snapshot.data)
                 );
           } else if (snapshot.hasError) {
-            return IErrorWidget();
+            return const IErrorWidget();
           } else {
-            return LoadingIndicatorWidget();
+            return const LoadingIndicatorWidget();
           }
         }),
     );

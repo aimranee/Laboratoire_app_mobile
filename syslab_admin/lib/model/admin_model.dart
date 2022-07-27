@@ -2,30 +2,29 @@ class AdminModel {
   String uId;
   String firstName;
   String lastName;
-  String aNo1;
-  String aNo2;
+  String laboratoireName;
+  String pNo1;
+  String pNo2;
   String email;
   String password;
-  String profileImageUrl;
-  String subTitle;
-  String description;
+  String aboutUs;
   String fcmId;
   String whatsAppNo;
-  String updatedTimeStamp;
   String isAnyNotification;
   String address;
+  String createdTimeStamp;
+  String updatedTimeStamp;
 
   AdminModel(
       {this.uId,
       this.firstName,
       this.lastName,
-      this.aNo1,
-      this.aNo2,
+      this.laboratoireName,
+      this.pNo1,
+      this.pNo2,
       this.email,
       this.password,
-      this.profileImageUrl,
-      this.subTitle,
-      this.description,
+      this.aboutUs,
       this.fcmId,
       this.whatsAppNo,
       this.updatedTimeStamp,
@@ -36,32 +35,33 @@ class AdminModel {
     uId = json['uId'].toString();
     firstName = json['firstName'];
     lastName = json['lastName'];
-    aNo1 = json['aNo1'];
-    aNo2 = json['aNo2'];
+    laboratoireName = json['laboratoireName'];
+    pNo1 = json['pNo1'];
+    pNo2 = json['pNo2'];
     email = json['email'];
-    password = json['password'];
-    profileImageUrl = json['profileImageUrl'].toString();
-    subTitle = json['subTitle'];
-    description = json['description'];
+    // password = json['password'];
+    aboutUs = json['aboutUs'];
     fcmId = json['fcmId'];
     whatsAppNo = json['whatsAppNo'];
-    updatedTimeStamp = json['updatedTimeStamp'];
     isAnyNotification = json['isAnyNotification'];
     address = json['address'];
+    createdTimeStamp = json['createdTimeStamp'];
+    updatedTimeStamp = json['updatedTimeStamp'];
   }
 
   Map<String,dynamic> toUpdateJson(){
     return {
       "firstName": firstName,
       "lastName": lastName,
-      "aNo1": aNo1,
-      "aNo2": aNo2,
+      "laboratoireName": laboratoireName,
+      "pNo1": pNo1,
+      "pNo2": pNo2,
       "email": email,
-      "subTitle": subTitle,
-      "description":description,
+      "aboutUs":aboutUs,
       "whatsAppNo":whatsAppNo,
       "address":address,
-      "isAnyNotification":isAnyNotification
+      "updatedTimeStamp": updatedTimeStamp,
+      "uId": uId
     };
 
   }

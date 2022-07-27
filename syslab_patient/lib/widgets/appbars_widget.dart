@@ -1,11 +1,8 @@
 // import 'package:patient/Service/Firebase/readData.dart';
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:patient/Service/user_service.dart';
 import 'package:patient/utilities/color.dart';
 import 'package:patient/utilities/style.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

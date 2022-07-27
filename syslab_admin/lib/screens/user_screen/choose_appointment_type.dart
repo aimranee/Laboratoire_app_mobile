@@ -2,13 +2,12 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/screens/user_screen/new_appointmet_time.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
-import 'package:syslab_admin/widgets/errorWidget.dart';
-import 'package:syslab_admin/widgets/imageWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
-import 'package:syslab_admin/widgets/noDataWidget.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
+import 'package:syslab_admin/widgets/error_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
+import 'package:syslab_admin/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:syslab_admin/Service/appointment_type_service.dart';
 
@@ -145,18 +144,15 @@ class _ChooseTypePageState extends State<ChooseTypePage> {
           // mainAxisAlignment: MainAxisAlignment.start,
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Positioned(
+            const Positioned(
               top: 0,
               left: 0,
               right: 0,
               bottom: 40,
               child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10)),
-                    child: ImageBoxFillWidget(
-                      // imageUrl: appointmentTypesDetails.imageUrl,
-                    ) //get images
+                      topRight: Radius.circular(10)),//get images
                   ),
             ),
             Positioned.fill(

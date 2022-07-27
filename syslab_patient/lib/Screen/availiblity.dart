@@ -92,7 +92,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
 
   Widget buildTable(day) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
+      padding: const EdgeInsets.fromLTRB(30, 20, 30, 0),
       child: Column(
         children: [
           rowContent("Jour", "Temps"),
@@ -117,22 +117,25 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
   }
 
   Widget rowContent(String first, String last) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(first,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(first,
+              style: const TextStyle(
+                fontFamily: 'OpenSans-SemiBold',
+                fontSize: 14.0,
+              )),
+          Text(
+            last,
             style: const TextStyle(
               fontFamily: 'OpenSans-SemiBold',
               fontSize: 14.0,
-            )),
-        Text(
-          last,
-          style: const TextStyle(
-            fontFamily: 'OpenSans-SemiBold',
-            fontSize: 14.0,
+            ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }

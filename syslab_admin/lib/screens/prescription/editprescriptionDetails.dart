@@ -3,22 +3,18 @@ import 'dart:developer';
 
 import 'package:intl/intl.dart';
 import 'package:syslab_admin/model/prescription_model.dart';
-import 'package:syslab_admin/screens/prescription/show_prescription_page.dart';
 import 'package:syslab_admin/service/admin_service.dart';
 import 'package:syslab_admin/service/notification/firebase_notification.dart';
 import 'package:syslab_admin/service/patient_service.dart';
 import 'package:syslab_admin/service/prescription_service.dart';
-import 'package:syslab_admin/service/uploadImageService.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/utilities/dialogBox.dart';
-import 'package:syslab_admin/utilities/fontStyle.dart';
-import 'package:syslab_admin/utilities/inputField.dart';
-import 'package:syslab_admin/utilities/toastMsg.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
-import 'package:syslab_admin/widgets/imageWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
+import 'package:syslab_admin/utilities/dialog_box.dart';
+import 'package:syslab_admin/utilities/font_style.dart';
+import 'package:syslab_admin/utilities/input_field.dart';
+import 'package:syslab_admin/utilities/toast_msg.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 
 class PrescriptionDetailsPage extends StatefulWidget {
   final String title;
@@ -35,17 +31,15 @@ class _PrescriptionDetailsPageState extends State<PrescriptionDetailsPage> {
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _messageController = TextEditingController();
-  final ScrollController _scrollController=ScrollController();
-  List<String> _imageUrls=[];
+  final TextEditingController _resultsController = TextEditingController();
 
-  final List<Asset> _listImages = <Asset>[];
-  //String _imageName = "";
   int _groupValue = -1;
-  int _successUploaded = 1;
-  bool _isUploading = false;
-  bool _isEnableBtn = true;
   bool _isLoading = false;
+  bool _isEnableBtn = true;
+  String _isPaiedStatus = "0";
+  String isPaiedString = "Non Validé";
+  String _prescriptionStatus = "";
+
 final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
 
   @override
@@ -55,13 +49,12 @@ final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
       _appointmentTypeController.text=widget.prescriptionDetails.appointmentName;
       _patientNameController.text=widget.prescriptionDetails.patientName;
       _drNameController.text=widget.prescriptionDetails.drName;
+      _isPaiedStatus = widget.prescriptionDetails.isPaied;
       _dateController.text=widget.prescriptionDetails.appointmentDate;
       _timeController.text=widget.prescriptionDetails.appointmentTime;
       _priceController.text=widget.prescriptionDetails.price;
-      _messageController.text=widget.prescriptionDetails.prescription;
-      if(widget.prescriptionDetails.fileUrl!="") {
-        _imageUrls=widget.prescriptionDetails.fileUrl.toString().split(",");
-      }
+      _resultsController.text=widget.prescriptionDetails.results;
+      _prescriptionStatus =widget.prescriptionDetails.prescriptionStatus;
 
     });
     super.initState();
@@ -76,41 +69,37 @@ final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
     _dateController.dispose();
     _timeController.dispose();
     _priceController.dispose();
-    _messageController.dispose();
+    _resultsController.dispose();
     super.dispose();
   }
+
   _takeUpdateConfirmation(){
     DialogBoxes.confirmationBox(
-        context, "Update", "Are you sure want to update details", _handleUpdate);
+        context, "Mise à jour", "Voulez-vous vraiment mettre à jour les détails ?", _handleUpdate);
   }
+
   _handleUpdate()async {
     if (_formKey.currentState.validate()) {
 
-    setState(() {
-      _isUploading = true;
-      _isEnableBtn = false;
-    });
-    if (_listImages.isEmpty) {
-      String imageUrl = "";
-      if (_imageUrls.isNotEmpty) {
-        for (var e in _imageUrls) {
-          if (imageUrl == "") {
-            imageUrl = e;
-          } else {
-            imageUrl = imageUrl + "," + e;
-          }
-        }
+      setState(() {
+        _isLoading = true;
+        _isEnableBtn = false;
+      });
+      if (_resultsController.text.isNotEmpty){
+        _prescriptionStatus = "Terminé";
       }
+
       DateTime now = DateTime.now();
       String _createdTime = DateFormat('yyyy-MM-dd').format(now);
       PrescriptionModel prescriptionModel = PrescriptionModel(
           id: widget.prescriptionDetails.id,
           drName: _drNameController.text,
-          patientName: _patientNameController.text,
-          fileUrl: imageUrl,
-          prescription: _messageController.text,
+          isPaied: _isPaiedStatus,
+          results: _resultsController.text,
+          prescriptionStatus: _prescriptionStatus,
           updatedTimeStamp : _createdTime
       );
+      // log(">>>>>>>>>>>>>>>>>>>>>>${prescriptionModel.toJsonUpdate()}");
       final res = await PrescriptionService.updateData(prescriptionModel);
       if (res == "success") {
         ToastMsg.showToastMsg("Mise à jour réussie");
@@ -118,146 +107,14 @@ final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
             '/AppointmentListPage', ModalRoute.withName('/HomePage'));
       }
       else {
-        ToastMsg.showToastMsg("Something went wrong");
+        ToastMsg.showToastMsg("Quelque chose s'est mal passé");
       }
+
+      setState(() {
+        _isLoading = false;
+        _isEnableBtn = true;
+      });
     }
-    else {
-      await _startUploading();
-    }
-
-
-    setState(() {
-      _isUploading = false;
-      _isEnableBtn = true;
-    });
-  }
-  }
-  _startUploading() async {
-    int index = _successUploaded - 1;
-    setState(() {
-      //_imageName=_listImages[index].name;
-    });
-
-
-    if (_successUploaded <= _listImages.length) {
-      final res=await UploadImageService.uploadImages(_listImages[index]); //  represent the progress of uploading task
-      if(res=="0"){
-        ToastMsg.showToastMsg("Sorry, ${_listImages[index].name} is not in format only JPG, JPEG, PNG, & GIF files are allowed to upload");
-        if (_successUploaded < _listImages.length) {
-          //check more images for upload
-          setState(() {
-            _successUploaded = _successUploaded + 1;
-          });
-          _startUploading(); //if images is remain to upload then again run this task
-
-        } else {
-
-        }
-      }
-
-      else if(res=="1")
-      {ToastMsg.showToastMsg("Image ${_listImages[index].name} size must be less the 1MB");
-      if (_successUploaded < _listImages.length) {
-        //check more images for upload
-        setState(() {
-          _successUploaded = _successUploaded + 1;
-        });
-        _startUploading(); //if images is remain to upload then again run this task
-
-      } else {
-
-      }
-      }
-
-      else if(res=="2")
-      { ToastMsg.showToastMsg("Image ${_listImages[index].name} size must be less the 1MB");
-      if (_successUploaded < _listImages.length) {
-        //check more images for upload
-        setState(() {
-          _successUploaded = _successUploaded + 1;
-        });
-        _startUploading(); //if images is remain to upload then again run this task
-
-      } else {
-      }
-      }
-
-      else if(res=="3"|| res=="error")
-      { ToastMsg.showToastMsg("Something went wrong");
-      if (_successUploaded < _listImages.length) {
-        //check more images for upload
-        setState(() {
-          _successUploaded = _successUploaded + 1;
-        });
-        _startUploading(); //if images is remain to upload then again run this task
-
-      } else {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-            '/EditGalleryPage', ModalRoute.withName('/HomePage'));
-      }
-      }
-
-      else if(res==""||res==null)
-      {ToastMsg.showToastMsg("Something went wrong");
-      if (_successUploaded < _listImages.length) {
-        //check more images for upload
-        setState(() {
-          _successUploaded = _successUploaded + 1;
-        });
-        _startUploading(); //if images is remain to upload then again run this task
-
-      } else {
-      }
-      }
-      else{
-        setState(() {
-          _imageUrls.add(res);
-        });
-
-          if (_successUploaded < _listImages.length) {
-            //check more images for upload
-            setState(() {
-              _successUploaded = _successUploaded + 1;
-            });
-            _startUploading(); //if images is remain to upload then again run this task
-
-          } else {
-            // print("***********${_imageUrls.length}");
-            String imageUrl="";
-            if(_imageUrls.isNotEmpty){
-              for(var e in _imageUrls){
-                if(imageUrl==""){
-                  imageUrl =e;
-                }else{
-                  imageUrl =imageUrl+","+e;
-                }
-              }}
-
-              PrescriptionModel prescriptionModel=PrescriptionModel(
-                  id: widget.prescriptionDetails.id,
-                  drName: _drNameController.text,
-                  patientName: _patientNameController.text,
-                  fileUrl: imageUrl,
-                  prescription: _messageController.text
-              );
-              final res =await PrescriptionService.updateData(prescriptionModel);
-              if(res=="success"){
-                ToastMsg.showToastMsg("Mise à jour réussie");
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/AppointmentListPage', ModalRoute.withName('/HomePage'));
-              }
-              else {
-                ToastMsg.showToastMsg("Something went wrong");
-              }
-          }
-                }
-
-
-    }
-    setState(() {
-      _isUploading = false;
-      _isEnableBtn = true;
-    });
   }
 
   @override
@@ -275,12 +132,10 @@ final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
           }, icon:const Icon(Icons.delete))
         ],
       ),
-      bottomNavigationBar: BottomNavTwoBarWidget(
-        firstTitle: "Update",
-        firstBtnOnPressed:_takeUpdateConfirmation,
-        isenableBtn:_isEnableBtn,
-        secondTitle: "Upload",
-        secondBtnOnPressed:_loadAssets,
+      bottomNavigationBar: BottomNavBarWidget(
+        title: "Mise à jour",
+        onPressed:_takeUpdateConfirmation,
+        isEnableBtn:_isEnableBtn,
       ),
       
         floatingActionButton: FloatingActionButton(
@@ -292,44 +147,45 @@ final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
             backgroundColor:btnColor,
             onPressed: (){}
         ),
-      body: _isUploading?LoadingIndicatorWidget(): Form(
+      body: _isLoading?const LoadingIndicatorWidget(): Form(
         key: _formKey,
         child: ListView(
           children: [
-            InputFields.readableInputField(_appointmentTypeController, "Service", 1),
-            InputFields.commonInputField(_patientNameController, "Patient Name", (item) {
-              return item.length > 0 ? null : "Enter patient name";
-            }, TextInputType.text, 1),
-            InputFields.commonInputField(_drNameController, "Dr Name", (item) {
-              return item.length > 0 ? null : "Enter Dr name";
+            InputFields.readableInputField(_appointmentTypeController, "Type de service", 1),
+            InputFields.readableInputField(_patientNameController, "Nom du patient", 1),
+            InputFields.commonInputField(_drNameController, "Nom de l'infermier", (item) {
+              return item.length > 0 ? null : "Nom de l'infermier";
             }, TextInputType.text, 1),
             InputFields.readableInputField(_dateController, "Date", 1),
             InputFields.readableInputField(_timeController, "Temps", 1),
             InputFields.readableInputField(_priceController, "Prix", 1),
-            InputFields.commonInputField(_messageController, "Message", (item) {
-              return item.length > 0 ? null : "Enter message ";
-            }, TextInputType.text, null),
+            const Padding(
+                    padding: EdgeInsets.only(top: 30.0, bottom: 0, left: 20, right: 240),
+                    child : Text (
+                      "Status de resultats",
+                      style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 13,
+                      ))),
+            _isPaiedDropDown(),    
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: Row(
                 children: [
                   const Text("État des Resultats:     "),
-                  if ( widget.prescriptionDetails.prescriptionStatus  ==
-                      "Terminé")
+                  if ( _prescriptionStatus  ==  "Terminé")
                     _statusIndicator(Colors.green)
-                  else if ( widget.prescriptionDetails.prescriptionStatus  ==
-                      "Dans la réalisation")
+                  else if ( _prescriptionStatus  ==  "Traiter")
                     _statusIndicator(Colors.yellowAccent)
                   else if (
-                    widget.prescriptionDetails.prescriptionStatus  ==
-                        "Suspendu")
+                    _prescriptionStatus  ==  "Suspendu")
                       _statusIndicator(Colors.red)
                     else
                       Container(),
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0),
                     child: Text(
-                        "${ widget.prescriptionDetails.prescriptionStatus }",
+                        _prescriptionStatus,
                         style: const TextStyle(
                           fontFamily: 'OpenSans-SemiBold',
                           fontSize: 15,
@@ -349,43 +205,25 @@ final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
                 //   padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
                 //   child: Divider(),
                 // ),
-            _imageUrls.isEmpty?Container(): const Padding(
+            _resultsController.text.isEmpty
+            ? Container()
+            : const Padding(
               padding: EdgeInsets.fromLTRB(20,8,20,8),
               child: Text("Les resultats jointe précédente",style: TextStyle(
                 fontFamily: "OpenSans-SemiBold",
                 fontSize: 14
               ),),
             ),
-            _buildImageList(),
-
-            _listImages.isEmpty? Container():const Padding(
-              padding: EdgeInsets.fromLTRB(20,8,20,8),
-              child: Text("New attached image",style: TextStyle(
-                  fontFamily: "OpenSans-SemiBold",
-                  fontSize: 14
-              ),),
-            ),
-          _buildNewImageList(),
+            InputFields.commonInputField(_resultsController, "results", true, TextInputType.text, 6),
           ],
         ),
       ),
     );
   }
-  Future<void> _loadAssets() async {
-    // final res = await ImagePicker.loadAssets(
-    //     _listImages, mounted, 10); //get images from phone gallery with 10 limit
-    setState(() {
-      // _listImages = res;
-      // if (res.length > 0)
-      //   _isEnableBtn = true;
-      // else
-      //   _isEnableBtn = false;
-    });
-  }
 
   _handleDeletePrescription()async{
     setState(() {
-      _isUploading=true;
+      _isLoading=true;
       _isEnableBtn=false;
     });
     final res=await PrescriptionService.deleteData(widget.prescriptionDetails.id);
@@ -395,87 +233,62 @@ final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
           '/AppointmentListPage', ModalRoute.withName('/HomePage'));
     }
     else{
-      ToastMsg.showToastMsg("Something went wrong");
+      ToastMsg.showToastMsg("Quelque chose s'est mal passé");
 
     }
     setState(() {
-      _isUploading=false;
+      _isLoading=false;
       _isEnableBtn=true;
     });
   }
-  _buildNewImageList() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-          shrinkWrap: true,
-          controller: _scrollController,
-          itemCount: _listImages.length,
-          itemBuilder: (context, index) {
-            Asset asset = _listImages[index];
-            return Padding(
-              padding: const EdgeInsets.only(top:8.0),
-              child: GestureDetector(
-                onLongPress: (){
-                  DialogBoxes.confirmationBox(
-                      context, "Delete", "Are you sure want to delete selected image", (){
-                        setState(() {
-                          _listImages.removeAt(index);
-                        });
-                  });
 
-                },
-                child: AssetThumb(
-                  asset: asset,
-                  width: 300,
-                  height: 300,
-                ),
-              ),
-            );
-          }),
+  _isPaiedDropDown() {
+    String val;
+    if (_isPaiedStatus == "0") {
+      val == "Non Validé";
+      isPaiedString = "Non Validé";
+    }
+    if (_isPaiedStatus == "1") {
+      val == "Validé";
+      isPaiedString = "Validé";
+    }
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 20, right: 20),
+      child: DropdownButton<String>(
+        focusColor: Colors.white,
+        value: val,
+        //elevation: 5,
+        style: const TextStyle(color: Colors.white),
+        iconEnabledColor: btnColor,
+        items: <String>[
+          'Non Validé',
+          'Validé',
+        ].map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(
+              value,
+              style: const TextStyle(color: Colors.black),
+            ),
+          );
+        }).toList(),
+        hint: Text(isPaiedString),
+        onChanged: (String value) {
+          setState(() {
+            if (value=="Non Validé") {
+              _isPaiedStatus = "0";
+              isPaiedString = "Non Validé";
+            }
+            if (value=="Validé") {
+              _isPaiedStatus = "1";
+              isPaiedString = "Validé";
+            }
+          });
+        },
+      ),
     );
   }
-
-    _buildImageList() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-        shrinkWrap: true,
-          controller: _scrollController,
-          itemCount: _imageUrls.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: GestureDetector(
-                onTap: (){
-                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ShowPrescriptionImagePage(
-                            imageUrls: _imageUrls,
-                            selectedImagesIndex: index,
-                            title: "Prescription Image"),
-                      ),
-                     );
-                },
-                onLongPress: (){
-                    DialogBoxes.confirmationBox(
-                        context, "Delete", "Are you sure want to delete selected image", (){
-                          setState(() {
-                            _imageUrls.removeAt(index);
-                          });
-                    });
-                },
-
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child:ImageBoxContainWidget(imageUrl:_imageUrls[index] ,),
-                ),
-              ),
-            );
-      }),
-    );
-  }
-
+  
   showDialogBox() {
 
     return showDialog(
@@ -501,7 +314,7 @@ final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
                       onChanged: (newValue)=> setState(() => _groupValue = newValue),
                     ),
                     _myRadioButton(
-                      title: "Dans la réalisation",
+                      title: "Traiter",
                       value: 1,
                       onChanged: (newValue) => setState(() => _groupValue = newValue),
                     ),
@@ -533,7 +346,7 @@ final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
 
                       break;
                       case 1:{ Navigator.of(context).pop();
-                      _handlePrescriptionStatus(widget.prescriptionDetails.id, "Dans la réalisation");
+                      _handlePrescriptionStatus(widget.prescriptionDetails.id, "Traiter");
                       }
 
                       break;
@@ -616,13 +429,13 @@ final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
     switch (title) {
       case "Terminé":
         {
-          body = "Merci pour votre visite. Votre document est pret!";
+          body = "Merci pour votre visite. Votre resultats est pret!";
           break;
         }
-      case "Dans la réalisation":
+      case "Traiter":
         {
           body =
-          "Votre rendez-vous a été Dans la réalisation depuis date: ${widget.prescriptionDetails.updatedTimeStamp}";
+          "Votre rendez-vous a été Traiter depuis date: ${widget.prescriptionDetails.updatedTimeStamp}";
           break;
         }
       case "Suspendu":

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:syslab_admin/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:syslab_admin/model/patient_model.dart';
@@ -9,8 +8,7 @@ class PatientService {
   static const _userUrl = "$apiUrl/get_user_fcm";
   static const _updateNotifUrl = "$apiUrl/update_notif_status_patient";
   static const _updateUrl = "$apiUrl/update_user";
-  static const _searchByNameUrl = "$apiUrl/search_by_name";
-  static const _searchByIdUrl = "$apiUrl/search_by_id";
+  static const _searchPatientByCINUrl = "$apiUrl/search_patient_by_CIN";
 
   static List<PatientModel> dataFromJson(String jsonString) {
     final data = json.decode(jsonString);
@@ -18,9 +16,9 @@ class PatientService {
   }
 
   static Future<List<PatientModel>> getData(userId) async {
-    log ("uid : "+userId);
+    // log ("uid : "+userId);
     final response = await http.get(Uri.parse("$_userUrl/$userId"));
-    log("test : "+response.body.toString());
+    // log("test : "+response.body.toString());
     if (response.statusCode == 200) {
       List<PatientModel> list = dataFromJson(response.body);
       return list;
@@ -50,29 +48,17 @@ class PatientService {
     }
   }
 
-  // static Future<List<PatientModel>> getUserByName(String searchByName) async {
-  //   final response = await http
-  //       .get(Uri.parse("$_searchByNameUrl?db=userList&name=$searchByName"));
+  static Future<List<PatientModel>> getUserByCIN(String searchByCIN) async {
+    final response = await http
+        .get(Uri.parse("$_searchPatientByCINUrl/$searchByCIN"));
 
-  //   if (response.statusCode == 200) {
-  //     List<PatientModel> list = dataFromJson(response.body);
-  //     return list;
-  //   } else {
-  //     return []; //if any error occurs then it return a blank list
-  //   }
-  // }
-
-  // static Future<List<PatientModel>> getUserById(String id) async {
-  //   final response = await http
-  //       .get(Uri.parse("$_searchByIdUrl?db=userList&idName=uId&id=$id"));
-
-  //   if (response.statusCode == 200) {
-  //     List<PatientModel> list = dataFromJson(response.body);
-  //     return list;
-  //   } else {
-  //     return []; //if any error occurs then it return a blank list
-  //   }
-  // }
+    if (response.statusCode == 200) {
+      List<PatientModel> list = dataFromJson(response.body);
+      return list;
+    } else {
+      return []; //if any error occurs then it return a blank list
+    }
+  }
 
   static updateIsAnyNotification(isNotif, uId) async {
   // log(isNotif +" : "+ uId);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomListTile extends StatelessWidget {
   final bool isCollapsed;
@@ -24,7 +23,9 @@ class CustomListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed(root,arguments: isConn);
+        Navigator.of(context)
+          .pushNamed(root, arguments: isConn);
+        // Get.toNamed(root,arguments: isConn);
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 500),

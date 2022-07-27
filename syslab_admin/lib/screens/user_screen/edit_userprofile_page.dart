@@ -2,20 +2,19 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/model/patient_model.dart';
 import 'package:syslab_admin/screens/appointments/show_appointment_by_uid.dart';
 import 'package:syslab_admin/screens/user_screen/choose_appointment_type.dart';
 import 'package:syslab_admin/service/patient_service.dart';
-import 'package:syslab_admin/utilities/dialogBox.dart';
-import 'package:syslab_admin/utilities/inputField.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
-import 'package:syslab_admin/widgets/buttonsWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
+import 'package:syslab_admin/utilities/dialog_box.dart';
+import 'package:syslab_admin/utilities/input_field.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
+import 'package:syslab_admin/widgets/buttons_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/utilities/toastMsg.dart';
+import 'package:syslab_admin/utilities/toast_msg.dart';
 
 class EditUserProfilePage extends StatefulWidget {
   final userDetails; //QueryDocumentSnapshot
@@ -42,7 +41,6 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _uIdController = TextEditingController();
   final TextEditingController _cratedDateController = TextEditingController();
-  // final TextEditingController _updatedDateController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _cinController = TextEditingController();
 
@@ -58,7 +56,6 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
       _uIdController.text = widget.userDetails.uId;
       _ageController.text = widget.userDetails.age;
       _cratedDateController.text = widget.userDetails.createdTimeStamp;
-      // _updatedDateController.text = widget.userDetails.updateTimeStamp;
       _selectedGender = widget.userDetails.gender;
       _selectedfamilySituation = widget.userDetails.familySituation;
       _cinController.text = widget.userDetails.cin;
@@ -112,7 +109,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
         ),
         appBar: IAppBars.commonAppBar(context, "Editer profil"),
         body: _isLoading
-            ? LoadingIndicatorWidget()
+            ? const LoadingIndicatorWidget()
             : Form(
                 key: _formKey,
                 child: ListView(
@@ -134,7 +131,6 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                     _checkCnss(_hasCnss),
                     _familySituationDropDown(),
                     _bloodTypeDropDown(),
-                    // _readOnlyInputField("Last updated", _updatedDateController),
                     _roundedCheckedBtn("Vérifier les rendez-vous réservé"),
                     _newAppointmentBtn("Prendre un nouveau rendez-vous")
                   ],
@@ -168,9 +164,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
           C = "1";
           R = "0";
       }
-    // final pattern = RegExp('\\s+'); //remove all space
-    // final fullName = _firstNameController.text + _lastNameController.text;
-    // String searchByName = fullName.toLowerCase().replaceAll(pattern, "");
+
     DateTime now = DateTime.now();
     String createdTimeStamp = DateFormat('yyyy-MM-dd hh:mm').format(now);
     final patientModel = PatientModel(
@@ -183,7 +177,6 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
         cin: _cinController.text,
         familySituation: _selectedfamilySituation,
         bloodType: _selectedBloodType,
-        // searchByName: searchByName,
         hasRamid: R,
         hasCnss: C,
         gender: _selectedGender,
@@ -274,7 +267,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
 
   Widget _phnNumInputField() {
     return InputFields.readableInputField(
-        _phoneNumberController, "Mobile Number", 1);
+        _phoneNumberController, "Numéro de portable", 1);
   }
 
   _checkRamid(bool _checked){

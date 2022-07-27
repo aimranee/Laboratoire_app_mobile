@@ -6,7 +6,6 @@ import 'package:patient/Service/Noftification/handle_firebase_notification.dart'
 import 'package:patient/Service/Noftification/handle_local_notification.dart';
 import 'package:patient/Service/admin_profile_service.dart';
 import 'package:patient/Service/appointment_service.dart';
-import 'package:patient/Service/user_service.dart';
 import 'package:patient/model/appointment_model.dart';
 import 'package:patient/utilities/color.dart';
 import 'package:patient/utilities/dialog_box.dart';
@@ -133,7 +132,7 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
   }
   _handlePrescription(){
     Get.to(() => PrescriptionListByIDPage(
-              appointmentId: widget.appointmentDetails.id)
+        appointmentId: widget.appointmentDetails.id)
     );
   }
   Widget _inputTextField(String labelText, controller, maxLine) {
@@ -170,25 +169,7 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
     final isUpdated=await AppointmentService.updateStatus(appointmentModel);
     log(isUpdated.toString());
     if(isUpdated=="success"){
-        // final notificationModel = NotificationModel(
-        //     title: "Canceled",
-        //     body:
-        //     "Appointment has been canceled for date ${widget.appointmentDetails.appointmentDate}. appointment id: ${widget.appointmentDetails.id}",
-        //     uId: widget.appointmentDetails.uId,
-        //     routeTo: "/Appointmentstatus",
-        //     sendBy: "user",
-        //     sendFrom: "${widget.appointmentDetails.pFirstName} ${widget.appointmentDetails.pLastName}",
-        //     sendTo: "Admin");
-        // final notificationModelForAdmin = NotificationModel(
-        //     title: "Canceled Appointment",
-        //     body:
-        //     "${widget.appointmentDetails.pFirstName} ${widget.appointmentDetails.pLastName} has canceled appointment for date ${widget.appointmentDetails.appointmentDate}. appointment id: ${widget.appointmentDetails.id}",//body
-        //     uId: widget.appointmentDetails.uId,
-        //     sendBy: "${widget.appointmentDetails.pFirstName} ${widget.appointmentDetails.pLastName}"
-        // );
-        // await NotificationService.addData(notificationModel);
         _handleSendNotification();
-        // await NotificationService.addDataForAdmin(notificationModelForAdmin);
         ToastMsg.showToastMsg("Annulé avec succès");
         Get.offAllNamed('/HomePage');
         // Navigator.of(context).pushNamedAndRemoveUntil(

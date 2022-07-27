@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -21,12 +19,12 @@ class LocalNotification{
         onSelectNotification: onSelectNotification);
   }
   static Future onSelectNotification(String payload)async {
-    log("===================Flutter local notification payload $payload");
+    // log("===================Flutter local notification payload $payload");
     Navigator.pushNamed(buildContext,"/NotificationListPage");
 
   }
   static Future<void> showNotification(String title,String body) async {
-    log("===================show notification==============");
+    // log("===================show notification==============");
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
     const AndroidNotificationDetails androidPlatformChannelSpecifics =

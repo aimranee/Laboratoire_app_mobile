@@ -1,11 +1,10 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/screens/user_screen/register_patient_page.dart';
 import 'package:syslab_admin/service/time_calculation.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:intl/intl.dart';
@@ -58,7 +57,6 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
     });
 
     _selectedDate = await _initializeDate(); //Initialize start time
-    // await _getAndSetbookedTimeSlots();
     await _getAndSetOpeningClosingTime();
     _getAndsetTimeSlots(
         _openingTimeHour, _openingTimeMin, _closingTimeHour, _closingTimeMin);
@@ -72,7 +70,6 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
     setState(() {
       _isLoading = true;
     });
-    // await _getAndSetbookedTimeSlots();
     _getAndsetTimeSlots(
       _openingTimeHour, _openingTimeMin, _closingTimeHour, _closingTimeMin);
       setState(() {
@@ -87,11 +84,6 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
 
     return formattedDate;
   }
-
-  // Future<void> _getAndSetbookedTimeSlots() async {
-  //   _bookedTimeSlots = await ReadData.fetchBookedTime(_selectedDate);
-  //   // await ReadData().fetchBookedTime(GlobalVariables.selectedClinicId);
-  // }
 
   Future<void> _getAndSetOpeningClosingTime() async {
     //break the opening and closing time in to the hour and minute
@@ -113,9 +105,6 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
         closingTimeMin,
         serviceTime); //calculate all the possible time slots between opening and closing time
 
-    //  print("Service Time" + " " + "$serviceTime");
-    // print("...................." + "$timeSlots");
-
     if (_bookedTimeSlots != null) {
       //if any booked time exists on the selected day
       timeSlots = TimeCalculation.reCalculateTimeSlots(
@@ -126,7 +115,6 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
           closingTimeMin,
           widget.serviceTimeMin); // Recalculate the time according to the booked time slots and date
     }
-    // print("+++++++++++++++++++++++++ $timeSlots");
 
     _arrangeTimeSlots(
         timeSlots); //separate the time according to morning, afternoon and evening slots
@@ -157,7 +145,7 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: IAppBars.commonAppBar(context, "Choose Time"),
+      appBar: IAppBars.commonAppBar(context, "Choisissez l'heure"),
       bottomNavigationBar: BottomNavBarWidget(
         isEnableBtn: _setTime == "" ? false : true,
         onPressed: () {
@@ -188,7 +176,7 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
                       _buildCalendar(),
                       const Divider(),
                       _isLoading
-                          ? LoadingIndicatorWidget()
+                          ? const LoadingIndicatorWidget()
                           : Column(
                                   children: <Widget>[
                                     _morningTimeSlotsList.isEmpty
@@ -196,7 +184,7 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
                                         : const Padding(
                                             padding: EdgeInsets.only(
                                                 top: 20.0),
-                                            child: Text("Morning Time Slot",
+                                            child: Text("Créneau horaire du matin",
                                                 style: TextStyle(
                                                   fontFamily:
                                                       'OpenSans-SemiBold',
@@ -214,7 +202,7 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
                                         : const Padding(
                                             padding: EdgeInsets.only(
                                                 top: 20.0),
-                                            child: Text("Afternoon Time Slot",
+                                            child: Text("Créneau horaire de l'après-midi",
                                                 style: TextStyle(
                                                   fontFamily:
                                                       'OpenSans-SemiBold',
@@ -232,7 +220,7 @@ class _NewAppointmentTimePageState extends State<NewAppointmentTimePage> {
                                         : const Padding(
                                             padding: EdgeInsets.only(
                                                 top: 20.0),
-                                            child: Text("Evening Time Slot",
+                                            child: Text("Créneau horaire du soir",
                                                 style: TextStyle(
                                                   fontFamily:
                                                       'OpenSans-SemiBold',

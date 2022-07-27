@@ -15,8 +15,8 @@ class AnalysesModel {
   String dispo;
   String lotsActif;
   String index;
-  String createdAt;
-  String updatedAt;
+  String createdTimeStamp;
+  String updatedTimeStamp;
 
   AnalysesModel(
       {this.id,
@@ -35,8 +35,8 @@ class AnalysesModel {
       this.dispo,
       this.lotsActif,
       this.index,
-      this.createdAt,
-      this.updatedAt});
+      this.createdTimeStamp,
+      this.updatedTimeStamp});
 
   AnalysesModel.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -55,8 +55,8 @@ class AnalysesModel {
     dispo = json['dispo'];
     lotsActif = json['lots_actif'];
     index = json['index'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    createdTimeStamp = json['createdTimeStamp'];
+    updatedTimeStamp = json['updatedTimeStamp'];
   }
 
   Map<String, dynamic> toJson() {
@@ -77,8 +77,8 @@ class AnalysesModel {
     data['dispo'] = dispo;
     data['lots_actif'] = lotsActif;
     data['index'] = index;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
+    data['createdTimeStamp'] = createdTimeStamp;
+    data['updatedTimeStamp'] = updatedTimeStamp;
     return data;
   }
 }

@@ -4,15 +4,15 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syslab_admin/screens/appointments/edit_appointment_details_page.dart';
 import 'package:syslab_admin/service/appointment_service.dart';
 import 'package:syslab_admin/service/appointment_type_service.dart';
-import 'package:syslab_admin/utilities/toastMsg.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
-import 'package:syslab_admin/widgets/buttonsWidget.dart';
-import 'package:syslab_admin/widgets/errorWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
-import 'package:syslab_admin/widgets/noDataWidget.dart';
+import 'package:syslab_admin/utilities/toast_msg.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
+import 'package:syslab_admin/widgets/buttons_widget.dart';
+import 'package:syslab_admin/widgets/error_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
+import 'package:syslab_admin/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/utilities/fontStyle.dart';
+import 'package:syslab_admin/utilities/font_style.dart';
 // import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 import 'package:intl/intl.dart';
 
@@ -95,7 +95,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
             backgroundColor: btnColor,
             onPressed: () {}),
         body: _isLoading
-            ? LoadingIndicatorWidget()
+            ? const LoadingIndicatorWidget()
             : Container(child: cardListBuilder()));
   }
 
@@ -139,7 +139,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.length == 0){
-              return NoDataWidget();
+              return const NoDataWidget();
             
             } else {
               itemLength = snapshot.data.length;
@@ -153,9 +153,9 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
             }
           }
           else if (snapshot.hasError) {
-            return IErrorWidget();
+            return const IErrorWidget();
           } else {
-            return LoadingIndicatorWidget();
+            return const LoadingIndicatorWidget();
           }
         });
   }
@@ -271,7 +271,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
 
   _handleTypes(newStatus) {
     if (newStatus.length == 0) {
-      ToastMsg.showToastMsg("please Select at least one");
+      ToastMsg.showToastMsg("veuillez sélectionner au moins un");
     } else if (newStatus.length > 0) {
       _selectedTypes.clear();
       setState(() {
@@ -408,7 +408,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
           content: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.width,
-             child :
+            child :
           SfDateRangePicker(
             view: DateRangePickerView.month,
             monthViewSettings: const DateRangePickerMonthViewSettings(firstDayOfWeek: 6),
@@ -437,17 +437,6 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
     );
   }
 
-  // void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-
-  //   log(" : "+args.value);
-  //   if (args != null) {
-  //     setState(() {
-  //       _firstDate = _setTodayDateFormat(args.value.startDate);
-  //       _lastDate = _setTodayDateFormat(args.value.endDate);
-  //     });
-  //   }
-  // }
-
   String _setTodayDateFormat(date) {
     final DateFormat formatter = DateFormat('M-d-yyyy');
     String formatted = formatter.format(date);
@@ -466,13 +455,13 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
           ),
           title: const Text("Choose"),
           content: const Text(
-              "Tap on All to get appointment of all dates\n\nTap on Date to pick a date range"),
+              "Appuyez sur Tout pour obtenir le rendez-vous de toutes les dates\n\nAppuyez sur Date pour choisir une plage de dates"),
           actions: <Widget>[
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: btnColor,
                 ),
-                child: const Text("All", style: TextStyle(color: Colors.white)),
+                child: const Text("Tous", style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   setState(() {
                     _firstDate = "All";

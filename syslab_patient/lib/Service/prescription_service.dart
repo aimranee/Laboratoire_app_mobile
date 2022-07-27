@@ -33,7 +33,7 @@ class PrescriptionService {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String userId = pref.getString("uId");
     
-    final response = await http.post(Uri.parse(_viewUrlById),body: {"uId":userId,"appointmentId":appointmentId});
+    final response = await http.get(Uri.parse("$_viewUrlById/$userId/$appointmentId"));
     if (response.statusCode == 200) {
       List<PrescriptionModel> list = dataFromJson(response.body);
       return list;

@@ -193,22 +193,22 @@ class TimeCalculation {
 
     if (min < 60 && min >= 10) {
       hour = int.parse(time.substring(0, 2)) + hour;
-      returnTime = "$hour" + ":" + "$min";
+      returnTime = "$hour" ":" + "$min";
     } else if (min > 60) {
       hour = int.parse(time.substring(0, 2)) + hour + 1;
       min = min - 60;
       if (min < 10) {
-        returnTime = "$hour" + ":" + "0" + "$min";
+        returnTime = "$hour" ":" + "0" + "$min";
       } else {
-        returnTime = "$hour" + ":" + "$min";
+        returnTime = "$hour" ":" + "$min";
       }
     } else if (min == 60) {
       hour = int.parse(time.substring(0, 2)) + hour + 1;
       min = 0;
-      returnTime = "$hour" + ":" + "0" + "$min";
+      returnTime = "$hour" ":" + "0" + "$min";
     } else {
       hour = int.parse(time.substring(0, 2)) + hour;
-      returnTime = "$hour" + ":" + "0" + "$min";
+      returnTime = "$hour" ":" + "0" + "$min";
       print("3 $returnTime");
     }
     if (returnTime.substring(0, 2).contains(":")) {
@@ -228,22 +228,22 @@ class TimeCalculation {
     if (min > 0) {
       hour = int.parse(time.substring(0, 2)) - hour;
       if (min < 10) {
-        returnTime = "$hour" + ":" + "0" + "$min";
+        returnTime = "$hour" ":" + "0" + "$min";
       } else {
-        returnTime = "$hour" + ":" + "$min";
+        returnTime = "$hour" ":" + "$min";
       }
     } else if (min < 0 && min != 0) {
       hour = int.parse(time.substring(0, 2)) - hour - 1;
       min = min + 60;
       if (min < 10) {
-        returnTime = "$hour" + ":" + "0" + "$min";
+        returnTime = "$hour" ":" + "0" + "$min";
       } else {
-        returnTime = "$hour" + ":" + "$min";
+        returnTime = "$hour" ":" + "$min";
       }
     } else if (min == 0) {
       hour = int.parse(time.substring(0, 2)) - hour;
       min = 0;
-      returnTime = "$hour" + ":" + "0" + "$min";
+      returnTime = "$hour" ":" + "0" + "$min";
     }
     if (returnTime.substring(0, 2).contains(":")) {
       returnTime =
@@ -256,7 +256,7 @@ class TimeCalculation {
   static List calculateBookedTime(
       String time, List bookedTime, int serviceTimeMin) {
     List<String> bookedTimeSlots = [];
-    bookedTime.forEach((element) {
+    for (var element in bookedTime) {
       //     print("addd" + _addTime(element["bookedTime"], element["forMin"]));
       // print("subtract" + _subtractime(element["bookedTime"], serviceTimeMin));
       String afterTime =
@@ -297,7 +297,7 @@ class TimeCalculation {
         bookedTimeSlots.add(time);
         //   print("$time BBBBBBBBBB");
       }
-    });
+    }
     return bookedTimeSlots;
   }
 }

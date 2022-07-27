@@ -13,10 +13,8 @@ import 'package:flutter/material.dart';
 
 
 class PrescriptionListByIDPage extends StatefulWidget {
-  // ignore: prefer_typing_uninitialized_variables
   final appointmentId;
-  // ignore: use_key_in_widget_constructors
-  const PrescriptionListByIDPage({this.appointmentId});
+  PrescriptionListByIDPage({this.appointmentId});
   @override
   _PrescriptionListByIDPageState createState() => _PrescriptionListByIDPageState();
 }
@@ -49,7 +47,6 @@ class _PrescriptionListByIDPageState extends State<PrescriptionListByIDPage> {
               decoration:IBoxDecoration.upperBoxDecoration(),
               child:FutureBuilder(
                   future: PrescriptionService.getDataByApId(appointmentId: widget.appointmentId),
-                  //ReadData.fetchNotification(FirebaseAuth.instance.currentUser.uid),//fetch all times
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return snapshot.data.length == 0
@@ -70,7 +67,6 @@ class _PrescriptionListByIDPageState extends State<PrescriptionListByIDPage> {
     );
   }
   Widget _buildCard(prescriptionDetails) {
-    // _itemLength=notificationDetails.length;
     return ListView.builder(
         controller: _scrollController,
         itemCount: prescriptionDetails.length,

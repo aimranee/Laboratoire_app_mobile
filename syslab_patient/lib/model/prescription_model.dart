@@ -1,7 +1,7 @@
 
 class PrescriptionModel {
   String id;
-  String prescription;
+  String results;
   String patientName; //fcm id
   String appointmentId;
   String appointmentTime;
@@ -9,7 +9,6 @@ class PrescriptionModel {
   String appointmentName;
   String drName;
   String price;
-  String fileUrl;
   String isPaied;
   String prescriptionStatus;
   String patientId;
@@ -23,8 +22,7 @@ class PrescriptionModel {
     this.appointmentName,
     this.price,
     this.patientName,
-    this.prescription,
-    this.fileUrl,
+    this.results,
     this.drName,
     this.isPaied,
     this.patientId,
@@ -39,11 +37,10 @@ class PrescriptionModel {
       appointmentDate: json['appointmentDate'],
       appointmentId: json['appointmentId'],
       appointmentName: json['appointmentName'],
-      prescription: json['prescription'],
+      results: json['results'],
       patientName: json['patientName'],
       price: json['price'].toString(),
       drName: json['drName'],
-      fileUrl: json['fileUrl'],
       isPaied: json['isPaied'].toString(),
       prescriptionStatus: json['prescriptionStatus'],
       updatedTimeStamp: json['updatedTimeStamp']

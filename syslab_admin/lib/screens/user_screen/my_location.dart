@@ -1,14 +1,13 @@
-import 'dart:developer';
 import 'package:flutter_geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:syslab_admin/screens/user_screen/confiramtionPage.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/utilities/fontStyle.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
+import 'package:syslab_admin/utilities/font_style.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
 import 'package:flutter/material.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
 
 class MyLocation extends StatefulWidget {
   final userDetails;
@@ -28,7 +27,7 @@ class MyLocation extends StatefulWidget {
 
   const MyLocation({Key key, 
     this.userDetails, 
-    this.appointmentType, 
+    this.appointmentType,   
     this.serviceTimeMin, 
     this.setTime, 
     this.selectedDate, 
@@ -117,53 +116,37 @@ class _MyLocationState extends State<MyLocation> {
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10)
                     ),
-
-                    // child: Column(
-                    //   children: [
-                    //     Row(children: [
-                    //       Expanded(child: TextFormField(
-                    //         controller: _searchController,
-                    //         textCapitalization: TextCapitalization.words,
-                    //         decoration: InputDecoration(hintText: 'Search by city'),
-                    //       )),
-                    //       IconButton(onPressed: () {}, icon: Icon(Icons.search),)
-                    //     ],),
-                    //     Expanded(
                           
-                          child: GoogleMap(
-                            initialCameraPosition: _kGooglePlex,
-                            myLocationEnabled: true,
-                            myLocationButtonEnabled: true,
-                            markers: markers,
-                            zoomControlsEnabled: false,
-                            onTap: (LatLng latLng) async {
-                              final coordinates = Coordinates(latLng.latitude, latLng.longitude);
-                              var address = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-                              var first = address.first;
-                              Marker newMarker = Marker(
-                                markerId: MarkerId('$id'),
-                                position: LatLng(latLng.latitude, latLng.longitude),
-                                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-                              );
-                              markers.clear();
-                              markers.add(newMarker);
+                    child: GoogleMap(
+                      initialCameraPosition: _kGooglePlex,
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: true,
+                      markers: markers,
+                      zoomControlsEnabled: false,
+                      onTap: (LatLng latLng) async {
+                        final coordinates = Coordinates(latLng.latitude, latLng.longitude);
+                        var address = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+                        var first = address.first;
+                        Marker newMarker = Marker(
+                          markerId: MarkerId('$id'),
+                          position: LatLng(latLng.latitude, latLng.longitude),
+                          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+                        );
+                        markers.clear();
+                        markers.add(newMarker);
 
-                              log("message : "+first.addressLine.toString());
-                              setState(() {
-                                longitude = latLng.longitude;
-                                latitude = latLng.latitude;
-                                addressPatient = "$latitude,$longitude";
-                                addressLine = first.addressLine.toString();
-                              });
-                            },
-                            // markers: Set<Marker>.of(_markers),
-                            onMapCreated: (GoogleMapController controller){
-                              googleMapController = controller;
-                            }
-                          ),
-                        // ),
-                      // ],
-                    // )
+                        // log("message : "+first.addressLine.toString());
+                        setState(() {
+                          longitude = latLng.longitude;
+                          latitude = latLng.latitude;
+                          addressPatient = "$latitude,$longitude";
+                          addressLine = first.addressLine.toString();
+                        });
+                      },
+                      onMapCreated: (GoogleMapController controller){
+                        googleMapController = controller;
+                      }
+                    ),
                 )
               ),
           ),
@@ -221,7 +204,7 @@ class _MyLocationState extends State<MyLocation> {
             var address = await Geocoder.local.findAddressesFromCoordinates(coordinates);
             var first = address.first;
             // print("${first.featureName} : ${first.addressLine}");
-            log ("address : "+first.featureName.toString()+"  "+first.addressLine.toString());
+            // log ("address : "+first.featureName.toString()+"  "+first.addressLine.toString());
             setState(() {
               longitude = position.longitude;
               latitude = position.latitude;

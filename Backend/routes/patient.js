@@ -12,6 +12,10 @@ const routes = express.Router();
 
 routes.route("/signup").post(patientController.signup);
 routes.route("/login").post(patientController.login);
+routes.route("/update_user").put(patientController.update_user);
+routes.route("/update_user_fcm").put(patientController.update_user_fcm);
+routes.route("/get_fcmId_admin").get(patientController.get_fcmId_admin);
+routes.route("/get_user/:uId").get(patientController.get_user);
 
 routes.route("/get_availability").get(availabilityController.get_availability);
 
@@ -22,7 +26,7 @@ routes
 routes.route("/get_categories").get(analysesController.get_categories);
 routes.route("/get_cat_analyse").get(analysesController.get_cat_analyse);
 routes
-  .route("/get_appointment_by_status/:uId/:status")
+.route("/get_appointment_by_status/:uId/:status")
   .get(appointmentsController.get_appointment_by_status);
 
 routes.route("/add_appointment").post(appointmentsController.add_appointment);
@@ -30,13 +34,12 @@ routes
   .route("/get_appointment_type")
   .get(appointmentsTypeController.get_appointment_type);
 
-routes.route("/get_user/:uId").get(patientController.get_user);
 
 routes
   .route("/get_prescription/:uId")
   .get(prescriptionController.get_prescription);
 routes
-  .route("/get_prescription_byid")
+  .route("/get_prescription_byid/:patientId/:appointmentId")
   .get(prescriptionController.get_prescription_byid);
 
 routes
@@ -46,12 +49,6 @@ routes
 routes
   .route("/update_appointment_status")
   .put(appointmentsController.update_appointment_status);
-
-routes.route("/update_user").put(patientController.update_user);
-
-routes.route("/update_user_fcm").put(patientController.update_user_fcm);
-
-routes.route("/get_admin_profile").get(patientController.get_admin_profile);
 
 routes
   .route("/get_notif_status_patient/:uId")

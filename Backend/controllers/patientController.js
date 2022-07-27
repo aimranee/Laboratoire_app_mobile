@@ -72,17 +72,15 @@ exports.signup = function (req, res) {
             } else {
               // console.log(hashedPassword);
               connection.query(
-                `INSERT INTO patient (firstName, lastName, email, password, fcmId, pNo, city, createdTimeStamp, updatedTimeStamp, age, gender, cin, hasRamid, hasCnss, familySituation, bloodType)values(?,?,${db.escape(
+                `INSERT INTO patient (firstName, lastName, email, password, fcmId, pNo, city, age, gender, cin, hasRamid, hasCnss, familySituation, bloodType, isAnyNotification, createdTimeStamp, updatedTimeStamp)values(?,?,${db.escape(
                   params.email
-                )},'${hashedPassword}',?,?,?,?,?,?,?,?,?,?,?,?);`,
+                )},'${hashedPassword}',?,?,?,?,?,?,?,?,?,?,?,?,?);`,
                 [
                   params.firstName,
                   params.lastName,
                   params.fcmId,
                   params.pNo,
                   params.city,
-                  params.createdTimeStamp,
-                  params.updatedTimeStamp,
                   params.age,
                   params.gender,
                   params.cin,
@@ -90,6 +88,9 @@ exports.signup = function (req, res) {
                   params.hasCnss,
                   params.familySituation,
                   params.bloodType,
+                  params.isAnyNotification,
+                  params.createdTimeStamp,
+                  params.updatedTimeStamp,
                 ],
                 (err, rows) => {
                   connection.release();
@@ -214,19 +215,15 @@ exports.get_user = function (req, res) {
   });
 };
 
-exports.get_admin_profile = function (req, res) {
+exports.get_fcmId_admin = function (req, res) {
   db.getConnection((err, connection) => {
     if (err) throw err;
-    connection.query(
-      "SELECT fcmId from admin",
-      [req.params.uId],
-      (err, rows) => {
-        connection.release();
-        if (!err) res.send(rows);
-        else console.log(err);
+    connection.query("SELECT * from admin", [req.params.uId], (err, rows) => {
+      connection.release();
+      if (!err) res.send(rows);
+      else console.log(err);
 
-        // console.log("The data from admin table \n", rows);
-      }
-    );
+      // console.log("The data from admin table \n", rows);
+    });
   });
 };

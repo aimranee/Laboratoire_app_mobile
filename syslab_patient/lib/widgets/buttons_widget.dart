@@ -147,12 +147,8 @@ class DeleteButtonWidget extends StatelessWidget {
 }
 
 class RoundedBtnWidget extends StatelessWidget {
-  @required
   final String title;
-  @required
-  // ignore: prefer_typing_uninitialized_variables
   final onPressed;
-  // ignore: use_key_in_widget_constructors
   const RoundedBtnWidget({this.onPressed, this.title});
   @override
   Widget build(BuildContext context) {

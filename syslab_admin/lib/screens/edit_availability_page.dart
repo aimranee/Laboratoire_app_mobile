@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/model/availability_model.dart';
 import 'package:syslab_admin/service/availablity_service.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
-import 'package:syslab_admin/utilities/dialogBox.dart';
-import 'package:syslab_admin/utilities/inputField.dart';
-import 'package:syslab_admin/utilities/toastMsg.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
+import 'package:syslab_admin/utilities/dialog_box.dart';
+import 'package:syslab_admin/utilities/input_field.dart';
+import 'package:syslab_admin/utilities/toast_msg.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
 
 class EditAvailabilityPage extends StatefulWidget {
+  const EditAvailabilityPage({Key key}) : super(key: key);
+
   @override
   _EditAvailabilityPageState createState() => _EditAvailabilityPageState();
 }
@@ -58,7 +59,7 @@ class _EditAvailabilityPageState extends State<EditAvailabilityPage> {
         isEnableBtn: _isEnableBtn,
       ),
       body: _isLoading
-          ? LoadingIndicatorWidget()
+          ? const LoadingIndicatorWidget()
           : Form(
               key: _formKey,
               child: ListView(
@@ -67,39 +68,39 @@ class _EditAvailabilityPageState extends State<EditAvailabilityPage> {
                       padding:
                           EdgeInsets.only(top: 20.0, left: 20, right: 20),
                       child: Text(
-                        "We are available on",
+                        "Nous sommes disponibles sur",
                         style: TextStyle(
                           fontFamily: 'OpenSans-SemiBold',
                           fontSize: 16,
                         ),
                       )),
-                  InputFields.commonInputField(_monController, "Monday",
+                  InputFields.commonInputField(_monController, "Lundi",
                       (item) {
-                    return item.length > 0 ? null : "Enter text ";
+                    return item.length > 0 ? null : "Entrez du texte ";
                   }, TextInputType.text, 1),
-                  InputFields.commonInputField(_tueController, "Tuesday",
+                  InputFields.commonInputField(_tueController, "Mardi",
                       (item) {
-                    return item.length > 0 ? null : "Enter text ";
+                    return item.length > 0 ? null : "Entrez du texte ";
                   }, TextInputType.text, 1),
-                  InputFields.commonInputField(_wedController, "Wednesday",
+                  InputFields.commonInputField(_wedController, "Mercredi",
                       (item) {
-                    return item.length > 0 ? null : "Enter text ";
+                    return item.length > 0 ? null : "Entrez du texte ";
                   }, TextInputType.text, 1),
-                  InputFields.commonInputField(_thuController, "Thursday",
+                  InputFields.commonInputField(_thuController, "Jeudi",
                       (item) {
-                    return item.length > 0 ? null : "Enter text ";
+                    return item.length > 0 ? null : "Entrez du texte ";
                   }, TextInputType.text, 1),
-                  InputFields.commonInputField(_friController, "Friday",
+                  InputFields.commonInputField(_friController, "Vendredi",
                       (item) {
-                    return item.length > 0 ? null : "Enter text ";
+                    return item.length > 0 ? null : "Entrez du texte ";
                   }, TextInputType.text, 1),
-                  InputFields.commonInputField(_satController, "Saturday",
+                  InputFields.commonInputField(_satController, "Samedi",
                       (item) {
-                    return item.length > 0 ? null : "Enter text ";
+                    return item.length > 0 ? null : "Entrez du texte ";
                   }, TextInputType.text, 1),
-                  InputFields.commonInputField(_sunController, "Sunday",
+                  InputFields.commonInputField(_sunController, "Dimanche",
                       (item) {
-                    return item.length > 0 ? null : "Enter text ";
+                    return item.length > 0 ? null : "Entrez du texte ";
                   }, TextInputType.text, 1),
                 ],
               ),
@@ -109,7 +110,7 @@ class _EditAvailabilityPageState extends State<EditAvailabilityPage> {
 
   _takeConfirmation() {
     DialogBoxes.confirmationBox(
-        context, "Update", "Are you sure want to update", _handleUpdate);
+        context, "Mise à jour", "Voulez-vous vraiment mettre à jour", _handleUpdate);
   }
 
   _handleUpdate() async {
@@ -131,7 +132,7 @@ class _EditAvailabilityPageState extends State<EditAvailabilityPage> {
       if (res == "success") {
         ToastMsg.showToastMsg("Mise à jour réussie");
       } else if (res == "error") {
-        ToastMsg.showToastMsg("Something wents wrong");
+        ToastMsg.showToastMsg("Quelque chose s'est mal passé");
       }
       setState(() {
         _isEnableBtn = true;

@@ -1,16 +1,15 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/model/analyses_category_model.dart';
 import 'package:syslab_admin/screens/user_screen/confiramtionPage.dart';
 import 'package:syslab_admin/screens/user_screen/my_location.dart';
 import 'package:syslab_admin/service/analyses_select_services.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/utilities/inputField.dart';
-import 'package:syslab_admin/utilities/toastMsg.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
+import 'package:syslab_admin/utilities/input_field.dart';
+import 'package:syslab_admin/utilities/toast_msg.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 // import 'package:syslab_admin/screens/userScreen/confiramtionPage.dart';
@@ -43,7 +42,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _desController = TextEditingController();
   final TextEditingController _cinController = TextEditingController();
-  String _selectedGender = 'Gender';
+  String _selectedGender = 'Genre';
   String uId = "";
 
   @override
@@ -88,13 +87,13 @@ class _RegisterPatientState extends State<RegisterPatient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: IAppBars.commonAppBar(context, "Register Patient"),
+      appBar: IAppBars.commonAppBar(context, "Inscrire un patient"),
       bottomNavigationBar: BottomNavBarWidget(
         isEnableBtn: true,
         onPressed: () {
           if (_formKey.currentState.validate()) {
-            if (_selectedGender == "Gender") {
-              ToastMsg.showToastMsg("Please select gender");
+            if (_selectedGender == "Genre") {
+              ToastMsg.showToastMsg("Veuillez sélectionner le genre");
             } else if (analyses == "" || summ == 0) {
                   ToastMsg.showToastMsg("Veuillez sélectionner les analyses");
             } else {
@@ -152,19 +151,19 @@ class _RegisterPatientState extends State<RegisterPatient> {
               top: 8.0, bottom: 8.0, left: 15, right: 15),
           child: ListView(
             children: <Widget>[
-              InputFields.commonInputField(_firstNameController, "First Name",
+              InputFields.commonInputField(_firstNameController, "Prénom",
                   (item) {
-                return item.length > 0 ? null : "Enter first name";
+                return item.length > 0 ? null : "Entrez votre prénom";
               }, TextInputType.text, 1),
-              InputFields.commonInputField(_lastNameController, "Last Name",
+              InputFields.commonInputField(_lastNameController, "Nom de famille",
                   (item) {
-                return item.length > 0 ? null : "Enter last name";
+                return item.length > 0 ? null : "Entrer le nom de famille";
               }, TextInputType.text, 1),
               InputFields.commonInputField(
-                  _phoneNumberController, "Mobile Number", (item) {
+                  _phoneNumberController, "Numéro de portable", (item) {
                 return item.length == 10
                     ? null
-                    : "Enter a 10 digit mobile number";
+                    : "Entrez un numéro de mobile à 10 chiffres";
               }, TextInputType.phone, 1),
               Padding(
                 padding: const EdgeInsets.only(
@@ -179,7 +178,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
                 RegExp regex = RegExp(pattern);
                 if (item.length > 0) {
                   if (!regex.hasMatch(item) || item == null) {
-                    return 'Enter a valid email address';
+                    return 'Entrez une adresse mail valide';
                   } else {
                     return null;
                   }
@@ -188,18 +187,18 @@ class _RegisterPatientState extends State<RegisterPatient> {
                 }
               }, TextInputType.emailAddress, 1),
               InputFields.commonInputField(_cityController, "City", (item) {
-                return item.length > 0 ? null : "Enter a city name";
+                return item.length > 0 ? null : "Entrez nom de ville";
               }, TextInputType.text, 1),
               InputFields.commonInputField(_cinController, "CIN", (item) {
-                return item.length > 0 ? null : "Enter a CIN";
+                return item.length > 0 ? null : "Entrez CIN";
               }, TextInputType.text, 1),
               _getAnalyses(),
               InputFields.commonInputField(
-                  _desController, "Description, About problem", (item) {
+                  _desController, "Description, À propos du problème", (item) {
                 if (item.isEmpty) {
                   return null;
                 } else {
-                  return item.length > 0 ? null : "Enter Description";
+                  return item.length > 0 ? null : "Entrez la description";
                 }
               }, TextInputType.text, 5),
             ],
@@ -219,10 +218,10 @@ class _RegisterPatientState extends State<RegisterPatient> {
         style: const TextStyle(color: Colors.white),
         iconEnabledColor: btnColor,
         items: <String>[
-          'Gender',
+          'Le genre',
           'Male',
-          'Female',
-          'Other',
+          'Femelle',
+          'Autre',
         ].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -233,7 +232,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
           );
         }).toList(),
         hint: const Text(
-          "Select Gender",
+          "Sélectionnez le genre",
         ),
         onChanged: (String value) {
           setState(() {

@@ -1,10 +1,8 @@
 import 'dart:developer';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:patient/Screen/prescription/prescription_details.dart';
 import 'package:patient/Service/prescription_service.dart';
-import 'package:patient/Service/user_service.dart';
 import 'package:patient/utilities/color.dart';
 import 'package:patient/utilities/decoration.dart';
 import 'package:patient/widgets/appbars_widget.dart';
@@ -15,7 +13,6 @@ import 'package:patient/widgets/error_widget.dart';
 import 'package:patient/widgets/loading_indicator.dart';
 import 'package:patient/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class PrescriptionListPage extends StatefulWidget {
@@ -60,7 +57,6 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
               decoration:IBoxDecoration.upperBoxDecoration(),
               child:FutureBuilder(
                   future: PrescriptionService.getData(),
-                  //ReadData.fetchNotification(FirebaseAuth.instance.currentUser.uid),//fetch all times
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return snapshot.data.length == 0
@@ -81,7 +77,6 @@ class _PrescriptionListPageState extends State<PrescriptionListPage> {
     );
   }
   Widget _buildCard(prescriptionDetails) {
-    // _itemLength=notificationDetails.length;
     return ListView.builder(
         controller: _scrollController,
         itemCount: prescriptionDetails.length,

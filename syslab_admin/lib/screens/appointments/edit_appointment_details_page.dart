@@ -11,14 +11,14 @@ import 'package:syslab_admin/service/notification/firebase_notification.dart';
 import 'package:syslab_admin/service/admin_service.dart';
 import 'package:syslab_admin/service/patient_service.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/utilities/fontStyle.dart';
-import 'package:syslab_admin/utilities/inputField.dart';
-import 'package:syslab_admin/widgets/bottomNavigationBarWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
+import 'package:syslab_admin/utilities/font_style.dart';
+import 'package:syslab_admin/utilities/input_field.dart';
+import 'package:syslab_admin/widgets/bottom_navigation_bar_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:syslab_admin/utilities/appbars.dart';
-import 'package:syslab_admin/utilities/dialogBox.dart';
-import 'package:syslab_admin/utilities/toastMsg.dart';
+import 'package:syslab_admin/utilities/app_bars.dart';
+import 'package:syslab_admin/utilities/dialog_box.dart';
+import 'package:syslab_admin/utilities/toast_msg.dart';
 
 class EditAppointmentDetailsPage extends StatefulWidget {
   final appointmentDetails;
@@ -131,7 +131,7 @@ class _EditAppointmentDetailsPageState extends State<EditAppointmentDetailsPage>
         ):IAppBars.commonAppBar(context, "Tous les rendez-vous"),
         bottomNavigationBar: BottomNavBarWidget(
           title: widget.appointmentDetails.appointmentStatus ==
-              "Visited"?"Prescription": "Update",
+              "Visited"?"Les resultats": "Mise à jour",
           onPressed:widget.appointmentDetails.appointmentStatus ==
               "Visited"?_handlePrescriptionBtn: _takeConfirmation,
           isEnableBtn:widget.appointmentDetails.appointmentStatus ==
@@ -141,7 +141,7 @@ class _EditAppointmentDetailsPageState extends State<EditAppointmentDetailsPage>
             "Rejected" ||
           widget.appointmentDetails.appointmentStatus ==
             "Visited" ||
-          widget.appointmentDetails.appointmentStatus =="Canceled"
+          widget.appointmentDetails.appointmentStatus =="Annulé"
 
             ? null: FloatingActionButton(
             elevation: 0.0,
@@ -153,30 +153,30 @@ class _EditAppointmentDetailsPageState extends State<EditAppointmentDetailsPage>
             onPressed: (){}
         ),
         body: _isLoading
-            ? LoadingIndicatorWidget()
+            ? const LoadingIndicatorWidget()
             : Form(
           key: _formKey,
           child: ListView(
 
               children: [
-                InputFields.commonInputField(_uNameController, "Patient Name", (item) {
-                  return item.length > 0 ? null : "Enter last name";
+                InputFields.commonInputField(_uNameController, "Nom du patient", (item) {
+                  return item.length > 0 ? null : "Enter le nom du patient";
                 }, TextInputType.text, 1),
                 InputFields.readableInputField(_cinController, "CIN Patient", 1),
-                InputFields.readableInputField(_dateController, "Appointment Date", 1),
-                InputFields.readableInputField(_timeController,  "Appointment Time", 1),
-                InputFields.readableInputField(_appointmentTypeController,  "Appointment Type", 1),
+                InputFields.readableInputField(_dateController, "Date de rendez-vous", 1),
+                InputFields.readableInputField(_timeController,  "Heure de rendez-vous", 1),
+                InputFields.readableInputField(_appointmentTypeController,  "Type de rendez-vous", 1),
                 InputFields.readableInputField(_analysesController,  "Analyses", 1),
                 InputFields.readableInputField(_priceController,  "Prix", 1),
-                InputFields.readableInputField(_appointmentIdController,  "Appointment id", 1),
+                InputFields.readableInputField(_appointmentIdController,  "ID de rendez-vous", 1),
                 InputFields.readableInputField(_uIdController, "User Id", 1),
-                InputFields.commonInputField(_descController, "Description, About problem", (item) {
+                InputFields.commonInputField(_descController, "Description, À propos du problème", (item) {
                   if (item.isEmpty) {
                     return null;
                   } else {
                     return item.length > 0
                         ? null
-                        : "Enter Description";
+                        : "Entrez Description";
                   }
                 }, TextInputType.text, 5),
 
@@ -184,7 +184,7 @@ class _EditAppointmentDetailsPageState extends State<EditAppointmentDetailsPage>
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                   child: Row(
                     children: [
-                      const Text("Appointment Status:     "),
+                      const Text("Statut du rendez-vous:     "),
                       if ( widget.appointmentDetails.appointmentStatus  ==
                           "Confirmed")
                         _statusIndicator(Colors.green)
@@ -574,7 +574,7 @@ class _EditAppointmentDetailsPageState extends State<EditAppointmentDetailsPage>
           '/AppointmentListPage', ModalRoute.withName('/HomePage'));
     }
     else{
-      ToastMsg.showToastMsg("Something went wrong");
+      ToastMsg.showToastMsg("Quelque chose s'est mal passé");
 
     }
     setState(() {

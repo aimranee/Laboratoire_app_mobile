@@ -1,18 +1,17 @@
 // import 'package:syslab_admin/service/drProfileService.dart';
-import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syslab_admin/screens/home_page.dart';
 import 'package:syslab_admin/service/admin_service.dart';
-import 'package:syslab_admin/widgets/buttonsWidget.dart';
-import 'package:syslab_admin/widgets/loadingIndicator.dart';
+import 'package:syslab_admin/widgets/buttons_widget.dart';
+import 'package:syslab_admin/widgets/loading_indicator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:syslab_admin/service/authService/auth_service.dart';
 import 'package:syslab_admin/utilities/colors.dart';
-import 'package:syslab_admin/utilities/toastMsg.dart';
+import 'package:syslab_admin/utilities/toast_msg.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -23,7 +22,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
-  bool _isEmailVerificationSend = false;
+  final bool _isEmailVerificationSend = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _userIdController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -203,8 +202,8 @@ class _LoginPageState extends State<LoginPage> {
                 _userIdField(),
                 _passwordField(),
                 _isLoading?
-                     Padding(
-                        padding: const EdgeInsets.all(8.0),
+                     const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: LoadingIndicatorWidget(),
                       )
                     : _loginBtn()
@@ -230,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
       });
       final res = await AuthService.signIn(
           _userIdController.text, _passwordController.text);
-          log("message");
+          // log("message");
       if (res['message']=="login successfully") {
        await setData(res["uId"].toString(), res["token"].toString());
        
@@ -251,10 +250,8 @@ class _LoginPageState extends State<LoginPage> {
   setData(uId, token) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final fcm = await FirebaseMessaging.instance.getToken();
-
     pref.setString("token", token);
     pref.setString("uId", uId);
-    pref.setString("fcm", fcm);
     await AdminService.updateFcmId(uId, fcm);
   }
 }

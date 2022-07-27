@@ -6,9 +6,7 @@ import 'package:patient/Service/user_service.dart';
 import 'package:patient/utilities/color.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:patient/Service/AuthService/authservice.dart';
-import 'package:patient/Service/admin_profile_service.dart';
 import 'package:patient/widgets/loading_indicator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:patient/widgets/buttons_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:patient/utilities/toast_msg.dart';
@@ -194,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
   setData(uId, token) async {
     final fcm = await FirebaseMessaging.instance.getToken();
     await UserService.updateFcmId(uId, fcm);
-    // log ("token : "+uId);
+    log ("token : "+uId);
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString("token", token);
     pref.setString("fcm", fcm);
