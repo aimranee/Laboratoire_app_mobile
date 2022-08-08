@@ -11,7 +11,6 @@ void main() async {
   await Firebase.initializeApp();
   await FlutterDownloader.initialize(debug: true,);
   initializeDateFormatting();
-  // Stripe.publishableKey = 'pk_test_51L5terGwqZ9fHWymgPqbertK1y3uH71QFgPBIaSBuegAhrw9ClYypmglh1ifEmkmMkPbZH3tEEjD1XPvaviAu1YK002PzXuYGp';
 
   runApp(const MyApp());
 }
@@ -30,9 +29,7 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return //<--- ChangeNotifierProvider
-
-      GetMaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.splashScreen,
       getPages: AppRoutes.pages,

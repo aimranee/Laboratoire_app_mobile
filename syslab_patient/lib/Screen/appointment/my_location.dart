@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:flutter_geocoder/geocoder.dart';
+import 'package:geocode/geocode.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -107,9 +107,7 @@ class _MyLocationState extends State<MyLocation> {
                             markers: markers,
                             zoomControlsEnabled: false,
                             onTap: (LatLng latLng) async {
-                              final coordinates = new Coordinates(latLng.latitude, latLng.longitude);
-                              var address = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-                              var first = address.first;
+                              
                               Marker newMarker = Marker(
                                 markerId: MarkerId('$id'),
                                 position: LatLng(latLng.latitude, latLng.longitude),
@@ -117,13 +115,16 @@ class _MyLocationState extends State<MyLocation> {
                               );
                               markers.clear();
                               markers.add(newMarker);
-
+                              GeoCode geoCode = GeoCode();
+                              Address address =
+                                  await geoCode.reverseGeocoding(latitude: latLng.latitude, longitude: latLng.longitude);
+                              String adresse = "${address.streetAddress}, ${address.city}, ${address.countryName}, ${address.postal}";
                               // log("message : "+first.addressLine.toString());
                               setState(() {
                                 longitude = latLng.longitude;
                                 latitude = latLng.latitude;
                                 addressPatient = "$latitude,$longitude";
-                                addressLine = first.addressLine.toString();
+                                addressLine = adresse;
                               });
                             },
                             // markers: Set<Marker>.of(_markers),
@@ -187,15 +188,15 @@ class _MyLocationState extends State<MyLocation> {
 
             markers.add(Marker(markerId: const MarkerId('currentLocation'),position: LatLng(position.latitude, position.longitude)));
             
-            final coordinates = new Coordinates(position.latitude, position.longitude);
-            var address = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-            var first = address.first;
-            // print("${first.featureName} : ${first.addressLine}");
-            log ("address : "+first.featureName.toString()+"  "+first.addressLine.toString());
+            GeoCode geoCode = GeoCode();
+            Address address =
+                await geoCode.reverseGeocoding(latitude: position.latitude, longitude: position.longitude);
+            String adresse = "${address.streetAddress}, ${address.city}, ${address.countryName}, ${address.postal}";
+            // log ("address : "+first.featureName.toString()+"  "+first.addressLine.toString());
             setState(() {
               longitude = position.longitude;
               latitude = position.latitude;
-              addressLine = first.addressLine.toString();
+              addressLine = adresse;
               addressPatient = "$latitude,$longitude";
             });
 

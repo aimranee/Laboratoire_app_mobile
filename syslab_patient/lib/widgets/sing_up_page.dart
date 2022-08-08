@@ -50,15 +50,15 @@ class _SignUpPageState extends State<SignUpPage> {
         key: _formKey,
         child :Column(
         children: [
-          buildTextField(MaterialCommunityIcons.account_outline, "First Name", _firstNameController),
-          buildTextField(MaterialCommunityIcons.account_outline, "Last Name", _lastNameController),
-          buildEmailField(MaterialCommunityIcons.email_outline, "Email"),
-          _passwordField(MaterialCommunityIcons.lock_outline, "Password"),
-          // buildTextField(MaterialCommunityIcons.lock_outline, "confirmer password", _passwordConfirmedController),
-          buildTextField(MaterialCommunityIcons.email_outline, "Phone Numbre", _phoneNumberController),
-          buildTextField(MaterialCommunityIcons.email_outline, "CIN", _cinController),
-          buildTextField(MaterialCommunityIcons.email_outline, "Age", _ageController),
-          buildTextField(MaterialCommunityIcons.email_outline, "Ville", _cityController),
+          buildTextField("First Name", _firstNameController),
+          buildTextField("Last Name", _lastNameController),
+          buildEmailField("Email"),
+          _passwordField("Password"),
+          // buildTextField("confirmer password", _passwordConfirmedController),
+          buildTextField("Phone Numbre", _phoneNumberController),
+          buildTextField("CIN", _cinController),
+          buildTextField("Age", _ageController),
+          buildTextField("Ville", _cityController),
           _familySituationDropDown(),
           _bloodTypeDropDown(),
 
@@ -169,18 +169,14 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
   
-  Widget buildTextField(icon, hintText, controller) {
+  Widget buildTextField(hintText, controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: TextField(
         controller: controller,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            icon,
-            color: Palette.iconColor,
-          ),
-          enabledBorder: const OutlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Palette.textColor1),
             borderRadius: BorderRadius.all(Radius.circular(35.0)),
           ),
@@ -195,7 +191,7 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
-  Widget buildEmailField(IconData icon, String hintText) {
+  Widget buildEmailField(String hintText) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: TextFormField(
@@ -215,11 +211,7 @@ class _SignUpPageState extends State<SignUpPage> {
           // return item.contains('@') ? null : "Enter correct email";
         },
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            icon,
-            color: Palette.iconColor,
-          ),
-          enabledBorder: const OutlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Palette.textColor1),
             borderRadius: BorderRadius.all(Radius.circular(35.0)),
           ),
@@ -235,8 +227,7 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget _passwordField(
-      IconData icon, String hintText) {
+  Widget _passwordField(String hintText) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: TextFormField(
@@ -247,10 +238,6 @@ class _SignUpPageState extends State<SignUpPage> {
           return item.isNotEmpty ? null : "Enter password";
         },
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            icon,
-            color: Palette.iconColor,
-          ),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Palette.textColor1),
             borderRadius: BorderRadius.all(Radius.circular(35.0)),

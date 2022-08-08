@@ -19,21 +19,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    // TODO: implement initState
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return //<--- ChangeNotifierProvider
-
-      GetMaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.splashScreen,
       getPages: AppRoutes.pages,

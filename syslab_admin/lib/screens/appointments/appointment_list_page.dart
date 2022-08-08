@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:geocode/geocode.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syslab_admin/screens/appointments/edit_appointment_details_page.dart';
@@ -40,6 +41,7 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
   ];
   String _firstDate = "All";
   String _lastDate = "All";
+  String address = "";
   final List<String> _selectedStatus = [];
   bool _isLoading = false;
   final ScrollController _scrollController = ScrollController();
@@ -49,10 +51,16 @@ class _AppointmentListPageState extends State<AppointmentListPage> {
     // TODO: implement initState
     _scrollListener();
     _getSetData();
-
+    
     super.initState();
   }
-
+  // String _getAddress (location){
+  //   lati = split
+  //   GeoCode geoCode = GeoCode();
+  //   Address address =
+  //       await geoCode.reverseGeocoding(latitude: latLng.latitude, longitude: latLng.longitude);
+  //   return "${address.streetAddress}, ${address.city}, ${address.countryName}, ${address.postal}";
+  // }
   _getSetData() async {
     setState(() {
       _isLoading = true;

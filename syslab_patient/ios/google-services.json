@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "590579910035",
+    "project_id": "test-792c7",
+    "storage_bucket": "test-792c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590579910035:android:f7502b23e1ed1ccb1b9466",
+        "android_client_info": {
+          "package_name": "com.syslab.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590579910035-u7prsm4f02f1vqai61s1h02shnb2h7eb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu8VCmFpO52z-Xk1XozjvrjIsTxC-Jixg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590579910035-u7prsm4f02f1vqai61s1h02shnb2h7eb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590579910035:android:e03e806fffc0d1be1b9466",
+        "android_client_info": {
+          "package_name": "com.syslab.patient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590579910035-u7prsm4f02f1vqai61s1h02shnb2h7eb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu8VCmFpO52z-Xk1XozjvrjIsTxC-Jixg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590579910035-u7prsm4f02f1vqai61s1h02shnb2h7eb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

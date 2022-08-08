@@ -44,34 +44,34 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             _EmailField(Icons.mail_outline, "info@example.com"),
             _passwordField(MaterialCommunityIcons.lock_outline, "**********"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Checkbox(
-                      value: isRememberMe,
-                      activeColor: Palette.textColor2,
-                      onChanged: (value) {
-                        setState(() {
-                          isRememberMe = !isRememberMe;
-                        });
-                      },
-                    ),
-                    const Text("Remember me",
-                        style: TextStyle(fontSize: 12, color: Palette.textColor1))
-                  ],
-                ),
-                TextButton(
-                  onPressed: () {
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Row(
+            //       children: [
+            //         Checkbox(
+            //           value: isRememberMe,
+            //           activeColor: Palette.textColor2,
+            //           onChanged: (value) {
+            //             setState(() {
+            //               isRememberMe = !isRememberMe;
+            //             });
+            //           },
+            //         ),
+            //         const Text("Remember me",
+            //             style: TextStyle(fontSize: 12, color: Palette.textColor1))
+            //       ],
+            //     ),
+            //     TextButton(
+            //       onPressed: () {
                     
-                  },
-                  child: const Text("Forgot Password?",
-                      style: TextStyle(fontSize: 12, color: Palette.textColor1)),
-                ),
+            //       },
+            //       child: const Text("Forgot Password?",
+            //           style: TextStyle(fontSize: 12, color: Palette.textColor1)),
+            //     ),
                 
-              ],
-            ),
+            //   ],
+            // ),
             _isLoading
               ? const Padding(
                   padding: EdgeInsets.all(8.0),
@@ -170,10 +170,7 @@ class _LoginPageState extends State<LoginPage> {
         _isLoading = true;
       });
       final res = await AuthService.login(_emailController.text, _passwordController.text);
-      // log ("message: " + res['success'].toString());
       if (res['message'].toString()=="login successfully") {
-        // final FirebaseAuth auth = FirebaseAuth.instance;
-        // log("token : "+res["uId"].toString());
         await setData(res['uId'].toString(), res['token']);
         setState(() {
           _isLoading = false;

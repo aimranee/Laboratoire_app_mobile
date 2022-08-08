@@ -54,11 +54,6 @@ class _HomePageState extends State<HomePage> {
       "title": "Disponibilité",
       "navigation": "/EditAvailabilityPage"
     },
-    // {
-    //   "iconName": "assets/icons/booking.svg",
-    //   "title": "Paramètre",
-    //   "navigation": "/EditBookingTiming"
-    // },
     {
       "iconName": "assets/icons/doct.svg",
       "title": "Contats",
@@ -221,13 +216,14 @@ class _HomePageState extends State<HomePage> {
                       child: SvgPicture.asset(widgetName,
                           semanticsLabel: 'Acme Logo'),
                     ),
-                         const Positioned(
-                            top: 0,
-                            right: 0,
-                            child: CircleAvatar(
-                              radius: 5,
-                              backgroundColor: Colors.red,
-                            ))
+                    const Positioned(
+                      top: 0,
+                      right: 0,
+                      child: CircleAvatar(
+                        radius: 5,
+                        backgroundColor: Colors.red,
+                      )
+                    )
                   ],
                 );
           }else {
